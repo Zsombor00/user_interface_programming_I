@@ -25,13 +25,15 @@
     <div class = "navbar">
         <a href="#" class="right" id="logout"></a>
     </div>
-    
+    <!--- Main section of screen -->
     <div class="row">
+        <!--- Left column containing control buttons -->
         <div class="left">
             <div class="key" id="fun1" onclick="doInit('fun1')"></div>
             <div class="key" id="fun2" onclick="doInit('fun1')"></div>
             <div class="key security" id="fun4" onclick="doInit('fun4')"></div>
         </div>
+        <!--- Middle column, showing either orders or inventory -->
         <div class="main", id="orders">
             <h2 id="ord_title"></h2>
             <p id="ord_text"></p>
@@ -49,6 +51,7 @@
             </div>
             
         </div>
+        <!--- Right column, showing either payment of orders or refill of inventory -->
         <div class="right", id="orderPayment">
             <h2 id="pay_title"></h2>
             <p id="pay_text"></p>
