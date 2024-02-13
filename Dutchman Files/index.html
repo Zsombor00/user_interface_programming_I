@@ -4,17 +4,61 @@
 
 <head>
     <meta charset="UTF-8">
+    <link rel="stylesheet" href="bartender_view_style.css">
     <title>Database Base Document</title>
     <script type="text/javascript" src="jquery-3.3.1.min.js"></script>
 
     <script type="text/javascript" src="Beverages.js"></script>
     <script type="text/javascript" src="DBLoaded.js"></script>
     <script type="text/javascript" src="loader.js"></script>
+    <script type="text/javascript" src="model.js"></script>
+    <script type="text/javascript" src="bartender_view_control.js"></script>
+    <script type="text/javascript" src="dictionary_eng.js"></script>
 
 </head>
 
 <body>
+    <div class="header">
+        <h1>The Flying Dutchman</h1>
+    </div>
+    
+    <div class = "navbar">
+        <a href="#" class="right" id="logout"></a>
+    </div>
+    
+    <div class="row">
+        <div class="left">
+            <div class="key" id="fun1" onclick="doInit('fun1')"></div>
+            <div class="key" id="fun2" onclick="doInit('fun1')"></div>
+            <div class="key security" id="fun4" onclick="doInit('fun4')"></div>
+        </div>
+        <div class="main", id="orders">
+            <h2 id="ord_title"></h2>
+            <p id="ord_text"></p>
+            <div id = "orderList">
 
+            </div>
+        </div>
+        <div class="main", id="inventory">
+            <h2 id="inv_title"></h2>
+            <p id="inv_text"></p>
+            <div id = "inventoryList">
+                <div class = "key inv">
+                    Test
+                </div>
+            </div>
+            
+        </div>
+        <div class="right", id="orderPayment">
+            <h2 id="pay_title"></h2>
+            <p id="pay_text"></p>
+        </div>
+        <div class="right", id="inventoryRefill">
+            <h2 id="refill_title"></h2>
+            <p id="refill_text"></p>
+        </div>
+        
+    </div>
 <!---
 
 The html-file is just for loading the javascript files. If you go to the console under the "Inspect" of the popup menu,
