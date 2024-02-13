@@ -47,7 +47,7 @@ function createRefillKey(ID){
     key = document.createElement("div");
     key.classList.add('key', 'refill');
     key.id = ID+"refill";
-    key.onclick = function() {refillProduct(ID)};
+    key.onclick = function() {refillProduct(ID)}; //Button sends the ID of the corresponding item
     key.innerHTML = dict['refill'];
     return key
 }
@@ -58,7 +58,7 @@ function createInventoryElement(product){
     elem.classList.add('key', 'inv');
     elem.id = product['productID'];
     elem.innerHTML = dict['productName'] + product['productName'] + dict['price'] + product["price"] + dict['stock'] + product["stock"];
-    // Create button to refill and append to row
+    // Create button to refill and append it to the row
     refillKey = createRefillKey(product['productID']);
     elem.appendChild(refillKey);
     return elem
