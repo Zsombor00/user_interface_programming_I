@@ -1,5 +1,6 @@
 var DB = require('./DBLoaded.js');
 var DB2 = require('./Beverages.js');
+var DB3 = require('./Dishes.js');
 
 function getAllUsers() {
     // Create an empty array
@@ -8,7 +9,6 @@ function getAllUsers() {
     for (i = 0; i < DB.users.length; i++) {
         allUsers.push(DB.users[i]);
     }
-    console.log(allUsers)
     // Return the array
     return allUsers;
 }
@@ -21,10 +21,18 @@ function getAllUserNames() {
     return nameCollect;
 }
 
+function getCredits(userId) {
+    // Find the user in the database
+    var account = DB.account.find(function(account) {
+        return account.user_id == userId;
+    });
+    return account.creditSEK
+}
+
 function increaseCredits(userId, creditsToAdd) {
     // Find the user in the database
     var user = DB.account.find(function(user) {
-        return user.user_id === userId;
+        return user.user_id == userId;
     });
 
     // If the user is found, increase their credits
@@ -42,7 +50,7 @@ function increaseCredits(userId, creditsToAdd) {
 function decreaseCredits(userId, creditsToSubtract) {
     // Find the user in the database
     var user = DB.account.find(function(user) {
-        return user.user_id === userId;
+        return user.user_id == userId;
     });
 
     // If the user is found, increase their credits
@@ -107,4 +115,24 @@ function getAllBeverages() {
     return allBeverages;
 }
 
-console.log(getAllBeverages())
+function getDish(itemNr) {
+    // Find the item in the dishes array
+    var item = DB3.dishes.find(function(item) {
+        return item.nr == itemNr;
+    });
+    return item
+}
+
+function getAllDishes() {
+    // Create an empty array
+    var allDishes = [];
+    // Iterate over the database
+    for (i = 0; i < DB2.dishes.length; i++) {
+        allDishes.push(DB3.dishes[i]);
+    }
+    // Return the array
+    return allDishes;
+}
+
+console.log(getDish(2))
+
