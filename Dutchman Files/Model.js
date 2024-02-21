@@ -41,6 +41,60 @@ var orderExample2 = {
 }
 
 modelData['orders'].push(orderExample1, orderExample2);
+modelData['orders'].push(orderExample1, orderExample2);
+modelData['orders'].push(orderExample1, orderExample2);
+modelData['orders'].push(orderExample1, orderExample2);
+modelData['orders'].push(orderExample1, orderExample2);
+modelData['orders'].push(orderExample1, orderExample2);
+modelData['orders'].push(orderExample1, orderExample2);
+modelData['orders'].push(orderExample1, orderExample2);
+modelData['orders'].push(orderExample1, orderExample2);
+modelData['orders'].push(orderExample1, orderExample2);
+modelData['orders'].push(orderExample1, orderExample2);
+modelData['orders'].push(orderExample1, orderExample2);
+modelData['orders'].push(orderExample1, orderExample2);
+modelData['orders'].push(orderExample1, orderExample2);
+modelData['orders'].push(orderExample1, orderExample2);
+modelData['orders'].push(orderExample1, orderExample2);
+modelData['orders'].push(orderExample1, orderExample2);
+modelData['orders'].push(orderExample1, orderExample2);
+
+var DB_order_example = [
+    {
+        "order_id": "T00001",
+        "bartender_id": "B00000",
+        "customer_id": "C00001",
+        "order":[25053],
+        "quantities":[3],
+        "amount": 1326,
+        'tableNr' : 7,
+        "timestamp": "2023-11-10 19:04:13",
+        "paid":false
+    },
+    {
+        "order_id": "T00002",
+        "bartender_id": "B00000",
+        "customer_id": "C00002",
+        "order":[190719,25053],
+        "quantities":[2,1],
+        "amount": 832,
+        'tableNr' : 5,
+        "timestamp": "2023-11-10 19:36:43",
+        "paid":false
+    },
+    {
+        "order_id": "T00004",
+        "bartender_id": "B00000",
+        "customer_id": "C00004",
+        "order":[190719],
+        "quantities":[1],
+        "amount": 195.00,
+        'tableNr' : 2,
+        "timestamp": "2023-11-10 19:36:52",
+        "paid":false
+    },
+   
+]
 
 // Example of products (This will use the same as menu)
 var productExample1 = {

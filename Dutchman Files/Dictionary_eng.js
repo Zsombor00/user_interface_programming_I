@@ -20,19 +20,34 @@ const cnst = {
 const dict = {
     'ord': "Orders",
     'inv': "Inventory",
-    'ord_text': "Orders added here (click to handle payment)",
-    'inv_text': "Inventory items added here (The same as menu, but with inventory and order option for bartender)",
+    'vip': "VIP customers",
+    'security' : 'Security',
     'logout': "Log out",
+
+    'ord_text': "Orders added here (click to handle payment)",
     'ordID' : 'Order ID: ',
     'tableNr' : ', Table number: ',
-    'security' : 'Security',
     'pay': 'Pay selected order',
     'pay_text': 'Show the details of selected order and payment options here',
+    'split_bill': 'Split bill',
+    'group_bill': 'Group bill',
+
+    'inv_text': "Inventory items added here (The same as menu, but with inventory and order option for bartender)",
     'refill': 'Refill',
     'refill_text': 'List of selected items to refill will be shown here',
+    'add_inv' : 'Add new item',
     'productName': "Product name: ",
     'price': ", Product price: ",
-    'stock': ", Stock: "
+    'stock': ", Stock: ",
+
+    'vip_text': "Show a list of VIP customers here. Click to add credits",
+    'add_vip': "Add new VIP",
+    'credit': 'User profile',
+    'credit_text': 'Show the chosen customer information here and option to add credits',
+    'credit_button': 'Add credits',
+    'user_id': "User ID: ",
+    'user_name': "User name: ",
+    'current_credits': "Current credits: "
 
 
 }

@@ -4,6 +4,8 @@
 
 <head>
     <meta charset="UTF-8">
+    
+
     <link rel="stylesheet" href="bartender_view_style.css">
     <title>Database Base Document</title>
     <script type="text/javascript" src="jquery-3.3.1.min.js"></script>
@@ -11,6 +13,7 @@
     <script type="text/javascript" src="Beverages.js"></script>
     <script type="text/javascript" src="DBLoaded.js"></script>
     <script type="text/javascript" src="loader.js"></script>
+    <script type="text/javascript" src="db_model.js"></script>
     <script type="text/javascript" src="model.js"></script>
     <script type="text/javascript" src="bartender_view_control.js"></script>
     <script type="text/javascript" src="dictionary_eng.js"></script>
@@ -23,44 +26,83 @@
     </div>
     
     <div class = "navbar">
-        <a href="#" class="right" id="logout"></a>
+        <a href="#" class="logout" id="logout"></a>
     </div>
     <!--- Main section of screen -->
     <div class="row">
         <!--- Left column containing control buttons -->
         <div class="left">
-            <div class="key" id="fun1" onclick="doInit('fun1')"></div>
-            <div class="key" id="fun2" onclick="doInit('fun1')"></div>
-            <div class="key security" id="fun4" onclick="doInit('fun4')"></div>
+            <div class="key" id="ordButton" onclick="toggleView(this.id)"></div>
+            <div class="key" id="invButton" onclick="toggleView(this.id)"></div>
+            <div class="key" id="VIPButton" onclick="toggleView(this.id)"></div>
+            <div class="key security" id="security" onclick="toggleWindow(this.id)"></div>
         </div>
-        <!--- Middle column, showing either orders or inventory -->
-        <div class="main", id="orders">
-            <h2 id="ord_title"></h2>
-            <p id="ord_text"></p>
-            <div id = "orderList">
-
-            </div>
-        </div>
-        <div class="main", id="inventory">
-            <h2 id="inv_title"></h2>
-            <p id="inv_text"></p>
-            <div id = "inventoryList">
-                <div class = "key inv">
-                    Test
+        <!--- Order menu -->
+        <div class="subrow", id="ordMenu">
+            <!--- Main column showing list of orders -->
+            <div class="main", id="orders">
+                <h2 id="ord_title"></h2>
+                <p id="ord_text"></p>
+                <div id = "orderList", class="list">
+                    <!--- Control writes order objects here -->
                 </div>
             </div>
-            
+            <!--- Right column handling payment of orders -->
+            <div class="right", id="orderPayment">
+                <h2 id="pay_title"></h2>
+                <p id="pay_text"></p>
+                <div id = "payList", class="list">
+
+                </div>
+                <div class="key pay" id="split_bill" onclick=""></div>
+                <div class="key pay" id="group_bill" onclick=""></div>
+            </div>
         </div>
-        <!--- Right column, showing either payment of orders or refill of inventory -->
-        <div class="right", id="orderPayment">
-            <h2 id="pay_title"></h2>
-            <p id="pay_text"></p>
+        <!--- Inventory menu -->
+        <div class="subrow", id="invMenu">
+            <!--- Main column showing list of inventory -->
+            <div class="main", id="inventory">
+                <h2 id="inv_title"></h2>
+                <p id="inv_text"></p>
+                <div class="key" id="add_inv" onclick=""></div>
+                <div id = "inventoryList", class="list">
+                    <!--- Control writes inventory objects here -->
+                </div>    
+            </div>
+            <!--- Right column handling refill of inventory -->
+            <div class="right", id="inventoryRefill">
+                <h2 id="refill_title"></h2>
+                <p id="refill_text"></p>
+            </div>
         </div>
-        <div class="right", id="inventoryRefill">
-            <h2 id="refill_title"></h2>
-            <p id="refill_text"></p>
+        <!--- VIP menu -->
+        <div class="subrow", id="VIPMenu">
+            <!--- Main column showing list of VIP users -->
+            <div class="main", id="users">
+                <h2 id="VIP_title"></h2>
+                <p id="VIP_text"></p>
+                <div class="key" id="add_VIP" onclick=""></div>
+                <div id = "userList", class="list">
+                    <!--- Control writes VIP profiles here -->
+                </div>    
+            </div>
+            <!--- Right column handling refill of VIP credits -->
+            <div class="right", id="VIPcredits">
+                <h2 id="credit_title"></h2>
+                <div id="credit_text"></div>
+                <br>
+                <label for="creditsToAdd">Credits to add:</label>
+                <input type="number" id="creditsToAdd" name="creditsToAdd" ><br><br>
+                
+                <div class="key", id="creditButton", data-customerID = "", onclick="addCredits()"></div>
+            </div>
         </div>
-        
+
+    </div>
+     <!--- Pop-up windows -->
+    <div class="popup warning", id="security_popup">
+        <div class="key exit", id="exit", onclick="exitWindow(this.id)">X</div>
+        <h1>Info</h1>
     </div>
 <!---
 

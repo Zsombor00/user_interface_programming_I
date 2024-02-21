@@ -5,6 +5,8 @@
 body {
 font-family: Arial, Helvetica, sans-serif;
 margin: 0;
+max-width: 100%;
+min-width: 500px;
 }
 
 /* Style the header */
@@ -13,7 +15,7 @@ margin: 0;
     text-align: left;
     background: #9432c2;
     color: white;
-    width: 1550px;
+    width: 90%;
     margin: auto;
 }
 
@@ -26,7 +28,7 @@ margin: 0;
 .navbar {
     overflow: hidden;
     background-color: #333;
-    width: 1550px;
+    width: 90%;
     margin: auto;
 }
 
@@ -41,7 +43,7 @@ margin: 0;
 }
 
 /* Right-aligned link */
-.navbar a.right{
+.navbar a.logout{
     float: right;
     background-color: #333;
 }
@@ -54,34 +56,75 @@ margin: 0;
 
 /* Column container */
 .row {
+    height: 700px;
+    max-height: 80vh;
     display: flex;
     flex-wrap: wrap;
-    width: 1550px;
+    width: 90%;
     margin: auto;
 }
 
-/* Create two unequal columns that sits next to each other */
+
+
 /* Sidebar left column */
 .left {
-    flex: 10%;
+    width: 150px;
     background-color: #fcebb6;
     padding: 20px;
-    height: 700px;
+    height: inherit;
+    max-height: inherit;
     position: relative;
+}
+
+/* Subrow containing the main and right columns */
+.subrow {
+    flex:10%;
+    height: inherit;
+    max-height: inherit;
+    display: flex;
+    flex-wrap: wrap;
+    margin: auto;
 }
 
 /* Main column */
 .main {
-    flex: 70%;
+    flex:20%;
+    height: inherit;
+    max-height: inherit;
     background-color: white;
     padding: 20px;
+    float: left;
 
 }
  /* Sidebar right column*/
 .right {
-    flex: 20%;
+    width: 300px;
     background-color: #fcebb6;
     padding: 20px;
+}
+
+/* scrolling list*/
+.list {
+    max-height: 80%;
+    overflow-y:scroll
+}
+
+/* pop-up windows*/
+.popup {
+    width: 300px;
+    height: 100px;
+    padding: 10px;
+    z-index: -1;
+    background-color: #3a48c4;
+    position: absolute;
+    top: 50%;
+    right: 50%;
+    
+}
+
+.warning{
+    background-color: #df2525;
+    color: white;
 }
 
 /*
@@ -94,6 +137,13 @@ Buttons
     border : 1px solid;
     border-radius: 7px;
     background-color: lightgoldenrodyellow;
+    color: black;
+}
+
+.exit{
+    float:right;
+    margin : 2px;
+
 }
 
 .security {
@@ -103,6 +153,7 @@ Buttons
     background-color: #df2525;
     color: white;
 }
+
 
 .refill {
     float: right;
@@ -114,12 +165,23 @@ Buttons
 .ord {
     width: 90%;
     background-color: #6a97eb;
+
 }
 /* Inventory items */
 .inv {
     cursor: default;
     width: 90%;
     background-color: #eb736a;
+}
+/* Customer items */
+.cust {
+    width: 90%;
+    background-color: #75eb6a;
+}
+/* pay items */
+.pay {
+    width: 90%;
+    background-color: #6a97eb;
 }
 
 /*
@@ -132,17 +194,14 @@ width: 1550px;
 margin: auto;
 }
 
-/* Responsive layout - when the screen is less than 700px wide, make the two columns stack on top of each other instead of next to each other */
-@media screen and (max-width: 700px) {
-    .row {   
-        flex-direction: column;
+/* Responsive layout - when the screen is less than 700px high, make the website scale vertically */
+@media screen and (max-height: 550px) {
+    .row {
+        max-height: 60vh;
     }
 }
 
-/* Responsive layout - when the screen is less than 400px wide, make the navigation links stack on top of each other instead of next to each other */
-@media screen and (max-width: 400px) {
-    .navbar a {
-        float: none;
-        width:100%;
-    }
+/* Responsive layout - when the screen is less than 500px wide, rearrange it vertically*/
+@media screen and (max-width: 500px) {
+
 }
