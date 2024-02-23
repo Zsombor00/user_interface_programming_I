@@ -35,7 +35,7 @@
             <div class="key" id="ordButton" onclick="toggleView(this.id)"></div>
             <div class="key" id="invButton" onclick="toggleView(this.id)"></div>
             <div class="key" id="VIPButton" onclick="toggleView(this.id)"></div>
-            <div class="key security" id="security" onclick="toggleWindow(this.id)"></div>
+            <div class="key security" id="security" onclick="toggleWindow(this.id + '_popup')"></div>
         </div>
         <!--- Order menu -->
         <div class="subrow", id="ordMenu">
@@ -64,7 +64,7 @@
             <div class="main", id="inventory">
                 <h2 id="inv_title"></h2>
                 <p id="inv_text"></p>
-                <div class="key" id="add_inv" onclick=""></div>
+                <div class="key" id="add_inv" onclick="toggleWindow('add_popup')"></div>
                 <div id = "inventoryList", class="list">
                     <!--- Control writes inventory objects here -->
                 </div>    
@@ -100,9 +100,28 @@
 
     </div>
      <!--- Pop-up windows -->
+     <!--- Security confirmation -->
     <div class="popup warning", id="security_popup">
-        <div class="key exit", id="exit", onclick="exitWindow(this.id)">X</div>
-        <h1>Info</h1>
+        <div class="key exit", id="exit_security", onclick="exitWindow(this.id)">X</div>
+        <p id="security_called">Security has been called, stay put.</p>
+    </div>
+    <!--- Remove item confirmation -->
+    <div class="popup", id="remove_popup", data-itemID = "">
+        <div class="key exit", id="exit_remove", onclick="exitWindow(this.id)">X</div>
+        <p id="remove_item_text"></p>
+        <div class="key", id="remove_yes", onclick="removePermanently()">Yes </div>
+        <div class="key", id="remove_no", onclick="exitWindow(this.id)">No</div>
+        
+    </div>
+    <!--- Add item dialogue -->
+    <div class="popup", id="add_popup">
+        <div class="key exit", id="exit_add", onclick="exitWindow(this.id)">X</div>
+        <p id="add_item_text"></p>
+        <div id="input_form">
+
+        </div>
+        <div class="key", id="add_item", onclick="addItem()">Add</div>
+        <div class="key", id="cancel", onclick="exitWindow(this.id)">Cancel</div>   
     </div>
 <!---
 

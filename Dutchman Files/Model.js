@@ -18,6 +18,7 @@ var modelData = {};
 
 modelData['orders'] = [];
 modelData['products'] = [];
+modelData['productAttributes'] = ['productID', 'productName', 'price', 'stock']
 
 // Example of orders
 var orderExample1 = {
@@ -101,13 +102,15 @@ var productExample1 = {
     'productID' : "25053",
     'productName' : "Braastad XO",
     'price' : "442.00",
-    'stock': 17
+    'stock': 17,
+    'available': false
 }
 var productExample2 = {
     'productID' : "190719",
     'productName' : "Vanlig Vodka",
     'price' : "195.00",
-    'stock': 9
+    'stock': 9,
+    'available': true
 }
 modelData['products'].push(productExample1, productExample2);
 

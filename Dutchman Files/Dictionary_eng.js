@@ -34,6 +34,9 @@ const dict = {
 
     'inv_text': "Inventory items added here (The same as menu, but with inventory and order option for bartender)",
     'refill': 'Refill',
+    'unavailable': 'Mark as unavailable',
+    'available': 'Mark as available',
+    'remove': 'Remove permanently',
     'refill_text': 'List of selected items to refill will be shown here',
     'add_inv' : 'Add new item',
     'productName': "Product name: ",
@@ -47,7 +50,12 @@ const dict = {
     'credit_button': 'Add credits',
     'user_id': "User ID: ",
     'user_name': "User name: ",
-    'current_credits': "Current credits: "
+    'current_credits': "Current credits: ",
+
+    'remove_text_1': 'Are you sure you want to remove the following item: ',
+    'remove_text_2': '(This choice can not be undone)',
+
+    'add_item_text': 'Fill in the form below to add new item'
 
 
 }

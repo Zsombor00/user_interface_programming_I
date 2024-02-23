@@ -112,19 +112,22 @@ min-width: 500px;
 /* pop-up windows*/
 .popup {
     width: 300px;
-    height: 100px;
+    height: 350px;
     padding: 10px;
     z-index: -1;
     background-color: #3a48c4;
+    color: white;
     position: absolute;
-    top: 50%;
-    right: 50%;
+    top:0;
+    bottom: 0;
+    left: 0;
+    right: 0;
+    margin: auto;
     
 }
 
 .warning{
     background-color: #df2525;
-    color: white;
 }
 
 /*
@@ -157,8 +160,9 @@ Buttons
 
 .refill {
     float: right;
-    margin : -3px;
+    margin : 0px;
     padding: 2px;
+    
 }
 
 /* Order items */
@@ -170,6 +174,7 @@ Buttons
 /* Inventory items */
 .inv {
     cursor: default;
+    padding: 10px;
     width: 90%;
     background-color: #eb736a;
 }

@@ -45,7 +45,27 @@ function updateOrderView(){
     }
 }
 
-// Functions which creates a HTML button to refill chosen item in inventory
+// Functions which creates a HTML button to mark chosen item in inventory as unavailable (disappears from customer menu)
+function createAvailableKey(ID){
+    key = document.createElement("div");
+    key.classList.add('key', 'refill');
+    key.id = ID+"available";
+    key.onclick = function() {toggleAvailable(ID)}; //Button toggles availability
+    key.innerHTML = dict['unavailable'];
+    return key
+}
+
+// Functions which creates a HTML button to permanently remove item in inventory (only bartender)
+function createRemoveKey(ID){
+    key = document.createElement("div");
+    key.classList.add('key', 'refill');
+    key.id = ID+"remove";
+    key.onclick = function() {removeProduct(ID)}; //Button opens remove dialogue
+    key.innerHTML = dict['remove'];
+    return key
+}
+
+// Functions which creates a HTML button to refill item in inventory (only bartender)
 function createRefillKey(ID){
     key = document.createElement("div");
     key.classList.add('key', 'refill');
@@ -61,9 +81,14 @@ function createInventoryElement(product){
     elem.classList.add('key', 'inv');
     elem.id = product['productID'];
     elem.innerHTML = dict['productName'] + product['productName'] + dict['price'] + product["price"] + dict['stock'] + product["stock"];
-    // Create button to refill and append it to the row
+    // Create buttons and append them to the row
     refillKey = createRefillKey(product['productID']);
+    availableKey = createAvailableKey(product['productID']);
+    removeKey = createRemoveKey(product['productID']);
+    
     elem.appendChild(refillKey);
+    elem.appendChild(removeKey);
+    elem.appendChild(availableKey);
     return elem
 }
 
@@ -72,10 +97,22 @@ function updateInventoryView(){
     var inventoryList = modelData['products'];
     // Reset content of order view
     $('#inventoryList').html(""); 
-    // Draw an order element for each order in the list
+    // Draw an element for each item in the product list
     for(i = 0; i < inventoryList.length; i++ ){ 
         var product = createInventoryElement(inventoryList[i]);
         $('#inventoryList').append(product);
+        // Toggle view according to availability of product
+        let productID = inventoryList[i]['productID'];
+        if(inventoryList[i]['available'])
+        {
+            $('#' + productID ).css('opacity', 0.5);
+            $('#' + productID + "available").text(dict['available']);
+        }
+        else
+        {
+            $('#' + productID ).css('opacity', 1);
+            $('#' + productID + "available").text(dict['unavailable']);
+        }
 
     }
 }
@@ -152,6 +189,99 @@ function showOrder(tableNr){
 function refillProduct(ID){
     console.log(ID);
 }
+// Function which toggles the availability of item
+function toggleAvailable(ID){
+    // Toggle tha availability in the database
+    var item = modelData['products'].find(function(item) {
+        return item['productID'] === ID;
+    });
+    if(item['available'])
+    {
+        item['available'] = false;
+    }
+    else
+    {
+        item['available'] = true;
+    }
+    updateInventoryView(); // Update the view from new database state  
+}
+
+// Functions which opens the remove item dialogue
+function removeProduct(ID){
+    toggleWindow('remove_popup');
+    let window = $("#remove_popup");
+    window.data("itemID", ID);
+    var item = modelData['products'].find(function(item) {
+        return item['productID'] === ID;
+    });
+    text = dict['remove_text_1'] + item['productName'] +"? <br>" + dict['remove_text_2'];
+    $("#remove_item_text").html(text)
+}
+
+// Function which affirms permanent removal of item
+function removePermanently(){
+    // Fetch ID and remove corresponding item from database
+    let ID =  $("#remove_popup").data("itemID");
+    var item = modelData['products'].find(function(item) {
+        return item['productID'] === ID;
+    });
+    i = modelData['products'].indexOf(item);
+    modelData['products'].splice(i, 1);
+    //Update the view from new database state
+    toggleWindow('remove_popup');
+    updateInventoryView()
+}
+
+// Function to create input field for text
+function createTextInput(attribute, containerID){
+    // Create label with attribute
+    label = document.createElement("label");
+    label.setAttribute('for', attribute);
+    label.innerHTML = attribute;
+    // Create text input for attribute
+    inputBox = document.createElement("input");
+    inputBox.setAttribute('type', 'text');
+    inputBox.setAttribute('name', attribute);
+    inputBox.id = attribute;
+
+    $("#" + containerID).append(label);
+    $("#" + containerID).append("<br>");
+    $("#" + containerID).append(inputBox);
+    $("#" + containerID).append("<br>");
+}
+
+// Function to create a form of attributes
+function createForm(attributeList, containerID){
+    for(i=0; i<attributeList.length; i++){
+        createTextInput(attributeList[i], containerID)
+    }
+}
+
+// Function to add a new item to the database and then update the view
+function addItem(){
+    // Change model
+    let newProduct = {};
+    for(i=0; i < modelData['productAttributes'].length; i++){
+        // Fetch property from corresponding input field
+        let attribute = modelData['productAttributes'][i];
+        let input = $('#' + attribute).val();
+        if(input != ""){
+            newProduct[attribute] = input; 
+        }
+        //If some field is empty, nothing happens
+        else
+        {
+            return
+        }
+        
+        //TODO Check for unique ID
+    }
+    newProduct["available"] = true;
+    modelData['products'].push(newProduct);
+
+    updateInventoryView(); // Change view from model
+}
+
 //Function to show the selected user in the model
 function showUser(ID){
     user = getUser(ID)
@@ -178,15 +308,14 @@ function addCredits(){
 }
 // Function to open pop-up window ()
 function toggleWindow(ID){
-    let window = $("#"+ ID + "_popup");
+    let window = $("#"+ ID);
     if(window.css('z-index') < 0)
     {
         window.css('z-index', 1);
     }
     else{
         window.css('z-index', -1);
-    }
-    
+    }  
 }
 
 // Function to exit pop-up window
@@ -240,6 +369,7 @@ $(document).ready(function () {
     $("#add_inv").text(dict['add_inv']);
     $("#refill_title").text(dict['refill']);
     $("#refill_text").text(dict['refill_text']);
+    $("#add_item_text").text(dict['add_item_text']);
 
     $("#VIP_title").text(dict['vip']);
     $("#VIP_text").text(dict['vip_text']);
@@ -252,6 +382,8 @@ $(document).ready(function () {
     $('label[for="creditsToAdd"]').hide();
 
     $("#logout").text(dict['logout']);
+
+    createForm(modelData['productAttributes'], "input_form");
     updateOrderView();
     updateInventoryView();
     updateVIPView();
