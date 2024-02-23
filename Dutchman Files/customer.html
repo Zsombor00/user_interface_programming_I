@@ -35,8 +35,8 @@
 
     <!-- UNDO-REDO MENU -->
     <div class="undo_redo_menu">
-        <a href="#" id="undo"><i class="fa fa-arrow-left fa-2x"></i></a>
-        <a href="#" id="redo"><i class="fa fa-arrow-right fa-2x"></i></a>
+        <a href="#" id="undo" onclick="undo()"><i class="fa fa-arrow-left fa-2x"></i></a>
+        <a href="#" id="redo" onclick="redo()"><i class="fa fa-arrow-right fa-2x"></i></a>
     </div>
 
 </header>
@@ -77,14 +77,14 @@
             </ul>
         </div>
         <div class="menu_list" id="all_food">
-            <div id="menu_food"></div>
+            <div id="menu_food" ondrop="drop_to_menu(event)" ondragover="allowDrop(event)"></div>
         </div>
     </div>
 
     <!--  Right menu with the order -->
     <div class="right" >
         <div> Your order </div>
-        <div id="order"></div>    
+        <div id="order" ondrop="drop_to_order(event)" ondragover="allowDrop(event)">Your order here</div>    
 
         <!--  Different buttons to change, add customers and their orders -->
         <div class="order_options">
@@ -93,6 +93,7 @@
             <button onclick="previous_customer()">Previous customer</button>
             <button onclick="next_customer()">Next customer</button>
             <button id="openPopupButton" onclick="showOrders()">Show order</button>
+            <button >Pay</button>
         </div>
         
         <!--  Pop up window with all customers and their orders -->
