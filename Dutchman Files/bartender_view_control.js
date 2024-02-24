@@ -1,23 +1,36 @@
+// Function to toggle between customer/employed
+function toggleLogin(buttonID) {
+    var employee = document.getElementById("employee_view");
+    var customer = document.getElementById("customer_view");
+
+    if (buttonID === "employee_login") {
+        employee.style.display = "block";
+        customer.style.display = "none";
+    }
+    else if (buttonID === "customer_login") {
+        employee.style.display = "none";
+        customer.style.display = "block";
+    }
+
+}
+
 // Function to toggle between order, inventory and VIP view
 function toggleView(buttonID) {
-    var orders = document.getElementById("ordMenu");
-    var inventory = document.getElementById("invMenu");
-    var VIP = document.getElementById("VIPMenu");
 
     if (buttonID === "ordButton") {
-        orders.style.display = "flex";
-        inventory.style.display = "none";
-        VIP.style.display = "none";
+        $(".order").show();
+        $(".inventory").hide();
+        $(".VIP").hide();
     }
     else if (buttonID === "invButton") {
-        orders.style.display = "none";
-        inventory.style.display = "flex";
-        VIP.style.display = "none";
+        $(".order").hide();
+        $(".inventory").show();
+        $(".VIP").hide();
     }
     else if (buttonID === "VIPButton") {
-        orders.style.display = "none";
-        inventory.style.display = "none";
-        VIP.style.display = "flex";
+        $(".order").hide();
+        $(".inventory").hide();
+        $(".VIP").show();
     }
 }
 
@@ -306,14 +319,30 @@ function addCredits(){
         $('#creditsToAdd').val("");
     }  
 }
+//Function to open security dialogue
+function openSecurity(){
+    toggleWindow("security_popup");
+    $('#security_text').text(dict['security_text_1']);
+    $('#security_yes').show();
+    $('#security_no').show();
+
+}
+// Function to call security
+function callSecurity(){
+    $('#security_text').text(dict['security_text_2']);
+    $('#security_yes').hide();
+    $('#security_no').hide();
+}
 // Function to open pop-up window ()
 function toggleWindow(ID){
     let window = $("#"+ ID);
-    if(window.css('z-index') < 0)
+    if(window.css('opacity') < 1)
     {
+        window.css('opacity', 1);
         window.css('z-index', 1);
     }
     else{
+        window.css('opacity', 0);
         window.css('z-index', -1);
     }  
 }
@@ -321,6 +350,7 @@ function toggleWindow(ID){
 // Function to exit pop-up window
 function exitWindow(ID){
     let window = $('#' + ID).parent();
+    window.css('opacity', 0);
     window.css('z-index', -1);
 }
 
@@ -348,12 +378,14 @@ function doInit(fun) {
 }
 
 $(document).ready(function () {
+    $('#employee_view').hide();
     $('#invMenu').hide();
     $('#VIPMenu').hide();
     $("#ordButton").text(dict['ord']);
     $("#invButton").text(dict['inv']);
     $("#VIPButton").text(dict['vip']);
     $("#security").text(dict['security']);
+    $('#security_text').text(dict['security_text_1']);
 
     $("#ord_title").text(dict['ord']);
     $("#ord_text").text(dict['ord_text']);

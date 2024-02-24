@@ -24,15 +24,15 @@ const dict = {
     'security' : 'Security',
     'logout': "Log out",
 
-    'ord_text': "Orders added here (click to handle payment)",
+    'ord_text': "",
     'ordID' : 'Order ID: ',
     'tableNr' : ', Table number: ',
     'pay': 'Pay selected order',
-    'pay_text': 'Show the details of selected order and payment options here',
+    'pay_text': '',
     'split_bill': 'Split bill',
     'group_bill': 'Group bill',
 
-    'inv_text': "Inventory items added here (The same as menu, but with inventory and order option for bartender)",
+    'inv_text': "",
     'refill': 'Refill',
     'unavailable': 'Mark as unavailable',
     'available': 'Mark as available',
@@ -43,10 +43,10 @@ const dict = {
     'price': ", Product price: ",
     'stock': ", Stock: ",
 
-    'vip_text': "Show a list of VIP customers here. Click to add credits",
+    'vip_text': "",
     'add_vip': "Add new VIP",
     'credit': 'User profile',
-    'credit_text': 'Show the chosen customer information here and option to add credits',
+    'credit_text': '',
     'credit_button': 'Add credits',
     'user_id': "User ID: ",
     'user_name': "User name: ",
@@ -55,7 +55,10 @@ const dict = {
     'remove_text_1': 'Are you sure you want to remove the following item: ',
     'remove_text_2': '(This choice can not be undone)',
 
-    'add_item_text': 'Fill in the form below to add new item'
+    'add_item_text': 'Fill in the form below to add new item',
+
+    'security_text_1': 'Are you sure you want to call sequrity?',
+    'security_text_2': 'Security has been called, stay put.'
 
 
 }
