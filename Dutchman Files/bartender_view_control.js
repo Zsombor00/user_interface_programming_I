@@ -171,31 +171,90 @@ function createElement(productID, quantity){
 }
 
 // Function for showing order in right column
+
 function showOrder(tableNr){
     //$('#orderPayment').html("");
     $('#payList').html(""); 
+    $('#billList').html("");
     var num =0;
-
     for(i = 0;i<DB_order_example.length;i++){     
-        if (DB_order_example[i].tableNr === tableNr && DB_order_example[i].paid === false){
+        if (DB_order_example[i].tableNr == tableNr && DB_order_example[i].paid === false){
             //console.log(DB_order_example[i]);
             num += DB_order_example[i].amount;
-            // console.log(DB_order_example[i]["quantities"][0]);
-            for(j = 0; j < DB_order_example[i]["order"].length; j++ ){
-               let iid = DB_order_example[i]["order"][j];
-               let q = DB_order_example[i]["quantities"][j];
-               let product = createElement(iid,q);
-               $('#payList').append(product);
+            var tmp =  DB_order_example[i]["suborder"];
+            for(j in tmp){
+                //console.log(tmp[j]);
+                var list_tmp = tmp[j];
+                for(k in list_tmp){ 
+                 var iid = list_tmp[k][0];
+                 var q = list_tmp[k][1];
+                 //console.log(iid,q);
+                 let product = createElement(iid,q);
+                  $('#payList').append(product);  
+                } 
             }
-           
+           break;
         }
     } 
     //$('#orderPayment').text(num);
     $('#payList').append("Total price: " + num);
     $('#split_bill').show();
+    $('#split_bill').click(function(){
+      $('#billList').html("");
+      for(i = 0;i<DB_order_example.length;i++){
+        //console.log(DB_order_example[1].tableNr);
+        if (DB_order_example[i].tableNr == tableNr && DB_order_example[i].paid === false){
+            console.log("in");
+            var tmp =  DB_order_example[i]["subpay"];
+            for(j = 0; j < tmp.length; j++ ){
+                elem = document.createElement("div");
+                elem.classList.add('key');
+                var t ='';
+                var w = j+1;
+                elem.id = j;
+                elem.onclick = function() {};
+                elem.innerHTML = "number "+w+"  price: "+ tmp[j] + "\r";
+                $('#billList').append(elem);
+            }
+            //console.log(txt);
+            break;
+        }
+        
+      }});
+
     $('#group_bill').show();
+    $('#group_bill').click(function(){
+        var n=0;
+        $('#billList').html("");
+        for(i = 0;i<DB_order_example.length;i++){     
+            if (DB_order_example[i].tableNr == tableNr && DB_order_example[i].paid === false){
+                var tmp =  DB_order_example[i].amount;
+                n = tmp;
+                elem = document.createElement("div");
+                elem.classList.add('key');
+                var w = j+1;
+                elem.id = i;
+                elem.onclick = function() {};
+                elem.innerHTML = "Total price: "+ tmp + "\r";
+                $('#billList').append(elem);
+                break;
+            }
+           
+        }
+        elem = document.createElement("div");
+        elem.classList.add('key', 'inv');
+        elem.id = tableNr;
+        elem.innerHTML = "Discount";
+        elem.onclick = function() {
+            n = n*0.8;
+            elem.innerHTML = "Total price: "+ n + "\r";
+        };
+        $('#billList').append(elem);
+
+    })
 
 }
+
 
 
 // Dummy function for ordering refill of inventory in right column

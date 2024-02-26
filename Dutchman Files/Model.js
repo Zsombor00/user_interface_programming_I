@@ -62,38 +62,31 @@ modelData['orders'].push(orderExample1, orderExample2);
 
 var DB_order_example = [
     {
-        "order_id": "T00001",
+        "order_id": 10000,
         "bartender_id": "B00000",
         "customer_id": "C00001",
-        "order":[25053],
-        "quantities":[3],
-        "amount": 1326,
+        "order":[],
+        "quantities":[],
+        "amount": 2153,
         'tableNr' : 7,
         "timestamp": "2023-11-10 19:04:13",
+        "suborder":[[["25053", 2], ["190719", 1]],[["51029", 1]],[["25053", 2]]],
+        "subpay":[1079,190,884],
         "paid":false
     },
     {
-        "order_id": "T00002",
+        "order_id": 10001,
         "bartender_id": "B00000",
         "customer_id": "C00002",
-        "order":[190719,25053],
-        "quantities":[2,1],
-        "amount": 832,
+        "order":[],
+        "quantities":[],
+        "amount": 1079,
         'tableNr' : 5,
         "timestamp": "2023-11-10 19:36:43",
+        "suborder":[[["25053", 2], ["190719", 1]]],
+        "subpay":[1079],
         "paid":false
-    },
-    {
-        "order_id": "T00004",
-        "bartender_id": "B00000",
-        "customer_id": "C00004",
-        "order":[190719],
-        "quantities":[1],
-        "amount": 195.00,
-        'tableNr' : 2,
-        "timestamp": "2023-11-10 19:36:52",
-        "paid":false
-    },
+    }
    
 ]
 
@@ -112,7 +105,14 @@ var productExample2 = {
     'stock': 9,
     'available': true
 }
-modelData['products'].push(productExample1, productExample2);
+var productExample3 = {
+    'productID' : "51029",
+    'productName' : "Dworek Vodka",
+    'price' : "190.00",
+    'stock': 9,
+    'available': true
+}
+modelData['products'].push(productExample1, productExample2,productExample3 );
 
 
 // The model in this version can then easily be transferred into the Local
