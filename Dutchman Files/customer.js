@@ -131,33 +131,6 @@ function next_customer(){
     }
 }// switch page to the next customer 
 
-window.onload=function () {
-    const data = [
-        { id: 1, name: "Burger", price: 10 , description: "description"},
-        { id: 2, name: "Pizza", price: 12, description: "description" },
-        { id: 3, name: "Salad", price: 7 , description: "description"},
-    ];//local database NEED TO CHANGE
-
-            const menuContainer = document.getElementById("menu_food");// get menu container
-            data.forEach(item => {
-                // console.log(typeof item.name)
-                // console.log(typeof item.name)
-                const menuItem = document.createElement("div");//create div for each element in menu
-                menuItem.setAttribute('draggable', true);
-                menuItem.setAttribute('ondragstart', `drag(event, '${item.name}', '${item.price}')`);
-                // menuItem.classList.add("menu-item");
-                menuItem.innerHTML = `
-                <h2>${item.name}</h2>
-                <p>${item.description}</p>
-                <p>Price: $${item.price.toFixed(2)}</p>
-                <button onclick="add_element('${item.name}','${item.price}')">Add dish</button>
-                `;// add header, description, price and ADD DISH button
-                menuContainer.appendChild(menuItem);// add this div to the menu container  
-            });
-        
-
-};//test function for food menu
-
 function displayOrder() {
 
     var div = document.getElementById("order");//get div with order
@@ -246,3 +219,86 @@ function drop_to_order(ev) {
     var data = JSON.parse(ev.dataTransfer.getData("text"));
     add_element(data.name, data.price);
 }
+
+//On web-page load
+window.onload=function () {
+    const data_drinks=getAllBeverages();
+    console.log(typeof data_b);
+    const slicedArray = data_drinks.slice(0, 20);
+    const menuBev = document.getElementById("menu_drinks");// get menu container
+    slicedArray.forEach(item => {
+        // console.log(typeof item.name)
+        // console.log(typeof item.name)
+        const menuItem = document.createElement("div");//create div for each element in menu
+        menuItem.setAttribute('draggable', true);
+        menuItem.setAttribute('ondragstart', `drag(event, '${item.namn}', '${item.prisinklmoms}')`);
+        // menuItem.classList.add("menu-item");
+        menuItem.innerHTML = `
+        <h2>${item.namn}</h2>
+        <p>${item.prisinklmoms}</p>
+        <button onclick="add_element('${item.namn}','${item.prisinklmoms}')">Add dish</button>
+        `;// add header, description, price and ADD DISH button
+        menuBev.appendChild(menuItem);// add this div to the menu container  
+    });
+
+    const data_dishes = getAllDishes();
+
+    const menuContainer = document.getElementById("menu_food");// get menu container
+    data_dishes.forEach(item => {
+        // console.log(typeof item.name)
+        // console.log(typeof item.name)
+        const menuItem = document.createElement("div");//create div for each element in menu
+        menuItem.setAttribute('draggable', true);
+        menuItem.setAttribute('ondragstart', `drag(event, '${item.name}', '${item.priceinclvat}')`);
+        // menuItem.classList.add("menu-item");
+        menuItem.innerHTML = `
+        <h2>${item.name}</h2>
+        <p>${item.priceinclvat}</p>
+        <button onclick="add_element('${item.name}','${item.priceinclvat}')">Add dish</button>
+        `;// add header, description, price and ADD DISH button
+        menuContainer.appendChild(menuItem);// add this div to the menu container  
+    });
+
+    $('#employee_view').hide();
+    $(".inventory").hide();
+    $(".VIP").hide();
+    $("#ordButton").text(dict['ord']);
+    $("#invButton").text(dict['inv']);
+    $("#VIPButton").text(dict['vip']);
+    $("#security").text(dict['security']);
+
+    $("#ord_title").text(dict['ord']);
+    $("#ord_text").text(dict['ord_text']);
+    $("#pay_title").text(dict['pay']);
+    $("#pay_text").text(dict['pay_text']);
+    $("#split_bill").text(dict['split_bill']);
+    $("#group_bill").text(dict['group_bill']);
+    $('#split_bill').hide();
+    $('#group_bill').hide();
+
+    $("#inv_title").text(dict['inv']);
+    $("#inv_text").text(dict['inv_text']);
+    $("#add_inv").text(dict['add_inv']);
+    $("#refill_title").text(dict['refill']);
+    $("#refill_text").text(dict['refill_text']);
+    $("#add_item_text").text(dict['add_item_text']);
+
+    $("#VIP_title").text(dict['vip']);
+    $("#VIP_text").text(dict['vip_text']);
+    $("#add_VIP").text(dict['add_vip']);
+    $("#credit_title").text(dict['credit']);
+    $("#credit_text").text(dict['credit_text']);
+    $("#creditButton").text(dict['credit_button']);
+    $('#creditButton').hide();
+    $('#creditsToAdd').hide();
+    $('label[for="creditsToAdd"]').hide();
+
+    $("#logout").text(dict['logout']);
+
+    createForm(modelData['productAttributes'], "input_form");
+    updateOrderView();
+    updateInventoryView();
+    updateVIPView();
+        
+
+};
