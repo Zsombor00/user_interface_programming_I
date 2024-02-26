@@ -236,7 +236,7 @@ window.onload=function () {
         menuItem.innerHTML = `
         <h2>${item.namn}</h2>
         <p>${item.prisinklmoms}</p>
-        <button onclick="add_element('${item.namn}','${item.prisinklmoms}')">Add dish</button>
+        <button onclick="add_element('${item.namn}','${item.prisinklmoms}')">Add</button>
         `;// add header, description, price and ADD DISH button
         menuBev.appendChild(menuItem);// add this div to the menu container  
     });
@@ -254,7 +254,7 @@ window.onload=function () {
         menuItem.innerHTML = `
         <h2>${item.name}</h2>
         <p>${item.priceinclvat}</p>
-        <button onclick="add_element('${item.name}','${item.priceinclvat}')">Add dish</button>
+        <button onclick="add_element('${item.name}','${item.priceinclvat}')">Add</button>
         `;// add header, description, price and ADD DISH button
         menuContainer.appendChild(menuItem);// add this div to the menu container  
     });
