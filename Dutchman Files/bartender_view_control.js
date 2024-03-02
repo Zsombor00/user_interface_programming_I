@@ -256,7 +256,6 @@ function showOrder(tableNr){
 }
 
 
-
 // Dummy function for ordering refill of inventory in right column
 function refillProduct(ID){
     console.log(ID);

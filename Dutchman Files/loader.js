@@ -134,6 +134,7 @@ function allStrongBeverages(strength) {
         };
     };
 
+
     // Don't forget to return the result.
     //
     return collector;

@@ -222,25 +222,39 @@ function drop_to_order(ev) {
 
 //On web-page load
 window.onload=function () {
-    const data = [
-        { id: 1, name: "Burger", price: 10 , description: "description"},
-        { id: 2, name: "Pizza", price: 12, description: "description" },
-        { id: 3, name: "Salad", price: 7 , description: "description"},
-    ];//local database NEED TO CHANGE
-
-    const menuContainer = document.getElementById("menu_food");// get menu container
-    data.forEach(item => {
+    const data_drinks=getAllBeverages();
+    console.log(typeof data_b);
+    const slicedArray = data_drinks.slice(0, 20);
+    const menuBev = document.getElementById("menu_drinks");// get menu container
+    slicedArray.forEach(item => {
         // console.log(typeof item.name)
         // console.log(typeof item.name)
         const menuItem = document.createElement("div");//create div for each element in menu
         menuItem.setAttribute('draggable', true);
-        menuItem.setAttribute('ondragstart', `drag(event, '${item.name}', '${item.price}')`);
+        menuItem.setAttribute('ondragstart', `drag(event, '${item.namn}', '${item.prisinklmoms}')`);
+        // menuItem.classList.add("menu-item");
+        menuItem.innerHTML = `
+        <h2>${item.namn}</h2>
+        <p>${item.prisinklmoms}</p>
+        <button onclick="add_element('${item.namn}','${item.prisinklmoms}')">Add</button>
+        `;// add header, description, price and ADD DISH button
+        menuBev.appendChild(menuItem);// add this div to the menu container  
+    });
+
+    const data_dishes = getAllDishes();
+
+    const menuContainer = document.getElementById("menu_food");// get menu container
+    data_dishes.forEach(item => {
+        // console.log(typeof item.name)
+        // console.log(typeof item.name)
+        const menuItem = document.createElement("div");//create div for each element in menu
+        menuItem.setAttribute('draggable', true);
+        menuItem.setAttribute('ondragstart', `drag(event, '${item.name}', '${item.priceinclvat}')`);
         // menuItem.classList.add("menu-item");
         menuItem.innerHTML = `
         <h2>${item.name}</h2>
-        <p>${item.description}</p>
-        <p>Price: $${item.price.toFixed(2)}</p>
-        <button onclick="add_element('${item.name}','${item.price}')">Add dish</button>
+        <p>${item.priceinclvat}</p>
+        <button onclick="add_element('${item.name}','${item.priceinclvat}')">Add</button>
         `;// add header, description, price and ADD DISH button
         menuContainer.appendChild(menuItem);// add this div to the menu container  
     });

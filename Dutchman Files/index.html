@@ -19,6 +19,7 @@
     <!-- test database with food REMOVE -->
     <!-- <script src="menu.js"></script> -->
     <script type="text/javascript" src="Beverages.js"></script>
+    <script type="text/javascript" src="Dishes.js"></script>
     <script type="text/javascript" src="DBLoaded.js"></script>
     <script type="text/javascript" src="loader.js"></script>
     <script type="text/javascript" src="db_model.js"></script>
@@ -72,7 +73,7 @@
             </ul>
         </div>
         <div class="menu_list" id="all_drinks">
-            ALL DRINKS
+            <div id="menu_drinks" ondrop="drop_to_menu(event)" ondragover="allowDrop(event)"></div>
         </div>
     </div>
 

@@ -119,4 +119,25 @@ function getAllBeverages() {
     return allBeverages;
 }
 
-console.log(getAllBeverages())
+function getDish(itemNr) {
+    // Find the item in the dishes array
+    var item = DB3.dishes.find(function(item) {
+        return item.nr == itemNr;
+    });
+    return item
+}
+
+
+function getAllDishes() {
+    // Create an empty array
+    var allDishes = [];
+    // Iterate over the database
+    for (i = 0; i < DB3.dishes.length; i++) {
+        allDishes.push(DB3.dishes[i]);
+    }
+    // Return the array
+    return allDishes;
+}
+
+
+console.log(getAllDishes() )
