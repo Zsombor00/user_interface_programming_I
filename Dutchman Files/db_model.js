@@ -1,3 +1,6 @@
+var DB = require('./DBLoaded.js');
+var DB2 = require('./Beverages.js');
+var DB3 = require('./Dishes.js');
 
 function getAllUsers() {
     // Create an empty array
@@ -6,7 +9,6 @@ function getAllUsers() {
     for (i = 0; i < DB.users.length; i++) {
         allUsers.push(DB.users[i]);
     }
-    console.log(allUsers)
     // Return the array
     return allUsers;
 }
@@ -19,24 +21,18 @@ function getAllUserNames() {
     return nameCollect;
 }
 
-function currentCredits(userId) {
+function getCredits(userId) {
     // Find the user in the database
-    var user = DB.account.find(function(user) {
-        return user.user_id === userId;
+    var account = DB.account.find(function(account) {
+        return account.user_id == userId;
     });
-    
-    // If the user is found, return their current credits
-    if (user) {;
-        return user.creditSEK;
-    } else {
-        return false; // Return false indicating the user was not found
-    }
+    return account.creditSEK
 }
 
 function increaseCredits(userId, creditsToAdd) {
     // Find the user in the database
     var user = DB.account.find(function(user) {
-        return user.user_id === userId;
+        return user.user_id == userId;
     });
 
     // If the user is found, increase their credits
@@ -54,7 +50,7 @@ function increaseCredits(userId, creditsToAdd) {
 function decreaseCredits(userId, creditsToSubtract) {
     // Find the user in the database
     var user = DB.account.find(function(user) {
-        return user.user_id === userId;
+        return user.user_id == userId;
     });
 
     // If the user is found, increase their credits
@@ -77,23 +73,32 @@ function getUser(userId) {
     return user
 }
 
-// Function to add a new field stock to items in the spirits array
-function addStockToItems(stock) {
-    DB2.spirits.forEach(function(item) {
-        item.stock = stock;
-    });
-}
-
 // Function to update stock of a specific item
 function updateStock(itemNr, newStock) {
-    // Find the item in the spirits array
-    var item = DB2.spirits.find(function(item) {
+    // Find the item in the beverages array
+    var item = DB2.beverages.find(function(item) {
         return item.nr == itemNr;
     });
 
     // If the item is found, update its stock
     if (item) {
-        item.stock = newStock;
+        item.stock = newStock.toString();
+        return true; // Return true indicating the operation was successful
+    } else {
+        return false; // Return false indicating the item was not found
+    }
+}
+
+// Function to decrease stock by one
+function decreaseStock(itemNr) {
+    // Find the item in the beverages array
+    var item = DB2.beverages.find(function(item) {
+        return item.nr == itemNr;
+    });
+
+    // If the item is found, update its stock
+    if (item) {
+        item.stock = item.stock-1
         return true; // Return true indicating the operation was successful
     } else {
         return false; // Return false indicating the item was not found
@@ -101,8 +106,8 @@ function updateStock(itemNr, newStock) {
 }
 
 function getBeverage(itemNr) {
-    // Find the item in the spirits array
-    var item = DB2.spirits.find(function(item) {
+    // Find the item in the beverages array
+    var item = DB2.beverages.find(function(item) {
         return item.nr == itemNr;
     });
     return item
@@ -112,8 +117,8 @@ function getAllBeverages() {
     // Create an empty array
     var allBeverages = [];
     // Iterate over the database
-    for (i = 0; i < DB2.spirits.length; i++) {
-        allBeverages.push(DB2.spirits[i]);
+    for (i = 0; i < DB2.beverages.length; i++) {
+        allBeverages.push(DB2.beverages[i]);
     }
     // Return the array
     return allBeverages;
@@ -127,7 +132,6 @@ function getDish(itemNr) {
     return item
 }
 
-
 function getAllDishes() {
     // Create an empty array
     var allDishes = [];
@@ -139,5 +143,54 @@ function getAllDishes() {
     return allDishes;
 }
 
+function filterBeveragesByCategory(category) {
+    // Create an empty array
+    var filtered = [];
+    // Iterate over the database
+    for (i = 0; i < DB2.beverages.length; i++) {
+        if (DB2.beverages[i].category==category)
+        filtered.push(DB2.beverages[i]);
+    }
+    // Return the array
+    return filtered;
+}
 
-console.log(getAllDishes() )
+function filterDishesBysCategory(category) {
+    // Create an empty array
+    var filtered = [];
+    // Iterate over the database
+    for (i = 0; i < DB3.dishes.length; i++) {
+        if (DB3.dishes[i].category==category)
+        filtered.push(DB3.dishes[i]);
+    }
+    // Return the array
+    return filtered;
+}
+
+function filterBeveragesByName(name) {
+    // Create an empty array
+    var filtered = [];
+    // Iterate over the database
+    for (i = 0; i < DB2.beverages.length; i++) {
+        if (DB2.beverages[i].namn.toLowerCase().includes(name.toLowerCase()))
+        filtered.push(DB2.beverages[i]);
+    }
+    // Return the array
+    return filtered;
+}
+
+function filterDishesByName(name) {
+    // Create an empty array
+    var filtered = [];
+    // Iterate over the database
+    for (i = 0; i < DB3.dishes.length; i++) {
+        if (DB3.dishes[i].name.toLowerCase().includes(name.toLowerCase()))
+        filtered.push(DB3.dishes[i]);
+    }
+    // Return the array
+    return filtered;
+}
+
+
+console.log(filterDishesByName('c'))
+
