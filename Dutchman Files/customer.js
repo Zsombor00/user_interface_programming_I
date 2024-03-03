@@ -278,10 +278,14 @@ window.onload=function () {
 
     $("#inv_title").text(dict['inv']);
     $("#inv_text").text(dict['inv_text']);
+    $("#inv_low").text(dict['inv_low']);
+    $("#inv_norm").text(dict['inv_norm']);
     $("#add_inv").text(dict['add_inv']);
     $("#refill_title").text(dict['refill']);
     $("#refill_text").text(dict['refill_text']);
     $("#add_item_text").text(dict['add_item_text']);
+    $("#send_refill").text(dict['send_refill']);
+    $('#send_refill').hide();
 
     $("#VIP_title").text(dict['vip']);
     $("#VIP_text").text(dict['vip_text']);

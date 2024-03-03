@@ -33,6 +33,8 @@ const dict = {
     'group_bill': 'Group bill',
 
     'inv_text': "",
+    'inv_low': "These items are low in stock, consider refill:",
+    'inv_norm': "These items are high in stock:",
     'refill': 'Refill',
     'unavailable': 'Mark as unavailable',
     'available': 'Mark as available',
@@ -42,6 +44,7 @@ const dict = {
     'productName': "Product name: ",
     'price': ", Product price: ",
     'stock': ", Stock: ",
+    'send_refill': "Place order",
 
     'vip_text': "",
     'add_vip': "Add new VIP",

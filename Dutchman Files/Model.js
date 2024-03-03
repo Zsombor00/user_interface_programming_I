@@ -21,44 +21,6 @@ modelData['products'] = [];
 modelData['productAttributes'] = ['productID', 'productName', 'price', 'stock']
 
 // Example of orders
-var orderExample1 = {
-    'orderID' : 10000,
-    'tableNr' : 7,
-    'status' : "new", // Order status: New, unpaid or paid(archive)
-    'suborders': [] //Container for the whole table with each persons suborder
-
-}
-var subOrder1 = [["25053", 2], ["190719", 1]]; // Suborder for each customer at the table (Beverage/food Id, quantity)
-var subOrder2 = [["51029", 1]];
-var subOrder3 = [["25053", 2]];
-orderExample1['suborders'].push(subOrder1, subOrder2, subOrder3);
-
-var orderExample2 = {
-    'orderID' : 10001,
-    'tableNr' : 5,
-    'status' : "new",
-    'suborders': [[["25053", 2], ["190719", 1]]]
-
-}
-
-modelData['orders'].push(orderExample1, orderExample2);
-modelData['orders'].push(orderExample1, orderExample2);
-modelData['orders'].push(orderExample1, orderExample2);
-modelData['orders'].push(orderExample1, orderExample2);
-modelData['orders'].push(orderExample1, orderExample2);
-modelData['orders'].push(orderExample1, orderExample2);
-modelData['orders'].push(orderExample1, orderExample2);
-modelData['orders'].push(orderExample1, orderExample2);
-modelData['orders'].push(orderExample1, orderExample2);
-modelData['orders'].push(orderExample1, orderExample2);
-modelData['orders'].push(orderExample1, orderExample2);
-modelData['orders'].push(orderExample1, orderExample2);
-modelData['orders'].push(orderExample1, orderExample2);
-modelData['orders'].push(orderExample1, orderExample2);
-modelData['orders'].push(orderExample1, orderExample2);
-modelData['orders'].push(orderExample1, orderExample2);
-modelData['orders'].push(orderExample1, orderExample2);
-modelData['orders'].push(orderExample1, orderExample2);
 
 var DB_order_example = [
     {
@@ -89,6 +51,8 @@ var DB_order_example = [
     }
    
 ]
+
+modelData['orders'] = DB_order_example;
 
 // Example of products (This will use the same as menu)
 var productExample1 = {

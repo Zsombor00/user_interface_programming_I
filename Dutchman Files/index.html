@@ -24,9 +24,10 @@
     <script type="text/javascript" src="loader.js"></script>
     <script type="text/javascript" src="db_model.js"></script>
     <script type="text/javascript" src="model.js"></script>
+    <script type="text/javascript" src="customer.js"></script>
     <script type="text/javascript" src="bartender_view_control.js"></script>
     <script type="text/javascript" src="dictionary_eng.js"></script>
-    <script type="text/javascript" src="customer.js"></script>
+    
     <!-- Favicon -->
     <link rel="shortcut icon" href="img/favicon-32x32.png">
 
@@ -168,8 +169,16 @@
             <div class="menu_list">
                 <h2 id="inv_title"></h2>
                 <p id="inv_text"></p>
-                <button id="add_inv" onclick="toggleWindow('add_popup')"></button>
-                <div id = "inventoryList", class="list">
+                <button id="add_inv" onclick="toggleWindow('add_popup')"></button>  
+                <div id = "inventoryList", class="list", ondrop="drop_to_inventory(event)" ondragover="allowDrop(event)">
+                    <p id="inv_low"></p>
+                    <div id = "lowStock">
+                        <!--- Control writes inventory objects here whenever they are low on stock-->
+                    </div>
+                    <p id="inv_norm"></p>
+                    <div id = "normalStock">
+                        <!--- Control writes inventory objects here whenever they are low on stock-->
+                    </div> 
                     <!--- Control writes inventory objects here -->
                 </div>   
             </div>        
@@ -178,6 +187,11 @@
         <div class="right inventory", id="inventoryRefill">
             <h2 id="refill_title"></h2>
             <p id="refill_text"></p>
+            <div id = "refillList", class="list" ondrop="drop_to_refill(event)" ondragover="allowDrop(event)">
+
+            </div>
+            <button id="send_refill" onclick="sendRefill()"></button>
+
         </div>
         <!--- VIP menu -->
         <!--- Main column showing list of VIP users -->
