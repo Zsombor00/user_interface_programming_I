@@ -81,6 +81,7 @@ function createElement(productID, quantity){
 }
 
 // Function for showing order in right column
+
 function showOrder(tableNr){
     //$('#orderPayment').html("");
     $('#payList').html(""); 
@@ -139,13 +140,13 @@ function showOrder(tableNr){
             if (DB_order_example[i].tableNr == tableNr && DB_order_example[i].paid === false){
                 var tmp =  DB_order_example[i].amount;
                 n = tmp;
-                elem = document.createElement("div");
-                elem.classList.add('key');
+                elem1 = document.createElement("div");
+                elem1.classList.add('key');
                 var w = j+1;
-                elem.id = i;
-                elem.onclick = function() {};
-                elem.innerHTML = "Total price: "+ tmp + "\r";
-                $('#billList').append(elem);
+                elem1.id = i;
+                elem1.onclick = function() {};
+                elem1.innerHTML = "Total price: "+ tmp + "\r";
+                $('#billList').append(elem1);
                 break;
             }
            
@@ -154,15 +155,41 @@ function showOrder(tableNr){
         elem.classList.add('key', 'inv');
         elem.id = tableNr;
         elem.innerHTML = "Discount";
+        
+        dis = n;
         elem.onclick = function() {
-            n = n*0.8;
-            elem.innerHTML = "Total price: "+ n + "\r";
+            toggleWindow("discount_popup");
+            $('#discount_form').html("");
+            $('#discount_form').show();
+            var btn = document.getElementById('submit');
+            var k =0;
+            btn.addEventListener('click',function() {
+                k = document.getElementById("dis_num").value;
+                var discount_n = 1-(k*0.01);                         
+                em = document.createElement("div");
+                em.classList.add('key', 'inv');
+                em.id = 'discount';
+                var num = n*discount_n;
+                elem.innerHTML = "Now Total price: "+ num.toFixed(1) + "\r";
+                $('#put_discount').append(elem);
+              });
+
+            var bte = document.getElementById('reset');
+            bte.addEventListener('click',function(){
+                document.getElementById("dis_num").value='';
+                $('#put_discount').html("");
+            })
         };
         $('#billList').append(elem);
 
-    })
+    });
+
 
 }
+function discount_rest() {
+    
+}
+
 
 // INVENTORY FUNCTIONS //
 
