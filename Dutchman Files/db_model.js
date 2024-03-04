@@ -155,7 +155,7 @@ function filterBeveragesByCategory(category) {
     return filtered;
 }
 
-function filterDishesBysCategory(category) {
+function filterDishesByCategory(category) {
     // Create an empty array
     var filtered = [];
     // Iterate over the database
@@ -191,6 +191,23 @@ function filterDishesByName(name) {
     return filtered;
 }
 
+function filterDishesByName(name) {
+    // Create an empty array
+    var filtered = [];
+    // Iterate over the database
+    for (i = 0; i < DB3.dishes.length; i++) {
+        if (DB3.dishes[i].name.toLowerCase().includes(name.toLowerCase()))
+        filtered.push(DB3.dishes[i]);
+    }
+    // Return the array
+    return filtered;
+}
 
-console.log(filterDishesByName('c'))
-
+function checkPassword(username, password){
+    var user = DB.users.find(function(user) {
+        return user.username == username;
+    });
+    if (user.password==password)
+        return true
+    else return false
+}
