@@ -122,7 +122,8 @@ function showOrder(tableNr){
                 var t ='';
                 var w = j+1;
                 elem.id = j;
-                elem.onclick = function() {};
+                let n = tmp[j];
+                elem.onclick = function() {pay_order(n)};
                 elem.innerHTML = "number "+w+"  price: "+ tmp[j] + "\r";
                 $('#billList').append(elem);
             }
@@ -144,43 +145,13 @@ function showOrder(tableNr){
                 elem1.classList.add('key');
                 var w = j+1;
                 elem1.id = i;
-                elem1.onclick = function() {};
+                elem1.onclick = function() {pay_order(n)};
                 elem1.innerHTML = "Total price: "+ tmp + "\r";
                 $('#billList').append(elem1);
                 break;
             }
            
         }
-        elem = document.createElement("div");
-        elem.classList.add('key', 'inv');
-        elem.id = tableNr;
-        elem.innerHTML = "Discount";
-        
-        dis = n;
-        elem.onclick = function() {
-            toggleWindow("discount_popup");
-            $('#discount_form').html("");
-            $('#discount_form').show();
-            var btn = document.getElementById('submit');
-            var k =0;
-            btn.addEventListener('click',function() {
-                k = document.getElementById("dis_num").value;
-                var discount_n = 1-(k*0.01);                         
-                em = document.createElement("div");
-                em.classList.add('key', 'inv');
-                em.id = 'discount';
-                var num = n*discount_n;
-                elem.innerHTML = "Now Total price: "+ num.toFixed(1) + "\r";
-                $('#put_discount').append(elem);
-              });
-
-            var bte = document.getElementById('reset');
-            bte.addEventListener('click',function(){
-                document.getElementById("dis_num").value='';
-                $('#put_discount').html("");
-            })
-        };
-        $('#billList').append(elem);
 
     });
 
@@ -188,6 +159,25 @@ function showOrder(tableNr){
 }
 function discount_rest() {
     
+}
+// Function which opens the pay dialogue
+function pay_order(n){
+    toggleWindow("discount_popup");
+    $('#discount_form').html("Total price: "+ n.toFixed(1) + "\r");
+    var btn = document.getElementById('submit');
+    var k =0;
+    btn.addEventListener('click',function() {
+        k = document.getElementById("dis_num").value;
+        var discount_n = 1-(k*0.01);                         
+        var num = n*discount_n;
+        $('#discount_form').html("Total price: "+ num.toFixed(1) + "\r");
+      });
+
+    var bte = document.getElementById('reset');
+    bte.addEventListener('click',function(){
+        document.getElementById("dis_num").value='';
+        $('#discount_form').html("Total price: "+ n.toFixed(1) + "\r");
+    })
 }
 
 

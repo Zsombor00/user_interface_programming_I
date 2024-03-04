@@ -246,6 +246,23 @@
         <div class="key", id="add_item", onclick="addItem()">Add</div>
         <div class="key", id="cancel", onclick="exitWindow(this.id)">Cancel</div>   
     </div>
+    <!--- Discount -->
+    <div class="popup", id="discount_popup">
+        <div class="key exit", id="exit_dis", onclick="exitWindow(this.id)">X</div>
+        <label for="discount">DISCOUNT(between 1% and 100% off):  </label>
+        <input type="number" id="dis_num" name="dis" min="1" max="100" required ><br><br>
+        <label for="name">comment (0 to 30 characters):</label>
+        <input type="text" id="name" name="name" required minlength="0" maxlength="30" size="32" />
+        <p></p>
+        <div class="key", id="submit", onclick="">Apply discount</div>
+        <div class="key", id="reset", onclick="">Reset discount</div>
+        <p id="put_discount"></p>
+        <div class="key inv" id="discount_form" >
+
+        </div>
+        <button id="pay", onclick="exitWindow(this.id)">Pay</button>
+  
+    </div>
 </div>
 <!-- Your code ends here -->
 
