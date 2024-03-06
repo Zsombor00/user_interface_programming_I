@@ -1,0 +1,289 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <!-- Metadata-->
+    <title id="page_title">The Flying Dutchman</title>
+    <meta name="Description goes here" content="">
+    <meta name="Pirates of the Caribbean" content="tags go here">
+
+    <!-- Responsivenes-->
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <!-- Favicon -->
+    <link rel="shortcut icon" href="img/favicon-32x32.png">
+
+    <!-- External CSS sheets -->
+    <link rel="stylesheet" href="./style.css">
+
+    <!-- test database with food REMOVE -->
+    <!-- <script src="menu.js"></script> -->
+    <script src="../jquery-3.3.1.min.js"></script>
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
+    <script type="text/javascript" src="../Model/Beverages.js"></script>
+    <script type="text/javascript" src="../Model/Dishes.js"></script>
+    <script type="text/javascript" src="../Model/DBLoaded.js"></script>
+    <script type="text/javascript" src="../Model/db_model.js"></script>
+    <script type="text/javascript" src="../Model/Model.js"></script>
+    <script type="text/javascript" src="../Model/Dictionary_eng.js"></script>
+    <script type="text/javascript" src="../Control/customer.js"></script>
+    <script type="text/javascript" src="../Control/bartender.js"></script>
+
+
+    <!-- Favicon -->
+    <link rel="shortcut icon" href="img/favicon-32x32.png">
+
+    <!-- CSS Icons -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
+
+    <!-- Google Fonts -->
+    <link href="https://fonts.googleapis.com/css?family=Berkshire+Swash|Oswald" rel="stylesheet">
+
+</head>
+<header>
+    <!-- LOG OUT BUTTON -->
+    <div class="small_button login" id="customer_login" onclick="toggleLogin(this.id)">Customer</div>
+    <div class="small_button login" id="employee_login" onclick="toggleLogin(this.id)">Employee</div>
+    <a onClick="logOut()"><div class="small_button logout" id="logout">Log Out</div></a>
+
+    <!-- UNDO-REDO MENU -->
+    <div class="undo_redo_menu">
+        <a href="#" id="undo" onclick="undo()"><i class="fa fa-arrow-left fa-2x"></i></a>
+        <a href="#" id="redo" onclick="redo()"><i class="fa fa-arrow-right fa-2x"></i></a>
+    </div>
+
+</header>
+<body>
+<!-- Your code starts here -->
+
+<div id="customer_view">
+    <!--  Left menu Food or Drinks -->
+    <div class="left" id="left_manu">
+        <div class="food_drinks">
+            <button onclick="SwapDivsWithClick('all_drink_menu','all_food_menu')">Drinks</button>
+            <button onclick="SwapDivsWithClick('all_food_menu','all_drink_menu')">Food</button>
+        </div>
+        
+    </div>
+
+    <!--  Main menu with all drinks -->
+    <div class="menu" id="all_drink_menu" style="display: block">
+        <div >
+            <ul class="menu_tabs">
+                <a><li id="all">All</li></a>
+                <a><li id="beers">Beers</li></a>
+                <a><li id="wines">Wines</li></a>
+                <a><li id="spirits">Spirits</li></a>
+                <a><li id="specials">Specials</li></a>
+            </ul>
+        </div>
+        <div class="menu_list" id="all_drinks">
+            <div id="menu_drinks" ondrop="drop_to_menu(event)" ondragover="allowDrop(event)"></div>
+        </div>
+    </div>
+
+    <!--  Main menu with food -->
+    <div class="menu" id="all_food_menu" style="display: None">
+        <div >
+            <ul class="menu_tabs">
+                <a><li id="type0">Type1</li></a>
+                <a><li id="type 1">Type2</li></a>
+                <a><li id="type2">Type3</li></a>
+            </ul>
+        </div>
+        <div class="menu_list" id="all_food">
+            <div id="menu_food" ondrop="drop_to_menu(event)" ondragover="allowDrop(event)"></div>
+        </div>
+    </div>
+
+    <!--  Right menu with the order -->
+    <div class="right" >
+        <div class="credits" id="DisplayCredits">gb</div>
+        <div> Your order </div>
+        <div id="order" ondrop="drop_to_order(event)" ondragover="allowDrop(event)">Your order here</div>    
+
+        <!--  Different buttons to change, add customers and their orders -->
+        <div class="order_options">
+            <button id= "saveOrder" onclick="save_order()">Save</button>
+            <button onclick="add_customer()">Add new customer</button>
+            <button onclick="previous_customer()">Previous customer</button>
+            <button onclick="next_customer()">Next customer</button>
+            <button id="openPopupButton" onclick="showOrders()">Show order</button>
+            <button id="payButton" onclick="paymentPopup()">Pay</button>
+            <div id="paymentPopup">
+                <p id="paymentMessage"></p>
+                <button id="payAtBarButton" onclick="messagePaymentBar()">Pay at Bar</button>
+                <button id="payByCreditsButton" onclick="messagePaymentCredits()">Pay by Credits</button>
+                <button id="NewOrder" onclick="newOrder()"> Make new order</button>
+                <button id="ClosePayment" onclick="hidePaymentPopup()"> Close payment window</button>
+            </div>
+        </div>
+        
+        <!--  Pop up window with all customers and their orders -->
+        <a href="#" id="main">
+            <div id="window_order"></div>
+        </a>
+    </div>
+</div>
+<div id="employee_view">
+    <!--- Left column containing control buttons -->
+    <div class="left">
+        <button id="ordButton" onclick="toggleView(this.id)"></button>
+        <button id="invButton" onclick="toggleView(this.id)"></button>
+        <button id="VIPButton" onclick="toggleView(this.id)"></button>
+        <div class ='security'>
+            <button id="security" onclick="openSecurity()"></button>
+        </div>
+        
+    </div>
+    <!--- Order menu -->
+    <!--- Main column showing list of orders -->
+    <div class="menu order", id="orders">
+        <div >
+            <ul class="menu_tabs">
+                <a><li id="type0">New</li></a>
+                <a><li id="type 1">Unpaid</li></a>
+                <a><li id="type2">Paid</li></a>
+            </ul>
+        </div>
+        <div class="menu_list">
+            <h2 id="ord_title"></h2>
+            <p id="ord_text"></p>
+            <div id = "orderList", class="list">
+                <!--- Control writes order objects here -->
+            </div>
+        </div>      
+    </div>
+    <!--- Right column handling payment of orders -->
+    <div class="right order", id="orderPayment">
+        <h2 id="pay_title"></h2>
+        <p id="pay_text"></p>
+        <div id = "payList", class="list">
+
+        </div>
+        <button id="split_bill" ></button>
+        <button id="group_bill" ></button>
+        <div id="billList" > </div>
+    </div>
+
+    <!--- Inventory menu -->
+    <!--- Main column showing list of inventory -->
+    <div class="menu inventory", id="inventory">
+        <div >
+            <ul class="menu_tabs">
+                <a><li id="all">All</li></a>
+                <a><li id="beers">Beers</li></a>
+                <a><li id="wines">Wines</li></a>
+                <a><li id="spirits">Spirits</li></a>
+                <a><li id="specials">Specials</li></a>
+            </ul>
+        </div>
+        <div class="menu_list">
+            <h2 id="inv_title"></h2>
+            <p id="inv_text"></p>
+            <button id="add_inv" onclick="toggleWindow('add_popup')"></button>  
+            <div id = "inventoryList", class="list", ondrop="drop_to_inventory(event)" ondragover="allowDrop(event)">
+                <p id="inv_low"></p>
+                <div id = "lowStock">
+                    <!--- Control writes inventory objects here whenever they are low on stock-->
+                </div>
+                <p id="inv_norm"></p>
+                <div id = "normalStock">
+                    <!--- Control writes inventory objects here whenever they are low on stock-->
+                </div> 
+                <!--- Control writes inventory objects here -->
+            </div>   
+        </div>        
+    </div>
+    <!--- Right column handling refill of inventory -->
+    <div class="right inventory", id="inventoryRefill">
+        <h2 id="refill_title"></h2>
+        <p id="refill_text"></p>
+        <div id = "refillList", class="list" ondrop="drop_to_refill(event)" ondragover="allowDrop(event)">
+
+        </div>
+        <button id="send_refill" onclick="sendRefill()"></button>
+
+    </div>
+    <!--- VIP menu -->
+    <!--- Main column showing list of VIP users -->
+    <div class="menu VIP", id="users">
+        <ul class="menu_tabs">
+            <a><li id="type0">Type1</li></a>
+        </ul>
+        <div class="menu_list">
+            <h2 id="VIP_title"></h2>
+            <p id="VIP_text"></p>
+            <button id="add_VIP" onclick=""></button>
+            <div id = "userList", class="list">
+                <!--- Control writes VIP profiles here -->
+            </div> 
+        </div>     
+    </div>
+    <!--- Right column handling refill of VIP credits -->
+    <div class="right VIP", id="VIPcredits">
+        <h2 id="credit_title"></h2>
+        <div id="credit_text"></div>
+        <br>
+        <label for="creditsToAdd">Credits to add:</label>
+        <input type="number" id="creditsToAdd" name="creditsToAdd" ><br><br>
+        
+        <div class="key", id="creditButton", data-customerID = "", onclick="addCredits()"></div>
+    </div>
+
+
+<!--- Pop-up windows -->
+<!--- Security confirmation -->
+<div class="popup warning", id="security_popup">
+    <div class="key exit", id="exit_security", onclick="exitWindow(this.id)">X</div>
+    <p id="security_text"></p>
+    <div class="key", id="security_yes", onclick="callSecurity()">Yes </div>
+    <div class="key", id="security_no", onclick="exitWindow(this.id)">No</div>
+</div>
+<!--- Remove item confirmation -->
+<div class="popup", id="remove_popup", data-itemID = "">
+    <div class="key exit", id="exit_remove", onclick="exitWindow(this.id)">X</div>
+    <p id="remove_item_text"></p>
+    <div class="key", id="remove_yes", onclick="removePermanently()">Yes </div>
+    <div class="key", id="remove_no", onclick="exitWindow(this.id)">No</div>
+    
+</div>
+<!--- Add item dialogue -->
+<div class="popup", id="add_popup">
+    <div class="key exit", id="exit_add", onclick="exitWindow(this.id)">X</div>
+    <p id="add_item_text"></p>
+    <div id="input_form">
+
+    </div>
+    <div class="key", id="add_item", onclick="addItem()">Add</div>
+    <div class="key", id="cancel", onclick="exitWindow(this.id)">Cancel</div>   
+</div>
+<!--- Discount -->
+<div class="popup", id="discount_popup">
+    <div class="key exit", id="exit_dis", onclick="exitWindow(this.id)">X</div>
+    <label for="discount">DISCOUNT(between 1% and 100% off):  </label>
+    <input type="number" id="dis_num" name="dis" min="1" max="100" required ><br><br>
+    <label for="name">comment (0 to 30 characters):</label>
+    <input type="text" id="name" name="name" required minlength="0" maxlength="30" size="32" />
+    <p></p>
+    <div class="key", id="submit", onclick="">Apply discount</div>
+    <div class="key", id="reset", onclick="">Reset discount</div>
+    <p id="put_discount"></p>
+    <div class="key inv" id="discount_form" >
+
+    </div>
+    <button id="pay", onclick="exitWindow(this.id)">Pay</button>
+
+</div>
+</div>
+<!-- Your code ends here -->
+
+<!-- External Scripts -->
+
+<!-- JQuery -->
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
+
+<!-- Load Database -->
+<!--<script src="db/Beverages.js" type="text/javascript"></script>-->
+</body>
+</html>
