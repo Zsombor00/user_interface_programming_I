@@ -48,6 +48,7 @@ $("document").ready(function() {
         menuContainer.append(menuItem);
     });
     // Hide elements
+    $('#login_view').hide();
     $('#employee_view').hide();
     $(".inventory").hide();
     $(".VIP").hide();

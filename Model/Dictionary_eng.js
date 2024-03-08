@@ -22,7 +22,7 @@ const dict = {
     'inv': "Inventory",
     'vip': "VIP customers",
     'security' : 'Security',
-    'logout': "Log out",
+    'logout': "Log In",
 
     'ord_text': "",
     'ordID' : 'Order ID: ',

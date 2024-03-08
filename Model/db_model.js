@@ -207,7 +207,12 @@ function checkPassword(username, password){
     var user = DB.users.find(function(user) {
         return user.username == username;
     });
-    if (user.password==password)
-        return true
-    else return false
-}
+    if (user){
+        if (user.password==password)
+            return user
+        else return null
+    }
+    else
+        return null
+        
+    }

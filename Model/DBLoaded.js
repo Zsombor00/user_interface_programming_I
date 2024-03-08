@@ -3,8 +3,18 @@ var DB = {
         {
             "user_id": "2",
             "credentials": "0",
-            "password": "b690bc2447d40ea8a6f78345eb979a28",
-            "username": "jorass",
+            "password": "b",
+            "username": "a",
+            "first_name": "Jory",
+            "last_name": "Assies",
+            "email": "jory.assies@it.uu.se",
+            "phone": "0704811411"
+        },
+        {
+            "user_id": "2",
+            "credentials": "1",
+            "password": "c",
+            "username": "d",
             "first_name": "Jory",
             "last_name": "Assies",
             "email": "jory.assies@it.uu.se",

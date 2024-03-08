@@ -21,7 +21,7 @@ body {
 
 /* Add logo container */
 .logo {
-    background-image: url('login_logo.png'); /* Set the path to your image */
+    background-image: url('img/login_logo.png'); /* Set the path to your image */
     background-size: contain;
     background-repeat: no-repeat;
     width: 100px; /* Set the width of your logo */

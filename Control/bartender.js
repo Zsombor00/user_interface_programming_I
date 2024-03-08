@@ -1,38 +1,3 @@
-// Function to toggle between customer/employed
-function toggleLogin(buttonID) {
-    var employee = document.getElementById("employee_view");
-    var customer = document.getElementById("vip_customer_view");
-
-    if (buttonID === "employee_login") {
-        employee.style.display = "block";
-        customer.style.display = "none";
-        // Change undo/redo between different views
-        $("#undo").attr("onclick","undo_refill()");
-        $("#redo").attr("onclick","redo_refill()");
-    }
-    else if (buttonID === "customer_login") {
-        employee.style.display = "none";
-        customer.style.display = "block";
-        customer_type="ordinary"
-        newOrder()
-        $('#DisplayCredits').hide()
-        $("#undo").attr("onclick","undo()");
-        $("#redo").attr("onclick","redo()");
-    }
-    else if (buttonID === "vip_customer_login") {
-        employee.style.display = "none";
-        customer.style.display = "block";
-        customer_type="vip"
-        newOrder()
-        $('#DisplayCredits').text("You have "+ user_credits +" credits");
-        $('#DisplayCredits').show()
-        $("#undo").attr("onclick","undo()");
-        $("#redo").attr("onclick","redo()");
-    }
-
-
-}
-
 // Function to toggle between order, inventory and VIP view
 function toggleView(buttonID) {
 
