@@ -1,7 +1,7 @@
 // Function to toggle between customer/employed
 function toggleLogin(buttonID) {
     var employee = document.getElementById("employee_view");
-    var customer = document.getElementById("customer_view");
+    var customer = document.getElementById("vip_customer_view");
 
     if (buttonID === "employee_login") {
         employee.style.display = "block";
@@ -13,9 +13,23 @@ function toggleLogin(buttonID) {
     else if (buttonID === "customer_login") {
         employee.style.display = "none";
         customer.style.display = "block";
+        customer_type="ordinary"
+        newOrder()
+        $('#DisplayCredits').hide()
         $("#undo").attr("onclick","undo()");
         $("#redo").attr("onclick","redo()");
     }
+    else if (buttonID === "vip_customer_login") {
+        employee.style.display = "none";
+        customer.style.display = "block";
+        customer_type="vip"
+        newOrder()
+        $('#DisplayCredits').text("You have "+ user_credits +" credits");
+        $('#DisplayCredits').show()
+        $("#undo").attr("onclick","undo()");
+        $("#redo").attr("onclick","redo()");
+    }
+
 
 }
 
@@ -70,9 +84,9 @@ function createElement(productID, quantity){
     var name;
     elem.onclick = function() {};
     for( i=0;i<modelData['products'].length;i++){
-       if( modelData['products'][i]['productID']==productID){
-           name = modelData['products'][i]['productName'];
-       }
+        if( modelData['products'][i]['productID']==productID){
+            name = modelData['products'][i]['productName'];
+        }
     }
     elem.id = name;
     elem.innerHTML = name+ " : " + quantity;
@@ -96,22 +110,22 @@ function showOrder(tableNr){
                 //console.log(tmp[j]);
                 var list_tmp = tmp[j];
                 for(k in list_tmp){ 
-                 var iid = list_tmp[k][0];
-                 var q = list_tmp[k][1];
+                var iid = list_tmp[k][0];
+                var q = list_tmp[k][1];
                  //console.log(iid,q);
-                 let product = createElement(iid,q);
-                  $('#payList').append(product);  
+                let product = createElement(iid,q);
+                    $('#payList').append(product);  
                 } 
             }
-           break;
+            break;
         }
     } 
     //$('#orderPayment').text(num);
     $('#payList').append("Total price: " + num);
     $('#split_bill').show();
     $('#split_bill').click(function(){
-      $('#billList').html("");
-      for(i = 0;i<DB_order_example.length;i++){
+    $('#billList').html("");
+    for(i = 0;i<DB_order_example.length;i++){
         //console.log(DB_order_example[1].tableNr);
         if (DB_order_example[i].tableNr == tableNr && DB_order_example[i].paid === false){
             console.log("in");
@@ -131,7 +145,7 @@ function showOrder(tableNr){
             break;
         }
         
-      }});
+    }});
 
     $('#group_bill').show();
     $('#group_bill').click(function(){
@@ -150,7 +164,6 @@ function showOrder(tableNr){
                 $('#billList').append(elem1);
                 break;
             }
-           
         }
 
     });
@@ -171,7 +184,7 @@ function pay_order(n){
         var discount_n = 1-(k*0.01);                         
         var num = n*discount_n;
         $('#discount_form').html("Total price: "+ num.toFixed(1) + "\r");
-      });
+    });
 
     var bte = document.getElementById('reset');
     bte.addEventListener('click',function(){
@@ -395,8 +408,7 @@ function updateInventoryView(){
         }
         else{
             $('#normalStock').append(product);
-        }
-         
+        }  
         // Toggle view  of element according to availability of product
         let productID = inventoryList[i]["artikelid"];
         if(inventoryList[i]['available'])

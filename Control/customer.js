@@ -7,16 +7,15 @@ all_orders=[[OrderDict, total_price],[OrderDict, total_price]] where [OrderDict,
 */
 let OrderDict = {};// dictionary of all element in order of one person
 let all_orders =[];// array of all customer orders
-current_customer=0;// save the index of current customer
-total_price=0;
+let current_customer=0;// save the index of current customer
+let total_price=0;
 
-
+var customer_type="vip"
 let undo_redo = [];
 let historyIndex = -1;
 let user_credits = getCredits(28)
 
 $("document").ready(function() {
-
     const data_drinks = getAllBeverages();
     const slicedArray = data_drinks.slice(0, 20);
 
@@ -48,7 +47,6 @@ $("document").ready(function() {
         `);
         menuContainer.append(menuItem);
     });
-    $('#DisplayCredits').text("You have "+ user_credits +" credits");
     // Hide elements
     $('#employee_view').hide();
     $(".inventory").hide();
@@ -187,15 +185,15 @@ function add_customer(){
 
 function save_order(){
     if(current_customer===all_orders.length && OrderDict != {}){
-        $('#saveOrder').text('Order saved');
         all_orders.push([OrderDict, total_price])
         displayOrder()
         // console.log(all_orders)
-        }
-        else if(current_customer<all_orders.length && OrderDict != {}){
-            all_orders[current_customer]=[OrderDict, total_price];
+    }
+    else if(current_customer<all_orders.length && OrderDict != {}){
+        all_orders[current_customer]=[OrderDict, total_price];
             // console.log(all_orders)
-        }
+    }
+    $('#saveOrder').text('Order saved');
 }// save order of the current customer (if order is not empty)
 
 function previous_customer(){
@@ -220,11 +218,15 @@ function next_customer(){
 function paymentPopup() {
     $('#paymentPopup').fadeIn();
     if (total_price>0){
-    $('#ClosePayment').show();
-    $('#NewOrder').show();
-    $('#payByCreditsButton').show();
-    $('#payAtBarButton').show();
-    $('#paymentMessage').html("The total price is: "+total_price+"<br>"+"Choose payment method");
+        $('#ClosePayment').show();
+        $('#NewOrder').show();
+        if (customer_type==="vip") {
+            $('#payByCreditsButton').show();
+        } else {
+            $('#payByCreditsButton').hide();
+        }
+        $('#payAtBarButton').show();
+        $('#paymentMessage').html("The total price is: "+total_price+"<br>"+"Choose payment method");
     }
     else{
         $('#paymentMessage').html("You didn't choose any item from menu");
@@ -268,6 +270,7 @@ function messagePaymentCredits() {
         $('#payAtBarButton').show();
     }   
 }
+
 function newOrder(){
     OrderDict = {};
     all_orders =[];
