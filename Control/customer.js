@@ -22,14 +22,33 @@ $("document").ready(function() {
     // Handle menu drinks
     const menuBev = $("#menu_drinks");
     slicedArray.forEach(item => {
-        const menuItem = $("<div>");
+        const menuItem = $("<div class='menu-item'>");
+        const accordionButton = $("<button class='accordion'>").text(`${item.namn} - SEK ${item.prisinklmoms}`);
+        const addButton = $(`<button onclick="add_element('${item.namn}','${item.prisinklmoms}')" class='add-button'>Add</button>`);
+        const buttonContainer = $("<div class='button-container'>");
+        buttonContainer.append(accordionButton);
+        buttonContainer.append(addButton);
+        const panel = $("<div class='panel'>").html(`
+      <p>
+        Category: ${item.category}<br>
+        Packaging: ${item.forpackning}<br>
+        Captype: ${item.forslutning}<br>
+        Country of Origin: ${item.ursprunglandnamn}<br>
+        Alcohol Strength: ${item.alkoholhalt}
+      </p>
+    `);
+
+        buttonContainer.on("click", function() {
+            $(this).toggleClass("active");
+            panel.slideToggle();
+        });
+
+        menuItem.append(buttonContainer);
+        menuItem.append(panel);
+
         menuItem.attr('draggable', true);
         menuItem.attr('ondragstart', `drag(event, '${item.namn}', '${item.prisinklmoms}')`);
-        menuItem.html(`
-            <h2>${item.namn}</h2>
-            <p>${item.prisinklmoms}</p>
-            <button onclick="add_element('${item.namn}','${item.prisinklmoms}')">Add</button>
-        `);
+
         menuBev.append(menuItem);
     });
 
