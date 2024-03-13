@@ -84,14 +84,25 @@
     <div class="menu" id="all_drink_menu" style="display: block">
         <div >
             <ul class="menu_tabs">
-                <a><li id="all">All</li></a>
-                <a><li id="beers">Beers</li></a>
-                <a><li id="wines">Wines</li></a>
-                <a><li id="spirits">Spirits</li></a>
-                <a><li id="specials">Specials</li></a>
+                <a><li class="menu_tab active" data-category="all">All</li></a>
+                <a><li class="menu_tab" data-category="beer">Beers</li></a>
+                <a><li class="menu_tab" data-category="wine">Wines</li></a>
+                <a><li class="menu_tab" data-category="spirit">Spirits</li></a>
+                <a><li class="menu_tab" data-category="special">Specials</li></a>
             </ul>
         </div>
         <div class="menu_list" id="all_drinks">
+            <div>
+                Alcohol Content: <select id="filter_select">
+                    <option value="all">All</option>
+                    <option value="< 5%">Less than 5%</option>
+                    <option value="5 - 10%">5% - 10%</option>
+                    <option value="10 - <20%">10% - Less than 20%</option>
+                    <option value="20 - <30%">20% - Less than 30%</option>
+                    <option value="30% - 40%">30% - 40%</option>
+                    <option value="> 40%">Greater than 40%</option>
+                </select>
+            </div>
             <div id="menu_drinks" ondrop="drop_to_menu(event)" ondragover="allowDrop(event)"></div>
         </div>
     </div>
