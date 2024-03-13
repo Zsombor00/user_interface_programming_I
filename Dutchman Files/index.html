@@ -19,13 +19,15 @@
     <!-- test database with food REMOVE -->
     <!-- <script src="menu.js"></script> -->
     <script type="text/javascript" src="Beverages.js"></script>
+    <script type="text/javascript" src="Dishes.js"></script>
     <script type="text/javascript" src="DBLoaded.js"></script>
     <script type="text/javascript" src="loader.js"></script>
     <script type="text/javascript" src="db_model.js"></script>
     <script type="text/javascript" src="model.js"></script>
+    <script type="text/javascript" src="customer.js"></script>
     <script type="text/javascript" src="bartender_view_control.js"></script>
     <script type="text/javascript" src="dictionary_eng.js"></script>
-    <script type="text/javascript" src="customer.js"></script>
+    
     <!-- Favicon -->
     <link rel="shortcut icon" href="img/favicon-32x32.png">
 
@@ -72,7 +74,7 @@
             </ul>
         </div>
         <div class="menu_list" id="all_drinks">
-            ALL DRINKS
+            <div id="menu_drinks" ondrop="drop_to_menu(event)" ondragover="allowDrop(event)"></div>
         </div>
     </div>
 
@@ -147,8 +149,9 @@
             <div id = "payList", class="list">
 
             </div>
-            <button id="split_bill" onclick=""></button>
-            <button id="group_bill" onclick=""></button>
+            <button id="split_bill" ></button>
+            <button id="group_bill" ></button>
+            <div id="billList" > </div>
         </div>
 
         <!--- Inventory menu -->
@@ -166,8 +169,16 @@
             <div class="menu_list">
                 <h2 id="inv_title"></h2>
                 <p id="inv_text"></p>
-                <button id="add_inv" onclick="toggleWindow('add_popup')"></button>
-                <div id = "inventoryList", class="list">
+                <button id="add_inv" onclick="toggleWindow('add_popup')"></button>  
+                <div id = "inventoryList", class="list", ondrop="drop_to_inventory(event)" ondragover="allowDrop(event)">
+                    <p id="inv_low"></p>
+                    <div id = "lowStock">
+                        <!--- Control writes inventory objects here whenever they are low on stock-->
+                    </div>
+                    <p id="inv_norm"></p>
+                    <div id = "normalStock">
+                        <!--- Control writes inventory objects here whenever they are low on stock-->
+                    </div> 
                     <!--- Control writes inventory objects here -->
                 </div>   
             </div>        
@@ -176,6 +187,11 @@
         <div class="right inventory", id="inventoryRefill">
             <h2 id="refill_title"></h2>
             <p id="refill_text"></p>
+            <div id = "refillList", class="list" ondrop="drop_to_refill(event)" ondragover="allowDrop(event)">
+
+            </div>
+            <button id="send_refill" onclick="sendRefill()"></button>
+
         </div>
         <!--- VIP menu -->
         <!--- Main column showing list of VIP users -->
@@ -229,6 +245,37 @@
         </div>
         <div class="key", id="add_item", onclick="addItem()">Add</div>
         <div class="key", id="cancel", onclick="exitWindow(this.id)">Cancel</div>   
+    </div>
+    <!--- Discount -->
+    <div class="popup", id="discount_popup">
+        <div class="key exit", id="exit_dis", onclick="exitWindow(this.id)">X</div>
+        <label for="discount">DISCOUNT(between 1% and 100% off):  </label>
+        <input type="number" id="dis_num" name="dis" min="1" max="100" required ><br><br>
+        <label for="name">comment (0 to 30 characters):</label>
+        <input type="text" id="name" name="name" required minlength="0" maxlength="30" size="32" />
+        <p></p>
+        <div class="key", id="submit", onclick="">Apply discount</div>
+        <div class="key", id="reset", onclick="">Reset discount</div>
+        <p id="put_discount"></p>
+        <div class="key inv" id="discount_form" >
+
+        </div>
+        <button id="pay", onclick="exitWindow(this.id)">Pay</button>
+  
+    </div>
+    <!--- Change_order-->
+    <div class="popup", id="change_order">
+
+    <div class="key exit", id="exit_ord", onclick="exitWindow(this.id)">X</div>
+    <p></p>
+    <br>
+    <div class="key", id="add_order", onclick="">Add item</div>
+    <div class="key", id="subtract_order", onclick="">Subtract item</div>
+    <div class="key inv" id="order_form" >
+
+    </div>
+    <button id="confirm", onclick="exitWindow(this.id)">Confirm</button>
+  
     </div>
 </div>
 <!-- Your code ends here -->
