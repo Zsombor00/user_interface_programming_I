@@ -15,7 +15,7 @@ let undo_redo = [];
 let historyIndex = -1;
 let user_credits = getCredits(28)
 
-$("document").ready(function() {
+$(document).ready(function() {
     const data_drinks = getAllBeverages();
     const slicedArray = data_drinks.slice(0, 20);
 
@@ -23,18 +23,18 @@ $("document").ready(function() {
     const menuBev = $("#menu_drinks");
     slicedArray.forEach(item => {
         const menuItem = $("<div class='menu-item'>");
-        const accordionButton = $("<button class='accordion'>").text(`${item.namn} - SEK ${item.prisinklmoms}`);
+        const accordionButton = $("<button class='accordion'>").html(`<strong>${item.namn}</strong> - SEK ${item.prisinklmoms}`);
         const addButton = $(`<button onclick="add_element('${item.namn}','${item.prisinklmoms}')" class='add-button'>Add</button>`);
         const buttonContainer = $("<div class='button-container'>");
         buttonContainer.append(accordionButton);
         buttonContainer.append(addButton);
         const panel = $("<div class='panel'>").html(`
       <p>
-        Category: ${item.category}<br>
-        Packaging: ${item.forpackning}<br>
-        Captype: ${item.forslutning}<br>
-        Country of Origin: ${item.ursprunglandnamn}<br>
-        Alcohol Strength: ${item.alkoholhalt}
+        <strong>Category:</strong> ${item.category}<br>
+        <strong>Packaging:</strong> ${item.forpackning}<br>
+        <strong>Captype:</strong> ${item.forslutning}<br>
+        <strong>Country of Origin:</strong> ${item.ursprunglandnamn}<br>
+        <strong>Alcohol Strength:</strong> ${item.alkoholhalt}
       </p>
     `);
 
@@ -49,8 +49,52 @@ $("document").ready(function() {
         menuItem.attr('draggable', true);
         menuItem.attr('ondragstart', `drag(event, '${item.namn}', '${item.prisinklmoms}')`);
 
+        menuItem.attr('data-category', item.category.toLowerCase());
+        menuItem.attr('data-alcohol', getAlcoholRange(item.alkoholhalt));
+
         menuBev.append(menuItem);
     });
+
+    $(".menu_tab").click(function() {
+        const category = $(this).data("category");
+        $(".menu_tab").removeClass("active");
+        $(this).addClass("active");
+
+        $(".menu-item").hide();
+        if (category === "all") {
+            $(".menu-item").show();
+        } else {
+            $(`.menu-item[data-category='${category}']`).show();
+        }
+    });
+
+    $("#filter_select").change(function() {
+        const selectedValue = $(this).val();
+        $(".menu-item").hide();
+
+        if (selectedValue === "all") {
+            $(".menu-item").show();
+        } else {
+            $(`.menu-item[data-alcohol='${selectedValue}']`).show();
+        }
+    });
+
+    function getAlcoholRange(alcoholContent) {
+        const percentage = parseFloat(alcoholContent.replace("%", ""));
+        if (percentage < 5) {
+            return "< 5%";
+        } else if (percentage >= 5 && percentage < 10) {
+            return "5 - 10%";
+        } else if (percentage >= 10 && percentage < 20) {
+            return "10 - <20%";
+        } else if (percentage >= 20 && percentage < 30) {
+            return "20 - <30%";
+        } else if (percentage >= 30 && percentage <= 40) {
+            return "30% - 40%";
+        } else {
+            return "> 40%";
+        }
+    }
 
     // Handle menu food
     const data_dishes = getAllDishes();
