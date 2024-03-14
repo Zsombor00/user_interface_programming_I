@@ -57,27 +57,35 @@ $(document).ready(function() {
 
     $(".menu_tab").click(function() {
         const category = $(this).data("category");
+        const selectedValue = $("#filter_select").val();
+
         $(".menu_tab").removeClass("active");
         $(this).addClass("active");
 
-        $(".menu-item").hide();
-        if (category === "all") {
-            $(".menu-item").show();
-        } else {
-            $(`.menu-item[data-category='${category}']`).show();
-        }
+        applyFilter(category, selectedValue);
     });
 
     $("#filter_select").change(function() {
         const selectedValue = $(this).val();
+        const activeTab = $(".menu_tab.active");
+        const category = activeTab.length ? activeTab.data("category") : "all";
+
+        applyFilter(category, selectedValue);
+    });
+
+    function applyFilter(category, alcoholFilter = "all") {
         $(".menu-item").hide();
 
-        if (selectedValue === "all") {
+        if (category === "all" && alcoholFilter === "all") {
             $(".menu-item").show();
+        } else if (category === "all") {
+            $(`.menu-item[data-alcohol='${alcoholFilter}']`).show();
+        } else if (alcoholFilter === "all") {
+            $(`.menu-item[data-category='${category}']`).show();
         } else {
-            $(`.menu-item[data-alcohol='${selectedValue}']`).show();
+            $(`.menu-item[data-category='${category}'][data-alcohol='${alcoholFilter}']`).show();
         }
-    });
+    }
 
     function getAlcoholRange(alcoholContent) {
         const percentage = parseFloat(alcoholContent.replace("%", ""));
