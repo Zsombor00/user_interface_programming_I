@@ -1,0 +1,116 @@
+body {
+    font-family: 'Arial', sans-serif;
+    background-color: #061539;
+    margin: 0;
+    padding: 0;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    height: 100vh;
+}
+
+.login-container {
+    background-color: #ffffff;
+    padding: 30px;
+    border-radius: 10px;
+    box-shadow: 0 0 20px rgba(0, 0, 0, 0.1);
+    width: 300px;
+    text-align: center;
+    position: relative;
+}
+
+/* Add logo container */
+.logo {
+    background-image: url('img/login_logo.png'); /* Set the path to your image */
+    background-size: contain;
+    background-repeat: no-repeat;
+    width: 100px; /* Set the width of your logo */
+    height: 100px; /* Set the height of your logo */
+    margin: 0 auto 20px 115px; /* Center the logo horizontally and add space below */
+}
+
+.login-container h2 {
+    margin-bottom: 20px;
+    color: #333333;
+}
+
+.input-group {
+    margin-bottom: 20px;
+}
+
+.input-group label {
+    display: block;
+    margin-bottom: 5px;
+    color: #061539;
+}
+
+.input-group input {
+    width: 100%;
+    padding: 10px;
+    border-radius: 5px;
+    border: 1px solid #cccccc;
+    transition: border-color 0.3s;
+}
+
+.input-group input:focus {
+    border-color: #007bff;
+}
+
+.btn {
+    width: 100%;
+    padding: 12px;
+    border: none;
+    border-radius: 5px;
+    background-color: #4F618F;
+    color: #ffffff;
+    cursor: pointer;
+    transition: background-color 0.3s;
+    margin-left: 10px;
+    margin-right: 5px; 
+}
+
+.btn:hover {
+    background-color: #7887AB;
+}
+
+/* Header */
+header {
+    background-color: #061539;
+    overflow: hidden;
+    position: relative;
+}
+
+/* Logout */
+.login {
+    float: left;
+    clear: none;
+    background-color: #4F618F;
+    margin-left: 2%;
+}
+
+.logout {
+    float: right;
+    clear: none;
+    background-color: #4F618F;
+    margin-left: 2%;
+}
+
+.small_button {
+    margin: 0.8%;
+    padding: 0.8%;
+    width: 15%;
+    border-radius: 5%;
+    text-align: center;
+    font-size: 20px;
+    cursor: pointer;
+}
+
+a {
+    text-decoration: none;
+    color: black;
+    cursor: pointer;
+}
+
+a:hover {
+    color: white;
+}
