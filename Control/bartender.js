@@ -5,6 +5,7 @@ function toggleView(buttonID) {
         $(".order").show();
         $(".inventory").hide();
         $(".VIP").hide();
+        console.log(OrderDict);
     }
     else if (buttonID === "invButton") {
         $(".order").hide();
@@ -24,7 +25,7 @@ function createOrderElement(order){
     elem = document.createElement("div");
     elem.classList.add('key', 'ord');
     elem.id = order["orderID"];
-    elem.onclick = function() {showOrder(order["tableNr"])};
+    elem.onclick = function() {showOrder(order["order_id"])};
     elem.innerHTML = dict['ordID'] + order["order_id"] + dict['tableNr'] + order["tableNr"];
     return elem
 }
@@ -43,105 +44,151 @@ function updateOrderView(){
 }
 
 // Create a bill element with name and ammount of product in order
-function createElement(productID, quantity){
+function createBillElement(order_id, suborder_index, productName, quantity){
     elem = document.createElement("div");
     elem.classList.add('key');
-    var name;
-    elem.onclick = function() {};
-    for( i=0;i<modelData['products'].length;i++){
-        if( modelData['products'][i]['productID']==productID){
-            name = modelData['products'][i]['productName'];
-        }
-    }
-    elem.id = name;
-    elem.innerHTML = name+ " : " + quantity;
-    //elem = name+ " : " + num+"\n";
+    // When clicking on an element, you get the option to change the ammount of the product
+    elem.onclick = function() {change_order(order_id, suborder_index, productName, quantity)};
+    elem.id = order_id + suborder_index + productName;
+    elem.innerHTML = productName + " : " + quantity;
     return elem
 }
 
 // Function for showing order in right column
-
-function showOrder(tableNr){
-    //$('#orderPayment').html("");
-    $('#payList').html(""); 
+function showOrder(order_id) {
+    $('#payList').html("");
     $('#billList').html("");
-    var num =0;
-    for(i = 0;i<DB_order_example.length;i++){     
-        if (DB_order_example[i].tableNr == tableNr && DB_order_example[i].paid === false){
-            //console.log(DB_order_example[i]);
-            num += DB_order_example[i].amount;
-            var tmp =  DB_order_example[i]["suborder"];
-            for(j in tmp){
-                //console.log(tmp[j]);
-                var list_tmp = tmp[j];
-                for(k in list_tmp){ 
-                var iid = list_tmp[k][0];
-                var q = list_tmp[k][1];
-                 //console.log(iid,q);
-                let product = createElement(iid,q);
+    var totalPrice = 0;
+    // Find the right order
+    for (i = 0; i < DB_order_example.length; i++) {
+        if (DB_order_example[i].order_id == order_id && DB_order_example[i].paid === false) {
+            // Pick out the list of suborders
+            var suborder = DB_order_example[i]["suborder"];
+            // For each suborder
+            for (j in suborder) {
+                // Get the suborder and add the price to the total price
+                var orderDict = suborder[j][0];
+                totalPrice += suborder[j][1];
+                // Create a bill element for each product in suborder
+                for (k in orderDict)
+                (function (currentKey) {
+                    var productName = currentKey;
+                    var quantity = orderDict[currentKey][1];
+                    let product = createBillElement(order_id, j, productName, quantity);
                     $('#payList').append(product);  
-                } 
+                })(k);
             }
             break;
         }
     } 
-    //$('#orderPayment').text(num);
-    $('#payList').append("Total price: " + num);
-    $('#split_bill').show();
-    $('#split_bill').click(function(){
-    $('#billList').html("");
-    for(i = 0;i<DB_order_example.length;i++){
-        //console.log(DB_order_example[1].tableNr);
-        if (DB_order_example[i].tableNr == tableNr && DB_order_example[i].paid === false){
-            console.log("in");
-            var tmp =  DB_order_example[i]["subpay"];
-            for(j = 0; j < tmp.length; j++ ){
-                elem = document.createElement("div");
-                elem.classList.add('key');
-                var t ='';
-                var w = j+1;
-                elem.id = j;
-                let n = tmp[j];
-                elem.onclick = function() {pay_order(n)};
-                elem.innerHTML = "number "+w+"  price: "+ tmp[j] + "\r";
-                $('#billList').append(elem);
-            }
-            //console.log(txt);
-            break;
-        }
-        
-    }});
+    $('#payList').append("Total price: " + totalPrice);
 
-    $('#group_bill').show();
-    $('#group_bill').click(function(){
-        var n=0;
+    // Activate button which shows split bill
+    $('#split_bill').show();
+    $('#split_bill').click(function () {
         $('#billList').html("");
-        for(i = 0;i<DB_order_example.length;i++){     
-            if (DB_order_example[i].tableNr == tableNr && DB_order_example[i].paid === false){
-                var tmp =  DB_order_example[i].amount;
-                n = tmp;
-                elem1 = document.createElement("div");
-                elem1.classList.add('key');
-                var w = j+1;
-                elem1.id = i;
-                elem1.onclick = function() {pay_order(n)};
-                elem1.innerHTML = "Total price: "+ tmp + "\r";
-                $('#billList').append(elem1);
+        for (i = 0; i < DB_order_example.length; i++) {
+            // Find the right order
+            if (DB_order_example[i].order_id == order_id && DB_order_example[i].paid === false) {
+                // Fetch the list of suborders
+                let suborders = DB_order_example[i]["suborder"];
+                // Create a pay button for each suborder
+                for (j = 0; j < suborders.length; j++) {
+                    // Create element
+                    elem = document.createElement("div");
+                    elem.classList.add('key');
+                    elem.id = "suborder" + j;
+                    // Fetch suborder price
+                    let suborderPrice = suborders[j][1];
+                    var n = j + 1;
+                    // Activate pay function
+                    elem.onclick = function () { pay_order(suborderPrice) };
+                    elem.innerHTML = "Customer: " + n + "  Price: " + suborderPrice + "\r";
+                    $('#billList').append(elem);
+                }
                 break;
             }
+
         }
+    });
+
+    // Activate button which shows group bill
+    $('#group_bill').show();
+    $('#group_bill').click(function () {
+
+        $('#billList').html("");
+        // Create a pay button for the total price
+        elem1 = document.createElement("div");
+        elem1.classList.add('key');
+        elem1.id = i;
+        elem1.onclick = function () { pay_order(totalPrice) };
+        elem1.innerHTML = "Total price: " + totalPrice + "\r";
+        $('#billList').append(elem1);
+
 
     });
 
 
 }
-function discount_rest() {
+
+// Functions which opens window to change quantity of a product within order
+function change_order(order_id, suborder_index, productName, quantity) {
+    var new_quantity = quantity;
+    // Open pop up window
+    toggleWindow("change_order");
+    $('#order_form').html(productName + " : " + quantity + "\r");
+    $('#confirm_change').attr("onclick","updateOrder('"+order_id+"', '"+suborder_index+"', '"+productName+"', '"+new_quantity+"')");
+    
+    // Draw button to add items
+    var btn = document.getElementById('add_order');
+    btn.addEventListener('click', function () {
+        new_quantity = new_quantity + 1;
+        // Update text and confirm action with new quantity
+        $('#order_form').html(productName + " : " + new_quantity + "\r");
+        $('#confirm_change').attr("onclick","updateOrder('"+order_id+"', '"+suborder_index+"', '"+productName+"', '"+new_quantity+"')");
+    });
+
+    // Draw button to remove items
+    var bte = document.getElementById('subtract_order');
+    bte.addEventListener('click', function () {
+        if (new_quantity > 0) {
+            new_quantity =new_quantity - 1;
+        }
+        // Update text and confirm action with new quantity
+        $('#order_form').html(productName + " : " + new_quantity + "\r");
+        $('#confirm_change').attr("onclick","updateOrder('"+order_id+"', '"+suborder_index+"', '"+productName+"', '"+new_quantity+"')");
+    });
     
 }
+
+//Function which updates order database with new quantity of product
+function updateOrder(order_id, suborder_index, productName, quantity){
+    // Find the right order  
+    var order= DB_order_example.find(function(order) {
+        return order.order_id == order_id;
+    });
+    
+    // Fetch old values
+    var old_qunatity = order["suborder"][suborder_index][0][productName][1];
+    var difference = quantity - old_qunatity;
+    var price = order["suborder"][suborder_index][0][productName][0];
+
+    // Update qunatity
+    order["suborder"][suborder_index][0][productName][1] = Number(quantity);
+    // Update total price
+    order["suborder"][suborder_index][1] += difference *price;
+
+    // Redraw the order view
+    toggleWindow("change_order");
+    showOrder(order_id);
+}
+
 // Function which opens the pay dialogue
 function pay_order(n){
     toggleWindow("discount_popup");
     $('#discount_form').html("Total price: "+ n.toFixed(1) + "\r");
+
+    // Create button which applies the discount from input
     var btn = document.getElementById('submit');
     var k =0;
     btn.addEventListener('click',function() {
@@ -151,12 +198,14 @@ function pay_order(n){
         $('#discount_form').html("Total price: "+ num.toFixed(1) + "\r");
     });
 
+    // Create button which resets the discount
     var bte = document.getElementById('reset');
     bte.addEventListener('click',function(){
         document.getElementById("dis_num").value='';
         $('#discount_form').html("Total price: "+ n.toFixed(1) + "\r");
     })
 }
+
 
 
 // INVENTORY FUNCTIONS //
@@ -582,24 +631,3 @@ function exitWindow(ID){
 }
 
 
-// Function handler (why?)
-function doInit(fun) {
-    if (fun == 'fun1') {
-        toggleView();
-    };
-    if (fun == 'fun2') {
-        
-    };
-    if (fun == 'fun3') {
-        showOrder();
-    };
-    if (fun == 'fun4') {
-
-        refillProduct();
-    };
-    if (fun == 'fun51') {
-        a = $("#argument").text(); // Get the argument
-        b = modelData['result'];  // Get the current result value
-        doit(addfun(a,b));
-    };
-}

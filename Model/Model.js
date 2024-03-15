@@ -32,7 +32,7 @@ var DB_order_example = [
         "amount": 2153,
         'tableNr' : 7,
         "timestamp": "2023-11-10 19:04:13",
-        "suborder":[[["25053", 2], ["190719", 1]],[["51029", 1]],[["25053", 2]]],
+        "suborder":[[{"Braastad XO":[442.00, 2], "Vanlig Vodka":[195.00, 1]}, 1079], [{"Dworek Vodka":[190.00, 1]}, 190], [{"Braastad XO":[442.00, 2]}, 884]],
         "subpay":[1079,190,884],
         "paid":false
     },
@@ -45,7 +45,7 @@ var DB_order_example = [
         "amount": 1079,
         'tableNr' : 5,
         "timestamp": "2023-11-10 19:36:43",
-        "suborder":[[["25053", 2], ["190719", 1]]],
+        "suborder":[[{"Braastad XO":[442.00, 2], "Vanlig Vodka":[195.00, 1]}, 1079]],
         "subpay":[1079],
         "paid":false
     }
