@@ -18,13 +18,14 @@ var user_credits = 0;
 var user_id=0;
 let limit = "false";
 var lang='eng'
+current_view="customer"
+
 function change_language(new_lang){
-    localStorage.setItem('selectedLanguage', new_lang);
-    window.location.href = window.location.pathname + '?lang=' + new_lang;
+    lang=new_lang
+    translation()
 }
 $(document).ready(function() {
-    const urlParams = new URLSearchParams(window.location.search);
-    lang = urlParams.get('lang');
+    translation()
     const data_drinks = getAllBeverages();
     const slicedArray = data_drinks.slice(0, 20);
 
@@ -34,6 +35,7 @@ $(document).ready(function() {
         const menuItem = $("<div class='menu-item'>");
         const accordionButton = $("<button class='accordion'>").html(`<strong>${item.namn}</strong> - SEK ${item.prisinklmoms}`);
         const addButton = $(`<button onclick="add_element('${item.namn}','${item.prisinklmoms}')" class='add-button'>${dict[lang]['Add']}</button>`);
+        
         const buttonContainer = $("<div class='button-container'>");
         buttonContainer.append(accordionButton);
         buttonContainer.append(addButton);
@@ -119,6 +121,10 @@ $(document).ready(function() {
         `);
         menuContainer.append(menuItem);
     });
+
+});
+
+function translation(){
     $("#filterAll").text(dict[lang]['all']);
     $("#filterBeers").text(dict[lang]['Beers']);
     $("#filterWines").text(dict[lang]['Wines']);
@@ -239,14 +245,11 @@ $(document).ready(function() {
     $("#logout").text(dict[lang]['login']);
 
     // Create and update various views
+    display_view(current_view)
     createForm(modelData['productAttributes'], "input_form");
     updateOrderView();
     updateInventoryView();
     updateVIPView();
-});
-
-function display_menu(){
-    
 }
 
 function saveState() {

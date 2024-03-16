@@ -3,16 +3,21 @@ function login() {
     var password = document.getElementById("password").value;
 
     user = checkPassword(username, password)
-
+    current_view="logout"
     if (user){
         if(user.credentials == 0){
             user_credits = getCredits(getUserID(username ))
             display_view("VIP")
+            current_view="VIP"
         }
-        if(user.credentials == 1)
+        if(user.credentials == 1){
             display_view("bartender")
-        if(user.credentials == 3)
+            current_view="bartender"
+        }
+        if(user.credentials == 3){
             display_view("waiter")
+            current_view="waiter"
+        }
         user_id=getUserID(username )
         login__status=true
     } else {
@@ -36,6 +41,7 @@ function display_view(type_view) {
         $("#redo").attr("onclick","redo_refill()");
     }
     else if (type_view === "customer") {
+        current_view="customer"
         employee.style.display = "none";
         customer.style.display = "block";
         login.style.display = "none";
@@ -61,6 +67,7 @@ function display_view(type_view) {
         $("#redo").attr("onclick","redo()");
     }
     else if (type_view === "logout") {
+        current_view="logout"
         employee.style.display = "none";
         customer.style.display = "none";
         login.style.display = "block";

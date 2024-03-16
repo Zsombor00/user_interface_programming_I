@@ -117,7 +117,7 @@ var DB2 = {
             "nr": "1003802",
             "artikelid": "513291",
             "varnummer": "10038",
-            "namn": "Esping Jul B\u00c3\u00a4sk",
+            "namn": "Esping Jul Bask",
             "namn2": "",
             "prisinklmoms": "195.00",
             "volymiml": null,
@@ -196,7 +196,7 @@ var DB2 = {
             "koscher": "0",
             "stock":"50",
             "available": false,
-            "category":"Spirit"
+            "category":"Wine"
         }, {
             "nr": "1004901",
             "artikelid": "733068",
@@ -224,7 +224,7 @@ var DB2 = {
             "koscher": "0",
             "stock":"50",
             "available": true,
-            "category":"Spirit"
+            "category":"Wine"
         }, {
             "nr": "1005001",
             "artikelid": "733084",
@@ -252,7 +252,7 @@ var DB2 = {
             "koscher": "0",
             "stock":"50",
             "available": true,
-            "category":"Spirit"
+            "category":"Special"
         }, {
             "nr": "1005101",
             "artikelid": "733200",
@@ -264,7 +264,7 @@ var DB2 = {
             "prisperliter": null,
             "saljstart": "2013-03-01",
             "slutlev": " ",
-            "varugrupp": "Whisky, \u00c3\u2013vrig",
+            "varugrupp": "Whisky, Avrig",
             "forpackning": "Flaska",
             "forslutning": "",
             "ursprung": "",
@@ -364,12 +364,12 @@ var DB2 = {
             "koscher": "0",
             "stock":"50",
             "available": true,
-            "category":"Spirit"
+            "category":"Special"
         }, {
             "nr": "1005602",
             "artikelid": "733468",
             "varnummer": "10056",
-            "namn": "Cl\u00c3\u00a9ment",
+            "namn": "Clament",
             "namn2": "Single Cask",
             "prisinklmoms": "529.00",
             "volymiml": null,
@@ -392,7 +392,7 @@ var DB2 = {
             "koscher": "0",
             "stock":"50",
             "available": true,
-            "category":"Spirit"
+            "category":"Special"
         }, {
             "nr": "101",
             "artikelid": "1",
@@ -420,7 +420,7 @@ var DB2 = {
             "koscher": "0",
             "stock":"50",
             "available": true,
-            "category":"Spirit"
+            "category":"Special"
         }, {
             "nr": "1010001",
             "artikelid": "817007",
