@@ -126,6 +126,14 @@ $(document).ready(function() {
     $(".VIP").hide();
 
     // Translate and set text for various elements
+    //Login screen
+    $("#login_header").text(dict['login']);
+    $('label[for="username"]').text(dict['username']);
+    $('label[for="password"]').text(dict['password']);
+    $("#login_button").text(dict['login']);
+    $("#logout").text(dict['login']);
+
+    // Bartender view
     $("#ordButton").text(dict['ord']);
     $("#invButton").text(dict['inv']);
     $("#VIPButton").text(dict['vip']);

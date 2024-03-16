@@ -17,7 +17,20 @@ const cnst = {
 // and the strings can easily be inserted at runtime through calls to the dict
 // with the correct key.
 //
-const dict = {
+
+// Current dictionary
+var dict = {};
+
+const dict_eng = {
+    // Log in screen
+    'login': "Log in",
+    'username': 'Username:',
+    'password': 'Password:',
+
+    // Customer view
+
+
+    // Bartender view
     'ord': "Orders",
     'inv': "Inventory",
     'vip': "VIP customers",
@@ -65,6 +78,8 @@ const dict = {
 
 
 }
+
+dict = dict_eng;
 
 // ===========================================================================
 // END OF FILE

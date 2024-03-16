@@ -45,7 +45,7 @@
     <!-- <div class="small_button login" id="customer_login" onclick="toggleLogin(this.id)">Customer</div>
     <div class="small_button login" id="vip_customer_login" onclick="toggleLogin(this.id)">VIP Customer</div>
     <div class="small_button login" id="employee_login" onclick="toggleLogin(this.id)">Employee</div> -->
-    <div class="small_button logout" id="logout" onclick=" display_view('logout')">Log In</div>
+    <div class="small_button logout" id="logout" onclick=" display_view('logout')"></div>
 
     <!-- UNDO-REDO MENU -->
     <div class="undo_redo_menu">
@@ -58,16 +58,16 @@
 <!-- Your code starts here -->
 <div class="login-container" id="login_view">
     <div class="logo"></div>
-    <h2>Login</h2>
+    <h2 id="login_header"></h2>
     <div class="input-group">
-        <label for="username">Username:</label>
+        <label for="username"></label>
         <input type="text" id="username" placeholder="Enter your username">
     </div>
     <div class="input-group">
-        <label for="password">Password:</label>
+        <label for="password"></label>
         <input type="password" id="password" placeholder="Enter your password">
     </div>
-    <button class="btn" onclick="login()">Login</button>
+    <button id="login_button" class="btn" onclick="login()"></button>
 </div>
 
 <div id="vip_customer_view">
