@@ -61,6 +61,16 @@ a:hover {
     height: 100%;
 }
 
+.lang_button{
+    background-color: #162856;
+    border: #162856;
+    color: white;
+    padding: 10px;
+    cursor: pointer;
+    margin-top: 1%;
+    border-radius: 10%;
+
+}
 
 /*MENU COLUMN*/
 body{

@@ -17,12 +17,11 @@
 var modelData = {};
 
 modelData['orders'] = [];
-modelData['products'] = [];
 modelData['productAttributes'] = ['productID', 'productName', 'price', 'stock']
 
 // Example of orders
 
-var DB_order_example = [
+var DB_orders = [
     {
         "order_id": 10000,
         "bartender_id": "B00000",
@@ -52,31 +51,9 @@ var DB_order_example = [
    
 ]
 
-modelData['orders'] = DB_order_example;
+modelData['orders'] = DB_orders;
 
-// Example of products (This will use the same as menu)
-var productExample1 = {
-    'productID' : "25053",
-    'productName' : "Braastad XO",
-    'price' : "442.00",
-    'stock': 17,
-    'available': false
-}
-var productExample2 = {
-    'productID' : "190719",
-    'productName' : "Vanlig Vodka",
-    'price' : "195.00",
-    'stock': 9,
-    'available': true
-}
-var productExample3 = {
-    'productID' : "51029",
-    'productName' : "Dworek Vodka",
-    'price' : "190.00",
-    'stock': 9,
-    'available': true
-}
-modelData['products'].push(productExample1, productExample2,productExample3 );
+
 
 
 // The model in this version can then easily be transferred into the Local

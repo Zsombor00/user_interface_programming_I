@@ -45,29 +45,32 @@
     <!-- <div class="small_button login" id="customer_login" onclick="toggleLogin(this.id)">Customer</div>
     <div class="small_button login" id="vip_customer_login" onclick="toggleLogin(this.id)">VIP Customer</div>
     <div class="small_button login" id="employee_login" onclick="toggleLogin(this.id)">Employee</div> -->
-    <div class="small_button logout" id="logout" onclick=" display_view('logout')">Log In</div>
+    <div class="small_button logout" id="logout" onclick=" display_view('logout')"></div>
 
     <!-- UNDO-REDO MENU -->
     <div class="undo_redo_menu">
         <a href="#" id="undo" onclick="undo()"><i class="fa fa-arrow-left fa-2x"></i></a>
         <a href="#" id="redo" onclick="redo()"><i class="fa fa-arrow-right fa-2x"></i></a>
     </div>
+    <button  class="lang_button" onclick="change_language('eng')">English</button>
+    <button class="lang_button" onclick="change_language('swe')">Svensk</button>
+    <button  class="lang_button" onclick="change_language('rus')">Русский</button>
 
 </header>
 <body>
 <!-- Your code starts here -->
 <div class="login-container" id="login_view">
     <div class="logo"></div>
-    <h2>Login</h2>
+    <h2 id="login_header"></h2>
     <div class="input-group">
-        <label for="username">Username:</label>
+        <label for="username"></label>
         <input type="text" id="username" placeholder="Enter your username">
     </div>
     <div class="input-group">
-        <label for="password">Password:</label>
+        <label for="password"></label>
         <input type="password" id="password" placeholder="Enter your password">
     </div>
-    <button class="btn" onclick="login()">Login</button>
+    <button id="login_button" class="btn" onclick="login()"></button>
 </div>
 
 <div id="vip_customer_view">
@@ -169,9 +172,9 @@
     <div class="menu order", id="orders">
         <div >
             <ul class="menu_tabs">
-                <a><li id="type0">New</li></a>
-                <a><li id="type 1">Unpaid</li></a>
-                <a><li id="type2">Paid</li></a>
+                <a><li id="order_type0"></li></a>
+                <a><li id="order_type1"></li></a>
+                <a><li id="order_type2"></li></a>
             </ul>
         </div>
         <div class="menu_list">
@@ -199,11 +202,11 @@
     <div class="menu inventory", id="inventory">
         <div >
             <ul class="menu_tabs">
-                <a><li id="all">All</li></a>
-                <a><li id="beers">Beers</li></a>
-                <a><li id="wines">Wines</li></a>
-                <a><li id="spirits">Spirits</li></a>
-                <a><li id="specials">Specials</li></a>
+                <a><li id="all"></li></a>
+                <a><li id="beers"></li></a>
+                <a><li id="wines"></li></a>
+                <a><li id="spirits"></li></a>
+                <a><li id="specials"></li></a>
             </ul>
         </div>
         <div class="menu_list">
@@ -237,7 +240,7 @@
     <!--- Main column showing list of VIP users -->
     <div class="menu VIP", id="users">
         <ul class="menu_tabs">
-            <a><li id="type0">Type1</li></a>
+            <a><li id="VIPs"></li></a>
         </ul>
         <div class="menu_list">
             <h2 id="VIP_title"></h2>
@@ -253,7 +256,7 @@
         <h2 id="credit_title"></h2>
         <div id="credit_text"></div>
         <br>
-        <label for="creditsToAdd">Credits to add:</label>
+        <label for="creditsToAdd"></label>
         <input type="number" id="creditsToAdd" name="creditsToAdd" ><br><br>
         
         <div class="key", id="creditButton", data-customerID = "", onclick="addCredits()"></div>
@@ -263,59 +266,59 @@
 <!--- Pop-up windows -->
 <!--- Security confirmation -->
 <div class="popup warning", id="security_popup">
-    <div class="key exit", id="exit_security", onclick="exitWindow(this.id)">X</div>
+    <div class="key exit", id="exit_security", onclick="exitWindow(this.id)"></div>
     <p id="security_text"></p>
-    <div class="key", id="security_yes", onclick="callSecurity()">Yes </div>
-    <div class="key", id="security_no", onclick="exitWindow(this.id)">No</div>
+    <div class="key", id="security_yes", onclick="callSecurity()"></div>
+    <div class="key", id="security_no", onclick="exitWindow(this.id)"></div>
 </div>
 <!--- Remove item confirmation -->
 <div class="popup", id="remove_popup", data-itemID = "">
-    <div class="key exit", id="exit_remove", onclick="exitWindow(this.id)">X</div>
+    <div class="key exit", id="exit_remove", onclick="exitWindow(this.id)"></div>
     <p id="remove_item_text"></p>
-    <div class="key", id="remove_yes", onclick="removePermanently()">Yes </div>
-    <div class="key", id="remove_no", onclick="exitWindow(this.id)">No</div>
+    <div class="key", id="remove_yes", onclick="removePermanently()"></div>
+    <div class="key", id="remove_no", onclick="exitWindow(this.id)"></div>
     
 </div>
 <!--- Add item dialogue -->
 <div class="popup", id="add_popup">
-    <div class="key exit", id="exit_add", onclick="exitWindow(this.id)">X</div>
+    <div class="key exit", id="exit_add", onclick="exitWindow(this.id)"></div>
     <p id="add_item_text"></p>
     <div id="input_form">
 
     </div>
-    <div class="key", id="add_item", onclick="addItem()">Add</div>
-    <div class="key", id="cancel", onclick="exitWindow(this.id)">Cancel</div>   
+    <div class="key", id="add_item", onclick="addItem()"></div>
+    <div class="key", id="cancel", onclick="exitWindow(this.id)"></div>   
 </div>
 <!--- Discount -->
 <div class="popup", id="discount_popup">
-    <div class="key exit", id="exit_dis", onclick="exitWindow(this.id)">X</div>
-    <label for="discount">DISCOUNT(between 1% and 100% off):  </label>
+    <div class="key exit", id="exit_dis", onclick="exitWindow(this.id)"></div>
+    <label for="discount">  </label>
     <input type="number" id="dis_num" name="dis" min="1" max="100" required ><br><br>
-    <label for="name">comment (0 to 30 characters):</label>
-    <input type="text" id="name" name="name" required minlength="0" maxlength="30" size="32" />
+    <label for="comment"></label>
+    <input type="text" id="comment" name="name" required minlength="0" maxlength="30" size="32" />
     <p></p>
-    <div class="key", id="submit", onclick="">Apply discount</div>
-    <div class="key", id="reset", onclick="">Reset discount</div>
+    <div class="key", id="submit", onclick=""></div>
+    <div class="key", id="reset", onclick=""></div>
     <p id="put_discount"></p>
     <div class="key inv" id="discount_form" >
 
     </div>
-    <button id="pay", onclick="exitWindow(this.id)">Pay</button>
+    <button id="pay", onclick="exitWindow(this.id)"></button>
 
 </div>
 </div>
 <!--- Change_order-->
 <div class="popup", id="change_order">
 
-    <div class="key exit", id="exit_ord", onclick="exitWindow(this.id)">X</div>
+    <div class="key exit", id="exit_ord", onclick="exitWindow(this.id)"></div>
     <p></p>
     <br>
-    <div class="key", id="add_order", onclick="">Add item</div>
-    <div class="key", id="subtract_order", onclick="">Subtract item</div>
+    <div class="key", id="add_order", onclick=""></div>
+    <div class="key", id="subtract_order", onclick=""></div>
     <div class="key inv" id="order_form" >
 
     </div>
-    <button id="confirm_change">Confirm</button>
+    <button id="confirm_change"></button>
 
     </div>
 </div>

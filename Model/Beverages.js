@@ -26,7 +26,9 @@ var DB2 = {
             "ekologisk": "0",
             "koscher": "0",
             "stock":"4",
+            "available": true,
             "category":"Spirit"
+            
         }, {
             "nr": "1001",
             "artikelid": "190719",
@@ -53,6 +55,7 @@ var DB2 = {
             "ekologisk": "0",
             "koscher": "0",
             "stock":"50",
+            "available": true,
             "category":"Spirit"
         }, {
             "nr": "1001201",
@@ -80,6 +83,7 @@ var DB2 = {
             "ekologisk": "0",
             "koscher": "0",
             "stock":"50",
+            "available": false,
             "category":"Spirit"
         }, {
             "nr": "1001202",
@@ -106,7 +110,8 @@ var DB2 = {
             "sortiment": "FS",
             "ekologisk": "0",
             "koscher": "0",
-            "stock":"50",
+            "stock":"3",
+            "available": true,
             "category":"Spirit"
         }, {
             "nr": "1003802",
@@ -134,6 +139,7 @@ var DB2 = {
             "ekologisk": "0",
             "koscher": "0",
             "stock":"50",
+            "available": true,
             "category":"Spirit"
         }, {
             "nr": "1004703",
@@ -161,6 +167,7 @@ var DB2 = {
             "ekologisk": "0",
             "koscher": "0",
             "stock":"50",
+            "available": true,
             "category":"Spirit"
         }, {
             "nr": "1004801",
@@ -188,6 +195,7 @@ var DB2 = {
             "ekologisk": "0",
             "koscher": "0",
             "stock":"50",
+            "available": false,
             "category":"Spirit"
         }, {
             "nr": "1004901",
@@ -215,6 +223,7 @@ var DB2 = {
             "ekologisk": "0",
             "koscher": "0",
             "stock":"50",
+            "available": true,
             "category":"Spirit"
         }, {
             "nr": "1005001",
@@ -242,6 +251,7 @@ var DB2 = {
             "ekologisk": "0",
             "koscher": "0",
             "stock":"50",
+            "available": true,
             "category":"Spirit"
         }, {
             "nr": "1005101",
@@ -269,6 +279,7 @@ var DB2 = {
             "ekologisk": "0",
             "koscher": "0",
             "stock":"50",
+            "available": true,
             "category":"Spirit"
         }, {
             "nr": "1005201",
@@ -295,7 +306,8 @@ var DB2 = {
             "sortiment": "TSE",
             "ekologisk": "0",
             "koscher": "0",
-            "stock":"50",
+            "stock":"3",
+            "available": false,
             "category":"Spirit"
         }, {
             "nr": "1005401",
@@ -323,6 +335,7 @@ var DB2 = {
             "ekologisk": "0",
             "koscher": "0",
             "stock":"50",
+            "available": true,
             "category":"Spirit"
         }, {
             "nr": "1005502",
@@ -350,6 +363,7 @@ var DB2 = {
             "ekologisk": "0",
             "koscher": "0",
             "stock":"50",
+            "available": true,
             "category":"Spirit"
         }, {
             "nr": "1005602",
@@ -377,6 +391,7 @@ var DB2 = {
             "ekologisk": "0",
             "koscher": "0",
             "stock":"50",
+            "available": true,
             "category":"Spirit"
         }, {
             "nr": "101",
@@ -404,6 +419,7 @@ var DB2 = {
             "ekologisk": "0",
             "koscher": "0",
             "stock":"50",
+            "available": true,
             "category":"Spirit"
         }, {
             "nr": "1010001",
@@ -431,6 +447,7 @@ var DB2 = {
             "ekologisk": "0",
             "koscher": "0",
             "stock":"50",
+            "available": true,
             "category":"Spirit"
         }, {
             "nr": "1010404",
@@ -458,6 +475,7 @@ var DB2 = {
             "ekologisk": "0",
             "koscher": "0",
             "stock":"50",
+            "available": true,
             "category":"Spirit"
         }, {
             "nr": "1010501",
@@ -485,6 +503,7 @@ var DB2 = {
             "ekologisk": "0",
             "koscher": "0",
             "stock":"50",
+            "available": true,
             "category":"Spirit"
         },  {
             "nr": "1159803",
@@ -512,6 +531,7 @@ var DB2 = {
             "ekologisk": "0",
             "koscher": "0",
             "stock":"50",
+            "available": true,
             "category":"Beer"
         },  {
             "nr": "1162001",
@@ -539,6 +559,7 @@ var DB2 = {
             "ekologisk": "0",
             "koscher": "0",
             "stock":"50",
+            "available": true,
             "category":"Beer"
         },  {
             "nr": "1167601",
@@ -566,6 +587,7 @@ var DB2 = {
             "ekologisk": "0",
             "koscher": "0",
             "stock":"50",
+            "available": true,
             "category":"Beer"
         },   {
             "nr": "1167801",
@@ -593,6 +615,7 @@ var DB2 = {
             "ekologisk": "0",
             "koscher": "0",
             "stock":"50",
+            "available": true,
             "category":"Beer"
         }, {
             "nr": "1200201",
@@ -620,6 +643,7 @@ var DB2 = {
             "ekologisk": "0",
             "koscher": "0",
             "stock":"50",
+            "available": true,
             "category":"Wine"
         },  {
             "nr": "1209408",
@@ -647,6 +671,7 @@ var DB2 = {
             "ekologisk": "0",
             "koscher": "0",
             "stock":"50",
+            "available": true,
             "category":"Wine"
         },  {
             "nr": "1209502",
@@ -674,6 +699,7 @@ var DB2 = {
             "ekologisk": "0",
             "koscher": "0",
             "stock":"50",
+            "available": true,
             "category":"Wine"
         },  {
             "nr": "1210304",
@@ -701,6 +727,7 @@ var DB2 = {
             "ekologisk": "0",
             "koscher": "0",
             "stock":"50",
+            "available": true,
             "category":"Wine"
         },   {
             "nr": "1210502",
@@ -728,6 +755,7 @@ var DB2 = {
             "ekologisk": "0",
             "koscher": "0",
             "stock":"50",
+            "available": true,
             "category":"Wine"
         }, {
             "nr": "1210901",
@@ -755,6 +783,7 @@ var DB2 = {
             "ekologisk": "0",
             "koscher": "0",
             "stock":"50",
+            "available": true,
             "category":"Wine"
         }, {
             "nr": "1211908",
@@ -782,6 +811,7 @@ var DB2 = {
             "ekologisk": "0",
             "koscher": "0",
             "stock":"50",
+            "available": true,
             "category":"Wine"
         },
     ]}

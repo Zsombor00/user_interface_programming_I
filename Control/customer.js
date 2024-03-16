@@ -9,6 +9,7 @@ let OrderDict = {};// dictionary of all element in order of one person
 let all_orders =[];// array of all customer orders
 let current_customer=0;// save the index of current customer
 let total_price=0;
+let current_order_id = 10002;
 
 var customer_type="vip"
 let undo_redo = [];
@@ -16,8 +17,14 @@ let historyIndex = -1;
 var user_credits = 0;
 var user_id=0;
 let limit = "false";
-var lang='rus'
+var lang='eng'
+function change_language(new_lang){
+    localStorage.setItem('selectedLanguage', new_lang);
+    window.location.href = window.location.pathname + '?lang=' + new_lang;
+}
 $(document).ready(function() {
+    const urlParams = new URLSearchParams(window.location.search);
+    lang = urlParams.get('lang');
     const data_drinks = getAllBeverages();
     const slicedArray = data_drinks.slice(0, 20);
 
@@ -132,7 +139,7 @@ $(document).ready(function() {
     $("#food_type2").text(dict[lang]['food_type2']);
 
     $("#order_title").text(dict[lang]['Title_order']);
-    $("#oder").text(dict[lang]['Order_list']);
+    $("#order").text(dict[lang]['Order_list']);
     $("#customer_limit").text(dict[lang]['Customers_limit']);
     $("#items_limit").text(dict[lang]['Items_limit']);
     $("#quantity_limit").text(dict[lang]['Quantity_limit']);
@@ -154,42 +161,82 @@ $(document).ready(function() {
     $(".VIP").hide();
 
     // Translate and set text for various elements
-    $("#ordButton").text(dict['ord']);
-    $("#invButton").text(dict['inv']);
-    $("#VIPButton").text(dict['vip']);
-    $("#security").text(dict['security']);
+    //Login screen
+    $("#login_header").text(dict[lang]['login']);
+    $('label[for="username"]').text(dict[lang]['username']);
+    $('label[for="password"]').text(dict[lang]['password']);
+    $("#login_button").text(dict[lang]['login']);
+    $("#logout").text(dict[lang]['login']);
 
-    $("#ord_title").text(dict['ord']);
-    $("#ord_text").text(dict['ord_text']);
-    $("#pay_title").text(dict['pay']);
-    $("#pay_text").text(dict['pay_text']);
-    $("#split_bill").text(dict['split_bill']);
-    $("#group_bill").text(dict['group_bill']);
+    // Bartender view
+    $("#ordButton").text(dict[lang]['ord']);
+    $("#invButton").text(dict[lang]['inv']);
+    $("#VIPButton").text(dict[lang]['vip']);
+    $("#security").text(dict[lang]['security']);
+
+    $("#order_type0").text(dict[lang]['ord_type0']);
+    $("#order_type1").text(dict[lang]['ord_type1']);
+    $("#order_type2").text(dict[lang]['ord_type2']);
+    $("#ord_title").text(dict[lang]['ord']);
+    $("#ord_text").text(dict[lang]['ord_text']);
+    $("#pay_title").text(dict[lang]['pay']);
+    $("#pay_text").text(dict[lang]['pay_text']);
+    $("#split_bill").text(dict[lang]['split_bill']);
+    $("#group_bill").text(dict[lang]['group_bill']);
     $('#split_bill').hide();
     $('#group_bill').hide();
 
-    $("#inv_title").text(dict['inv']);
-    $("#inv_text").text(dict['inv_text']);
-    $("#inv_low").text(dict['inv_low']);
-    $("#inv_norm").text(dict['inv_norm']);
-    $("#add_inv").text(dict['add_inv']);
-    $("#refill_title").text(dict['refill']);
-    $("#refill_text").text(dict['refill_text']);
-    $("#add_item_text").text(dict['add_item_text']);
-    $("#send_refill").text(dict['send_refill']);
+    $("#inv_title").text(dict[lang]['inv']);
+    $("#all").text(dict[lang]['all']);
+    $("#beers").text(dict[lang]['Beers']);
+    $("#wines").text(dict[lang]['Wines']);
+    $("#spirits").text(dict[lang]['Spirits']);
+    $("#specials").text(dict[lang]['Specials']);
+    $("#inv_text").text(dict[lang]['inv_text']);
+    $("#inv_low").text(dict[lang]['inv_low']);
+    $("#inv_norm").text(dict[lang]['inv_norm']);
+    $("#add_inv").text(dict[lang]['add_inv']);
+    $("#refill_title").text(dict[lang]['refill']);
+    $("#refill_text").text(dict[lang]['refill_text']);
+    $("#add_item_text").text(dict[lang]['add_item_text']);
+    $("#send_refill").text(dict[lang]['send_refill']);
     $('#send_refill').hide();
 
-    $("#VIP_title").text(dict['vip']);
-    $("#VIP_text").text(dict['vip_text']);
-    $("#add_VIP").text(dict['add_vip']);
-    $("#credit_title").text(dict['credit']);
-    $("#credit_text").text(dict['credit_text']);
-    $("#creditButton").text(dict['credit_button']);
+    $("#VIP_title").text(dict[lang]['vip']);
+    $("#VIPs").text(dict[lang]['VIPs']);
+    $("#VIP_text").text(dict[lang]['vip_text']);
+    $("#add_VIP").text(dict[lang]['add_vip']);
+    $("#credit_title").text(dict[lang]['credit']);
+    $("#credit_text").text(dict[lang]['credit_text']);
+    $("#creditButton").text(dict[lang]['credit_button']);creditsToAdd
+    $("#creditsToAdd").text(dict[lang]['creditsToAdd']);
     $('#creditButton').hide();
     $('#creditsToAdd').hide();
     $('label[for="creditsToAdd"]').hide();
 
-    $("#logout").text(dict['logout']);
+    $("#security_yes").text(dict[lang]['yes']);
+    $("#remove_yes").text(dict[lang]['yes']);
+    $("#security_no").text(dict[lang]['no']);
+    $("#remove_no").text(dict[lang]['no']);
+    $("#add_item").text(dict[lang]['add']);
+    $("#cancel").text(dict[lang]['cancel']);
+    $("#submit").text(dict[lang]['submit']);
+    $("#reset").text(dict[lang]['reset']);
+    $("#add_order").text(dict[lang]['add_order']);
+    $("#subtract_order").text(dict[lang]['subtract_order']);
+    $("#confirm_change").text(dict[lang]['confirm']);
+    $("#pay").text(dict[lang]['Pay_button']);
+    $("#exit_security").text(dict[lang]['exit']);
+    $("#exit_remove").text(dict[lang]['exit']);  
+    $("#exit_add").text(dict[lang]['exit']);  
+    $("#exit_dis").text(dict[lang]['exit']);
+    $("#exit_ord").text(dict[lang]['exit']);     
+
+    $('label[for="discount"]').text(dict[lang]['discount']);
+    $('label[for="comment"]').text(dict[lang]['comment']);
+
+
+    $("#logout").text(dict[lang]['login']);
 
     // Create and update various views
     createForm(modelData['productAttributes'], "input_form");
@@ -197,6 +244,10 @@ $(document).ready(function() {
     updateInventoryView();
     updateVIPView();
 });
+
+function display_menu(){
+    
+}
 
 function saveState() {
     // console.log(undo_redo)
@@ -373,9 +424,26 @@ function hidePaymentPopup() {
     $('#paymentPopup').fadeOut();
 }//hide popup window for payment
 
+// Function to push order to database
+function pushOrder(all_orders, current_order_id, total_price, paid)
+{
+    DB_orders.push({
+        "order_id": current_order_id,
+        "bartender_id": "B00000",
+        "customer_id": "C00001",
+        "amount": total_price,
+        'tableNr' : 7,
+        "timestamp": "2023-11-10 19:04:13",
+        "suborder": all_orders,
+        "paid": paid
+    });
+    current_order_id +=1;
+    updateOrderView();
+}
 
 // Functions to display payment confirmation message(bar payment)
 function messagePaymentBar() {
+    pushOrder(all_orders, current_order_id, total_price, false);
     $('#paymentMessage').text(dict[lang]['Bar_payment']);
     $('#ClosePayment').hide();
     $('#NewOrder').show();
@@ -387,6 +455,7 @@ function messagePaymentBar() {
 function messagePaymentCredits() {
     if (user_credits >= total_price){
         user_credits -=total_price;
+        pushOrder(all_orders, current_order_id, total_price, true);
         $('#DisplayCredits').text(dict[lang]['Credits'] + user_credits);
         decreaseCredits(user_id,total_price)
         $('#paymentMessage').text(dict[lang]['Credits payment']);
@@ -396,6 +465,7 @@ function messagePaymentCredits() {
         $('#payAtBarButton').hide();
     }
     else {
+        pushOrder(all_orders, current_order_id, total_price, false);
         $('#paymentMessage').text(dict[lang]['Not enough credits']);
         $('#ClosePayment').show();
         $('#New order').show();

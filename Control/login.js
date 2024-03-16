@@ -1,5 +1,4 @@
 function login() {
-    console.log('ASDASD')
     var username = document.getElementById("username").value;
     var password = document.getElementById("password").value;
 
@@ -31,7 +30,7 @@ function display_view(type_view) {
         customer.style.display = "none";
         login.style.display = "none";
         // Change undo/redo between different views
-        $("#logout").text("Log Out")
+        $("#logout").text(dict[lang]['logout'])
         $("#logout").attr("onclick", "display_view('customer')");
         $("#undo").attr("onclick","undo_refill()");
         $("#redo").attr("onclick","redo_refill()");
@@ -41,7 +40,7 @@ function display_view(type_view) {
         customer.style.display = "block";
         login.style.display = "none";
         customer_type="ordinary"
-        $("#logout").text("Log In")
+        $("#logout").text(dict[lang]['login'])
         $("#logout").attr("onclick", "display_view('logout')");
         newOrder()
         $('#DisplayCredits').hide()
@@ -52,7 +51,7 @@ function display_view(type_view) {
         employee.style.display = "none";
         customer.style.display = "block";
         login.style.display = "none";
-        $("#logout").text("Log Out")
+        $("#logout").text(dict[lang]['logout'])
         $("#logout").attr("onclick", "display_view('customer')");
         customer_type="vip"
         newOrder()
@@ -65,7 +64,7 @@ function display_view(type_view) {
         employee.style.display = "none";
         customer.style.display = "none";
         login.style.display = "block";
-        $("#logout").text("Exit")
+        $("#logout").text(dict[lang]['Exit'])
         $("#logout").attr("onclick", "display_view('customer')");
         $("#undo").attr("onclick","undo()");
         $("#redo").attr("onclick","redo()");
