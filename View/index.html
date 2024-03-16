@@ -74,8 +74,8 @@
     <!--  Left menu Food or Drinks -->
     <div class="left" id="left_manu">
         <div class="food_drinks">
-            <button onclick="SwapDivsWithClick('all_drink_menu','all_food_menu')">Drinks</button>
-            <button onclick="SwapDivsWithClick('all_food_menu','all_drink_menu')">Food</button>
+            <button id="Drinks_menu" onclick="SwapDivsWithClick('all_drink_menu','all_food_menu')"></button>
+            <button id="Food_menu" onclick="SwapDivsWithClick('all_food_menu','all_drink_menu')"></button>
         </div>
         
     </div>
@@ -84,23 +84,23 @@
     <div class="menu" id="all_drink_menu" style="display: block">
         <div >
             <ul class="menu_tabs">
-                <a><li class="menu_tab active" data-category="all">All</li></a>
-                <a><li class="menu_tab" data-category="beer">Beers</li></a>
-                <a><li class="menu_tab" data-category="wine">Wines</li></a>
-                <a><li class="menu_tab" data-category="spirit">Spirits</li></a>
-                <a><li class="menu_tab" data-category="special">Specials</li></a>
+                <a><li id = "filterAll" class="menu_tab active" data-category="all"></li></a>
+                <a><li id = "filterBeers" class="menu_tab" data-category="beer"></li></a>
+                <a><li id = "filterWines" class="menu_tab" data-category="wine"></li></a>
+                <a><li id = "filterSpirits" class="menu_tab" data-category="spirit"></li></a>
+                <a><li id = "filterSpecials" class="menu_tab" data-category="special"></li></a>
             </ul>
         </div>
         <div class="menu_list" id="all_drinks">
             <div>
-                Alcohol Content: <select id="filter_select">
-                    <option value="all">All</option>
-                    <option value="< 5%">Less than 5%</option>
-                    <option value="5 - 10%">5% - 10%</option>
-                    <option value="10 - <20%">10% - Less than 20%</option>
-                    <option value="20 - <30%">20% - Less than 30%</option>
-                    <option value="30% - 40%">30% - 40%</option>
-                    <option value="> 40%">Greater than 40%</option>
+                <select id="filter_select">
+                    <option id="alcoholAll" value="all"></option>
+                    <option id="alcohol5"  value="< 5%"></option>
+                    <option id="alcohol5_10"  value="5 - 10%"></option>
+                    <option id="alcohol10_20"  value="10 - <20%"></option>
+                    <option id="alcohol20_30"  value="20 - <30%"></option>
+                    <option id="alcohol30_40"  value="30% - 40%"></option>
+                    <option id="alcohol_40"  value="> 40%"></option>
                 </select>
             </div>
             <div id="menu_drinks" ondrop="drop_to_menu(event)" ondragover="allowDrop(event)"></div>
@@ -111,9 +111,9 @@
     <div class="menu" id="all_food_menu" style="display: None">
         <div >
             <ul class="menu_tabs">
-                <a><li id="type0">Type1</li></a>
-                <a><li id="type 1">Type2</li></a>
-                <a><li id="type2">Type3</li></a>
+                <a><li id="food_type0"></li></a>
+                <a><li id="food_type1"></li></a>
+                <a><li id="food_type2"></li></a>
             </ul>
         </div>
         <div class="menu_list" id="all_food">
@@ -124,23 +124,26 @@
     <!--  Right menu with the order -->
     <div class="right" >
         <div class="credits" id="DisplayCredits"></div>
-        <div> Your order </div>
-        <div id="order" ondrop="drop_to_order(event)" ondragover="allowDrop(event)">Your order here</div>    
+        <div id="order_title"> </div>
+        <div id="order" ondrop="drop_to_order(event)" ondragover="allowDrop(event)"></div>    
 
         <!--  Different buttons to change, add customers and their orders -->
         <div class="order_options">
-            <button id= "saveOrder" onclick="save_order()">Save</button>
-            <button onclick="add_customer()">Add new customer</button>
-            <button onclick="previous_customer()">Previous customer</button>
-            <button onclick="next_customer()">Next customer</button>
-            <button id="openPopupButton" onclick="showOrders()">Show order</button>
-            <button id="payButton" onclick="paymentPopup()">Pay</button>
+            <p id="customers_limit" hidden class="message_limit"></p>
+            <p id="items_limit" hidden class="message_limit"></p>
+            <p id="quantity_limit" hidden class="message_limit"></p>
+            <button id= "saveOrder" onclick="save_order()"></button>
+            <button id="new_customer" onclick="add_customer()"></button>
+            <button id="previous_customer" onclick="previous_customer()"></button>
+            <button id="next_customer" onclick="next_customer()"></button>
+            <button id="openPopupButton" onclick="showOrders()"></button>
+            <button id="payButton" onclick="paymentPopup()"></button>
             <div id="paymentPopup">
                 <p id="paymentMessage"></p>
-                <button id="payAtBarButton" onclick="messagePaymentBar()">Pay at Bar</button>
-                <button id="payByCreditsButton" onclick="messagePaymentCredits()">Pay by Credits</button>
-                <button id="NewOrder" onclick="newOrder()"> Make new order</button>
-                <button id="ClosePayment" onclick="hidePaymentPopup()"> Close payment window</button>
+                <button id="payAtBarButton" onclick="messagePaymentBar()"></button>
+                <button id="payByCreditsButton" onclick="messagePaymentCredits()"></button>
+                <button id="NewOrder" onclick="newOrder()"></button>
+                <button id="ClosePayment" onclick="hidePaymentPopup()"></button>
             </div>
         </div>
         
@@ -300,6 +303,21 @@
     <button id="pay", onclick="exitWindow(this.id)">Pay</button>
 
 </div>
+</div>
+<!--- Change_order-->
+<div class="popup", id="change_order">
+
+    <div class="key exit", id="exit_ord", onclick="exitWindow(this.id)">X</div>
+    <p></p>
+    <br>
+    <div class="key", id="add_order", onclick="">Add item</div>
+    <div class="key", id="subtract_order", onclick="">Subtract item</div>
+    <div class="key inv" id="order_form" >
+
+    </div>
+    <button id="confirm_change">Confirm</button>
+
+    </div>
 </div>
 <!-- Your code ends here -->
 

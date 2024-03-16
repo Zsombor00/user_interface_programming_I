@@ -73,6 +73,14 @@ function getUser(userId) {
     return user
 }
 
+function getUserID(userName) {
+    // Find the user in the database
+    var user = DB.users.find(function(user) {
+        return user.username == userName;
+    });
+    return user.user_id
+}
+
 // Function to update stock of a specific item
 function updateStock(itemNr, newStock) {
     // Find the item in the beverages array
@@ -89,6 +97,8 @@ function updateStock(itemNr, newStock) {
     }
 }
 
+
+
 // Function to decrease stock by one
 function decreaseStock(itemNr) {
     // Find the item in the beverages array
@@ -100,6 +110,27 @@ function decreaseStock(itemNr) {
     if (item) {
         item.stock = item.stock-1
         return true; // Return true indicating the operation was successful
+    } else {
+        return false; // Return false indicating the item was not found
+    }
+}
+
+
+// Function to increase stock by one
+function decreaseStock(itemNr) {
+    // Find the item in the beverages array
+    var item = DB2.beverages.find(function(item) {
+        return item.nr == itemNr;
+    });
+
+    // If the item is found, update its stock
+    if (item) {
+        if (Number(item.stock)>0){
+            item.stock = item.stock+1
+            return true; // Return true indicating the operation was successful
+        }else{
+            return false
+        }
     } else {
         return false; // Return false indicating the item was not found
     }
@@ -215,4 +246,38 @@ function checkPassword(username, password){
     else
         return null
         
+    }
+
+function decreaseStockAllMenu(itemName) {
+        // Find the item in the dishes array
+        var item = DB3.dishes.find(function(item) {
+            return item.name == itemName;
+        });
+        if (!item){
+            var item = DB2.beverages.find(function(item) {
+                return item.namn == itemName;
+            });
+        }
+        if (Number(item.stock)>0){
+            item.stock = item.stock-1
+            return true; // Return true indicating the operation was successful
+        }else{
+            return false
+        }
+
+    }
+
+function increaseStockAllMenu(itemName) {
+        // Find the item in the dishes array
+        var item = DB3.dishes.find(function(item) {
+            return item.name == itemName;
+        });
+        if (!item){
+            var item = DB2.beverages.find(function(item) {
+                return item.namn == itemName;
+            });
+        }
+        item.stock = item.stock+1
+        return true; // Return true indicating the operation was successful
+
     }

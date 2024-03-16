@@ -25,7 +25,7 @@ var DB2 = {
             "sortiment": "FS",
             "ekologisk": "0",
             "koscher": "0",
-            "stock":"50",
+            "stock":"4",
             "category":"Spirit"
         }, {
             "nr": "1001",

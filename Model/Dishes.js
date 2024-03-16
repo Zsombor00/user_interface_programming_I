@@ -4,13 +4,13 @@ var DB3 = {
             "nr": "1",
             "name": "Chips",
             "priceinclvat": "30.00",
-            "stock":"50",
+            "stock":"5",
             "category":"Snack"
         }, {
             "nr": "2",
             "name": "Nuts",
             "priceinclvat": "40.00",
-            "stock":"50",
+            "stock":"3",
             "category":"Snack"
         }, {
             "nr": "3",

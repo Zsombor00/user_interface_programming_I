@@ -6,12 +6,15 @@ function login() {
     user = checkPassword(username, password)
 
     if (user){
-        if(user.credentials == 0)
+        if(user.credentials == 0){
+            user_credits = getCredits(getUserID(username ))
             display_view("VIP")
+        }
         if(user.credentials == 1)
             display_view("bartender")
         if(user.credentials == 3)
             display_view("waiter")
+        user_id=getUserID(username )
         login__status=true
     } else {
         alert("Invalid username or password.");
