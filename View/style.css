@@ -44,6 +44,10 @@ a:hover {
 
 /*UNDO-REDO MENU*/
 
+.message_limit {
+    background-color:rgb(243, 174, 90)
+}
+
 .undo_redo_menu {
     float: right;
     margin: 1%;
@@ -232,7 +236,7 @@ h1 {
     padding: 15px;
     border: 3px solid #0000cc;
     border-radius: 10px;
-    color: #ffffff;
+    color: #000000;
     position: absolute;
     top: 0;
     right: 0;
@@ -251,7 +255,7 @@ h1 {
     text-align: center;
     border: 3px solid #0000cc;
     border-radius: 10px;
-    color: #ffffff;
+    color: #000000;
 }
 div.credits {
     font-size: 20px;

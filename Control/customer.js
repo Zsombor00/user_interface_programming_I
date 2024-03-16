@@ -14,8 +14,10 @@ let current_order_id = 10002;
 var customer_type="vip"
 let undo_redo = [];
 let historyIndex = -1;
-let user_credits = getCredits(28)
-
+var user_credits = 0;
+var user_id=0;
+let limit = "false";
+var lang='rus'
 $(document).ready(function() {
     const data_drinks = getAllBeverages();
     const slicedArray = data_drinks.slice(0, 20);
@@ -25,17 +27,17 @@ $(document).ready(function() {
     slicedArray.forEach(item => {
         const menuItem = $("<div class='menu-item'>");
         const accordionButton = $("<button class='accordion'>").html(`<strong>${item.namn}</strong> - SEK ${item.prisinklmoms}`);
-        const addButton = $(`<button onclick="add_element('${item.namn}','${item.prisinklmoms}')" class='add-button'>Add</button>`);
+        const addButton = $(`<button onclick="add_element('${item.namn}','${item.prisinklmoms}')" class='add-button'>${dict[lang]['Add']}</button>`);
         const buttonContainer = $("<div class='button-container'>");
         buttonContainer.append(accordionButton);
         buttonContainer.append(addButton);
         const panel = $("<div class='panel'>").html(`
       <p>
-        <strong>Category:</strong> ${item.category}<br>
-        <strong>Packaging:</strong> ${item.forpackning}<br>
-        <strong>Captype:</strong> ${item.forslutning}<br>
-        <strong>Country of Origin:</strong> ${item.ursprunglandnamn}<br>
-        <strong>Alcohol Strength:</strong> ${item.alkoholhalt}
+        <strong>${dict[lang]['Category']}</strong> ${item.category}<br>
+        <strong>${dict[lang]['Packaging']}</strong> ${item.forpackning}<br>
+        <strong>${dict[lang]['Captype']}</strong> ${item.forslutning}<br>
+        <strong>${dict[lang]['Country of Origin']}</strong> ${item.ursprunglandnamn}<br>
+        <strong>${dict[lang]['Alcohol Strength']}</strong> ${item.alkoholhalt}
       </p>
     `);
 
@@ -43,7 +45,7 @@ $(document).ready(function() {
             $(this).toggleClass("active");
             panel.slideToggle();
         });
-
+ 
         menuItem.append(buttonContainer);
         menuItem.append(panel);
 
@@ -58,35 +60,27 @@ $(document).ready(function() {
 
     $(".menu_tab").click(function() {
         const category = $(this).data("category");
-        const selectedValue = $("#filter_select").val();
-
         $(".menu_tab").removeClass("active");
         $(this).addClass("active");
 
-        applyFilter(category, selectedValue);
+        $(".menu-item").hide();
+        if (category === "all") {
+            $(".menu-item").show();
+        } else {
+            $(`.menu-item[data-category='${category}']`).show();
+        }
     });
 
     $("#filter_select").change(function() {
         const selectedValue = $(this).val();
-        const activeTab = $(".menu_tab.active");
-        const category = activeTab.length ? activeTab.data("category") : "all";
-
-        applyFilter(category, selectedValue);
-    });
-
-    function applyFilter(category, alcoholFilter = "all") {
         $(".menu-item").hide();
 
-        if (category === "all" && alcoholFilter === "all") {
+        if (selectedValue === "all") {
             $(".menu-item").show();
-        } else if (category === "all") {
-            $(`.menu-item[data-alcohol='${alcoholFilter}']`).show();
-        } else if (alcoholFilter === "all") {
-            $(`.menu-item[data-category='${category}']`).show();
         } else {
-            $(`.menu-item[data-category='${category}'][data-alcohol='${alcoholFilter}']`).show();
+            $(`.menu-item[data-alcohol='${selectedValue}']`).show();
         }
-    }
+    });
 
     function getAlcoholRange(alcoholContent) {
         const percentage = parseFloat(alcoholContent.replace("%", ""));
@@ -115,10 +109,45 @@ $(document).ready(function() {
         menuItem.html(`
             <h2>${item.name}</h2>
             <p>${item.priceinclvat}</p>
-            <button onclick="add_element('${item.name}','${item.priceinclvat}')">Add</button>
+            <button onclick="add_element('${item.name}','${item.priceinclvat}')">${dict[lang]['Add']}</button>
         `);
         menuContainer.append(menuItem);
     });
+    $("#filterAll").text(dict[lang]['all']);
+    $("#filterBeers").text(dict[lang]['Beers']);
+    $("#filterWines").text(dict[lang]['Wines']);
+    $("#filterSpirits").text(dict[lang]['Spirits']);
+    $("#filterSpecials").text(dict[lang]['Specials']);
+    $("#Food_menu").text(dict[lang]['Food_menu']);
+    $("#Drinks_menu").text(dict[lang]['Drinks_menu']);
+    $("#alcohol").text(dict[lang]['Alcohol']);
+    $("#alcoholAll").text(dict[lang]['AlcoholAll']);
+    $("#alcohol5").text(dict[lang]['alcohol5']);
+    $("#alcohol5_10").text(dict[lang]['alcohol5_10']);
+    $("#alcohol10_20").text(dict[lang]['alcohol10_20']);
+    $("#alcohol20_30").text(dict[lang]['alcohol20_30']);
+    $("#alcohol30_40").text(dict[lang]['alcohol30_40']);
+    $("#alcohol40").text(dict[lang]['alcohol40']);
+    $("#food_type0").text(dict[lang]['food_type0']);
+    $("#food_type1").text(dict[lang]['food_type1']);
+    $("#food_type2").text(dict[lang]['food_type2']);
+
+    $("#order_title").text(dict[lang]['Title_order']);
+    $("#oder").text(dict[lang]['Order_list']);
+    $("#customer_limit").text(dict[lang]['Customers_limit']);
+    $("#items_limit").text(dict[lang]['Items_limit']);
+    $("#quantity_limit").text(dict[lang]['Quantity_limit']);
+    $("#saveOrder").text(dict[lang]['Save_order']);
+    $("#new_customer").text(dict[lang]['Add_new_customer']);
+    $("#previous_customer").text(dict[lang]['Previous_customer']);
+    $("#next_customer").text(dict[lang]['Next_customer']);
+    $("#openPopupButton").text(dict[lang]['Show_order']);
+    $("#payButton").text(dict[lang]['Pay_button']);
+    $("#payAtBarButton").text(dict[lang]['Pay_at_bar']);
+    $("#payByCreditsButton").text(dict[lang]['Pay_by_credits']);
+    $("#NewOrder").text(dict[lang]['New_order']);
+    $("#ClosePayment").text(dict[lang]['Close_payment']);
+
     // Hide elements
     $('#login_view').hide();
     $('#employee_view').hide();
@@ -185,7 +214,7 @@ function saveState() {
     }
     // console.log(undo_redo)
     const Dict = JSON.parse(JSON.stringify(OrderDict));
-    undo_redo.push([Dict, total_price]);
+    undo_redo.push([Dict, total_price, limit]);
     historyIndex = undo_redo.length-1;
     // console.log(historyIndex)
 }//save current state of order to make UNDO&REDO
@@ -197,6 +226,7 @@ function undo() {
         const prevState = undo_redo[historyIndex];
         OrderDict = prevState[0];//pick dictionary of order
         total_price = prevState[1];//pick total price
+        limit= prevState[2];
         displayOrder();
     }
     // console.log(historyIndex)
@@ -210,6 +240,7 @@ function redo() {
         OrderDict = prevState[0];//pick dictionary of order
 
         total_price = prevState[1];//pick total price
+        limit= prevState[2];
         displayOrder();
     }
 }
@@ -222,47 +253,76 @@ function SwapDivsWithClick(div1, div2) {
 
 
 function add_element(name, price){
-    $('#saveOrder').text('Save');
-    saveState() //save current state and then add new element to the order
-    if(typeof OrderDict[name]!="undefined"){
-        OrderDict[name][1] +=1;}//if this element exists in the order, we increase the count 
-
-    else{
-        OrderDict[name] =[Number(price), 1];}//
-    total_price+=Number(price)
-
+    if (decreaseStockAllMenu(name)){
+        $('#saveOrder').text(dict[lang]['Save_order']);
+        saveState() //save current state and then add new element to the order
+        if(typeof OrderDict[name]!="undefined"){
+            if  (OrderDict[name][1]<10){
+                OrderDict[name][1] +=1;//if this element exists in the order, we increase the count 
+                total_price+=Number(price)
+            }
+            else {
+                limit="quantity"
+            }
+        }
+        else{
+            if (Object.keys(OrderDict).length<10){
+                OrderDict[name] =[Number(price), 1];//
+                total_price+=Number(price)
+            }
+            else {
+                limit="items"
+            }
+        }
+        
+    }
+    else {
+        limit = "stock"
+    }
     displayOrder()//if this element doesn't exist in the order, we add it to the dictionary
 }//add new element to customer order or change element in the dictionary 
 
 function remove_element(name, price){
-    $('#saveOrder').text('Save');
+    increaseStockAllMenu(name)
+    $('#saveOrder').text(dict[lang]['Save_order']);
     saveState()  //save current state and then remove element from the order
     if(OrderDict[name][1]>1){
-        OrderDict[name][1]-=1;}//decrease the count of element if quantity>1
+        OrderDict[name][1]-=1;//decrease the count of element if quantity>1
+        if (limit==="quantity") 
+            limit="false"
+    }
     else{
-        delete OrderDict[name]}// delete element from order if quantity==1
-    total_price-=Number(price)
+        delete OrderDict[name]// delete element from order if quantity==1
+        if (limit==="items") limit="false"
+    }
+    total_price-=Number(price);
+    if (limit==="stock") 
+        limit="false"
+    console.log(OrderDict[name])
     displayOrder()
 }// delete element for the order
 
 
 function add_customer(){    
-    undo_redo = [];
-    historyIndex = -1;
+    if (all_orders.length<3){
+        undo_redo = [];
+        historyIndex = -1;
+    
+        total_price=0;
+        if(current_customer===all_orders.length){
+            OrderDict = {};
+            current_customer+=1;
+        }
+        else {
+            OrderDict = {};
+            current_customer=all_orders.length;
 
-    total_price=0;
-    if(current_customer===all_orders.length){
-        OrderDict = {};
-        current_customer+=1;
-        displayOrder()
+        }
     }
-    else {
-        OrderDict = {};
-        current_customer=all_orders.length;
-        displayOrder()
-
-    }
+    else limit="customers"
+    displayOrder()
 }// add new customer to the order
+
 
 function save_order(){
     if(current_customer===all_orders.length && OrderDict != {}){
@@ -274,7 +334,7 @@ function save_order(){
         all_orders[current_customer]=[OrderDict, total_price];
             // console.log(all_orders)
     }
-    $('#saveOrder').text('Order saved');
+    $('#saveOrder').text(dict[lang]["Saved_order"]);
 }// save order of the current customer (if order is not empty)
 
 function previous_customer(){
@@ -307,10 +367,10 @@ function paymentPopup() {
             $('#payByCreditsButton').hide();
         }
         $('#payAtBarButton').show();
-        $('#paymentMessage').html("The total price is: "+total_price+"<br>"+"Choose payment method");
+        $('#paymentMessage').html(dict[lang]['Total_price']+total_price+"<br>"+dict[lang]['Choose_payment']);
     }
     else{
-        $('#paymentMessage').html("You didn't choose any item from menu");
+        $('#paymentMessage').html(dict[lang]['Empty_order']);
         $('#ClosePayment').show();
         $('#NewOrder').hide();
         $('#payByCreditsButton').hide();
@@ -342,7 +402,7 @@ function pushOrder(all_orders, current_order_id, total_price, paid)
 // Functions to display payment confirmation message(bar payment)
 function messagePaymentBar() {
     pushOrder(all_orders, current_order_id, total_price, false);
-    $('#paymentMessage').text('You chose to pay at the bar.');
+    $('#paymentMessage').text(dict[lang]['Bar_payment']);
     $('#ClosePayment').hide();
     $('#NewOrder').show();
     $('#payByCreditsButton').hide();
@@ -354,8 +414,9 @@ function messagePaymentCredits() {
     if (user_credits >= total_price){
         user_credits -=total_price;
         pushOrder(all_orders, current_order_id, total_price, true);
-        $('#DisplayCredits').text("You have "+ user_credits +" credits");
-        $('#paymentMessage').text('Your order was paid by credits.');
+        $('#DisplayCredits').text(dict[lang]['Credits'] + user_credits);
+        decreaseCredits(user_id,total_price)
+        $('#paymentMessage').text(dict[lang]['Credits payment']);
         $('#ClosePayment').hide();
         $('#New order').show();
         $('#payByCreditsButton').hide();
@@ -363,7 +424,7 @@ function messagePaymentCredits() {
     }
     else {
         pushOrder(all_orders, current_order_id, total_price, false);
-        $('#paymentMessage').text('You do not have enough credits. Please pay at the bar.');
+        $('#paymentMessage').text(dict[lang]['Not enough credits']);
         $('#ClosePayment').show();
         $('#New order').show();
         $('#payByCreditsButton').hide();
@@ -383,20 +444,21 @@ function newOrder(){
 }//set zeros to all variables 
 
 function displayOrder() {
+    console.log(limit)
     let div = $("#order");
     div.empty();
     for (let k in OrderDict) {
         (function (currentKey) {
-            let button_add = $("<button>").text("Add").click(function () {
+            let button_add = $("<button>").text(dict[lang]['Add']).click(function () {
                 add_element(currentKey, Number(OrderDict[currentKey][0]));
             });
 
-            let button_remove = $("<button>").text("Remove").click(function () {
+            let button_remove = $("<button>").text(dict[lang]['Remove']).click(function () {
                 remove_element(currentKey, Number(OrderDict[currentKey][0]));
             });
 
-            let p = $("<p>").html("Total price: ");
-            p.html(currentKey + "<br>Price: " + OrderDict[currentKey][0] + "<br>Quantity: " + OrderDict[currentKey][1] + '<br>');
+            let p = $("<p>").html(dict[lang]['Total_price']);
+            p.html(currentKey + "<br>" +dict[lang]['Price']+ OrderDict[currentKey][0] + "<br>"+dict[lang]['Quantity'] + OrderDict[currentKey][1] + '<br>');
             p.append(button_add);
             p.append(button_remove);
             p.attr('draggable', true);
@@ -404,8 +466,27 @@ function displayOrder() {
             div.append(p);
         })(k);
     }
-    let p = $("<p>").text("Total price: " + total_price);
+    let p = $("<p>").text(dict[lang]['Total_price'] + total_price);
     div.append(p);
+    if (limit==="customers"){
+        $("#customers_limit").show()
+        $("#quantity_limit").hide()
+        $("#items_limit").hide()
+    }else if (limit==="quantity"){
+        $("#quantity_limit").show()
+        $("#items_limit").hide()
+        $("#customers_limit").hide()
+    }
+    else if (limit==="items" || limit==="stock"){
+        $("#items_limit").show()
+        $("#quantity_limit").hide()
+        $("#customers_limit").hide()
+    }else {
+        $("#items_limit").hide()
+        $("#quantity_limit").hide()
+        $("#customers_limit").hide()
+    }
+
 }//display all element in the order
 
 
@@ -415,14 +496,15 @@ function showOrders() {
         let window = $('#window_order');
         let text = "";
         for (customer in all_orders) {
-            text += `Customer ${Number(customer) + 1}: `;
+            text += dict[lang]['Customer'] +(Number(customer)+1) +": ";
             for (element in all_orders[customer][0]) {
                 text += all_orders[customer][0][element][1] + " " + element + ", ";
             }
-            text += "Price: " + all_orders[customer][1];
+            text += dict[lang]['Price'] + all_orders[customer][1];
             text += "<br>";
         }
         window.html(text);
+        window.append(dict[lang]['Total_price']+ total_price)
         main.show();
         main.click(function () {
             main.hide();
