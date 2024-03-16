@@ -19,62 +19,9 @@ const cnst = {
 //
 
 // Current dictionary
-var dict = {};
 
-const dict_eng = {
-    // Log in screen
-    'login': "Log in",
-    'username': 'Username:',
-    'password': 'Password:',
+const dict= {
 
-    // Customer view
-
-
-    // Bartender view
-    'ord': "Orders",
-    'inv': "Inventory",
-    'vip': "VIP customers",
-    'security' : 'Security',
-    'logout': "Log In",
-
-    'ord_text': "",
-    'ordID' : 'Order ID: ',
-    'tableNr' : ', Table number: ',
-    'pay': 'Pay selected order',
-    'pay_text': '',
-    'split_bill': 'Split bill',
-    'group_bill': 'Group bill',
-
-    'inv_text': "",
-    'inv_low': "These items are low in stock, consider refill:",
-    'inv_norm': "These items are high in stock:",
-    'refill': 'Refill',
-    'unavailable': 'Mark as unavailable',
-    'available': 'Mark as available',
-    'remove': 'Remove permanently',
-    'refill_text': 'List of selected items to refill will be shown here',
-    'add_inv' : 'Add new item',
-    'productName': "Product name: ",
-    'price': ", Product price: ",
-    'stock': ", Stock: ",
-    'send_refill': "Place order",
-
-    'vip_text': "",
-    'add_vip': "Add new VIP",
-    'credit': 'User profile',
-    'credit_text': '',
-    'credit_button': 'Add credits',
-    'user_id': "User ID: ",
-    'user_name': "User name: ",
-    'current_credits': "Current credits: ",
-
-    'remove_text_1': 'Are you sure you want to remove the following item: ',
-    'remove_text_2': '(This choice can not be undone)',
-
-    'add_item_text': 'Fill in the form below to add new item',
-
-    'security_text_1': 'Are you sure you want to call sequrity?',
-    'security_text_2': 'Security has been called, stay put.',
     'eng':{
         'all':'All',
         'Beers':'Beers',
@@ -124,7 +71,81 @@ const dict_eng = {
         'Packaging':'Category: ',
         'Captype':'Captype: ',
         'Country of Origin':'Country of Origin: ',
-        'Alcohol Strength':'Alcohol Strength: '
+        'Alcohol Strength':'Alcohol Strength: ',
+
+        //To translate:
+        // Log in screen
+        'login': "Log in",
+        'username': 'Username:',
+        'password': 'Password:',
+
+        // Bartender view
+        'ord': "Orders",
+        'inv': "Inventory",
+        'vip': "VIP customers",
+        'security' : 'Security',
+        'logout': "Log In",
+
+        'ord_text': "",
+        'ord_type0': 'New',
+        'ord_type1': 'Unpaid',
+        'ord_type2': 'Paid',
+        'ordID' : 'Order ID: ',
+        'tableNr' : ', Table number: ',
+        'pay': 'Pay selected order',
+        'pay_text': '',
+        'split_bill': 'Split bill',
+        'group_bill': 'Group bill',
+        'total_price': 'Total price: ',
+        'customer': 'Customer: ',
+        'price': ' Price: ',
+
+        'inv_text': "",
+        'inv_low': "These items are low in stock, consider refill:",
+        'inv_norm': "These items are high in stock:",
+        'refill': 'Refill',
+        'unavailable': 'Mark as unavailable',
+        'available': 'Mark as available',
+        'remove': 'Remove permanently',
+        'refill_text': 'List of selected items to refill will be shown here',
+        'add_inv' : 'Add new item',
+        'productName': "Product name: ",
+        'price': ", Product price: ",
+        'stock': ", Stock: ",
+        'send_refill': "Place order",
+
+        'vip_text': "",
+        'VIPs': "VIPs",
+        'add_vip': "Add new VIP",
+        'credit': 'User profile',
+        'credit_text': '',
+        'credit_button': 'Add credits',
+        'user_id': "User ID: ",
+        'user_name': "User name: ",
+        'current_credits': "Current credits: ",
+        'creditsToAdd': 'Credits to add: ',
+
+        'yes': 'Yes',
+        'no': 'No',
+        'discount': 'DISCOUNT(between 1% and 100% off):',
+        'comment': 'Comment (0 to 30 characters):',
+        'add': 'Add',
+        'cancel': 'Cancel',
+        'submit': 'Apply discount',
+        'reset': 'Reset discount',
+        'add_order': 'Add item',
+        'subtract_order': 'Remove item',
+        'confirm': 'Confirm',
+        'exit': 'X',
+
+
+        'remove_text_1': 'Are you sure you want to remove the following item: ',
+        'remove_text_2': '(This choice can not be undone)',
+
+        'add_item_text': 'Fill in the form below to add new item',
+
+        'security_text_1': 'Are you sure you want to call sequrity?',
+        'security_text_2': 'Security has been called.',
     },
     'rus':{
         'all':'Всё',
@@ -176,8 +197,204 @@ const dict_eng = {
         'Packaging':'Упаковка: ',
         'Captype':'Captype: ',
         'Country of Origin':'Страна производства: ',
-        'Alcohol Strength':'Крепость: '
-    }
+        'Alcohol Strength':'Крепость: ',
+
+         //To translate:
+        // Log in screen
+        'login': "Log in",
+        'username': 'Username:',
+        'password': 'Password:',
+
+        // Bartender view
+        'ord': "Orders",
+        'inv': "Inventory",
+        'vip': "VIP customers",
+        'security' : 'Security',
+
+        'ord_text': "",
+        'ord_type0': 'New',
+        'ord_type1': 'Unpaid',
+        'ord_type2': 'Paid',
+        'ordID' : 'Order ID: ',
+        'tableNr' : ', Table number: ',
+        'pay': 'Pay selected order',
+        'pay_text': '',
+        'split_bill': 'Split bill',
+        'group_bill': 'Group bill',
+        'total_price': 'Total price: ',
+        'customer': 'Customer: ',
+        'price': ' Price: ',
+
+        'inv_text': "",
+        'inv_low': "These items are low in stock, consider refill:",
+        'inv_norm': "These items are high in stock:",
+        'refill': 'Refill',
+        'unavailable': 'Mark as unavailable',
+        'available': 'Mark as available',
+        'remove': 'Remove permanently',
+        'refill_text': 'List of selected items to refill will be shown here',
+        'add_inv' : 'Add new item',
+        'productName': "Product name: ",
+        'stock': ", Stock: ",
+        'send_refill': "Place order",
+
+        'vip_text': "",
+        'VIPs': "VIPs",
+        'add_vip': "Add new VIP",
+        'credit': 'User profile',
+        'credit_text': '',
+        'credit_button': 'Add credits',
+        'user_id': "User ID: ",
+        'user_name': "User name: ",
+        'current_credits': "Current credits: ",
+        'creditsToAdd': 'Credits to add: ',
+
+        'yes': 'Yes',
+        'no': 'No',
+        'discount': 'DISCOUNT(between 1% and 100% off):',
+        'comment': 'Comment (0 to 30 characters):',
+        'add': 'Add',
+        'cancel': 'Cancel',
+        'submit': 'Apply discount',
+        'reset': 'Reset discount',
+        'add_order': 'Add item',
+        'subtract_order': 'Remove item',
+        'confirm': 'Confirm',
+        'exit': 'X',
+
+
+        'remove_text_1': 'Are you sure you want to remove the following item: ',
+        'remove_text_2': '(This choice can not be undone)',
+
+        'add_item_text': 'Fill in the form below to add new item',
+
+        'security_text_1': 'Are you sure you want to call sequrity?',
+        'security_text_2': 'Security has been called.',
+    },
+    'swe':{
+        'all':'Allt',
+        'Beers':'Öl',
+        'Wines':'Vin',
+        'Spirits':'Sprit',
+        'Specials':'Special',
+        'Food_menu':'Mat',
+        'Drinks_menu':'Dryck',
+        'AlcoholAll':'Varje alkoholhalt',
+        'alcohol5':"Mindre än 5%",
+        'alcohol5_10':'5% - Mindre än 10%',
+        'alcohol10_20':'10% - Mindre än 20%',
+        'alcohol20_30':'20% - Mindre än 30%',
+        'alcohol30_40':'30% - Mindre än 40%',
+        'alcohol40':'Mer än 40%',
+        'food_type0':'Typ 1',
+        'food_type1':'Typ 2',
+        'food_type2':'Typ 3',
+        'Title_order':'Din beställning ',
+        'Order_list':'Din beställning visas här',
+        'Customers_limit':'Du har nått max antal kunder i en beställning.',
+        'Items_limit':'Du har nått max antal varor för en kund.',
+        'Quantity_limit':'Du har nått max antal av en vara från menyn för en beställning.',
+        'Save_order':'Spara',
+        'Add_new_customer':'Lägg till ny kund',
+        'Previous_customer':'Föregående kund',
+        'Next_customer':'Nästa kund',
+        'Show_order':'Visa beställning',
+        'Pay_button':'Betala',
+        'Pay_at_bar':'Betala vid bardisk',
+        'Pay_by_credits':'Betala med kredit',
+        'New_order':'Lägg ny beställning',
+        'Close_payment':'Stäng betalningsfönster',
+        'Total_price':'Totalt: ',
+        'Choose_payment':'Välj betalningsmetod',
+        'Empty_order':"Du har inte valt någon vara från menyn.",
+        'Bar_payment':'Du valde att betala vid bardisken.',
+        'Credits payment':'Din beställning är betald med kredit.',
+        'Credits':'Din kredit: ',
+        'Not enough credits':'Du har inte tillräcklig kredit. Var god betala vid baren.',
+        'Price':'Pris: ',
+        'Quantity':'Antal: ',
+        'Customer ':'Kund',
+        'Add':'Lägg till',
+        'Remove':'Ta bort',
+        'Category':'Kategori: ',
+        'Packaging':'Förpackning: ',
+        'Captype':'Förslutning: ',
+        'Country of Origin':'Ursprungsland: ',
+        'Alcohol Strength':'Alkoholhalt: ',
+
+        //To translate:
+        // Log in screen
+        'login': "Logga in",
+        'username': 'Användarnamn:',
+        'password': 'Lösenord:',
+
+        // Bartender view
+        'ord': "Beställningar",
+        'inv': "Lager",
+        'vip': "VIP-kunder",
+        'security' : 'Väktare',
+
+        'ord_text': "",
+        'ord_type0': 'Nya',
+        'ord_type1': 'Obetalda',
+        'ord_type2': 'Betalda',
+        'ordID' : 'Beställnings-ID: ',
+        'tableNr' : ', Bordsnummer: ',
+        'pay': 'Betala vald beställning',
+        'pay_text': '',
+        'split_bill': 'Delad nota',
+        'group_bill': 'Gemensam nota',
+        'total_price': 'Totalt: ',
+        'customer': 'Kund: ',
+        'price': ' Pris: ',
+
+        'inv_text': "",
+        'inv_low': "Dessa varor är snart slut på lagret, överväg att beställa in:",
+        'inv_norm': "Dessa varor finns inne på lagret:",
+        'refill': 'Beställ in',
+        'unavailable': 'Markera som otillgänglig',
+        'available': 'Markera som tillgänglig',
+        'remove': 'Ta bort permanent',
+        'refill_text': 'Valda varor att beställa in visas här:',
+        'add_inv' : 'Lägg till ny vara',
+        'productName': "Varans namn: ",
+        'price': ", Pris: ",
+        'stock': ", Antal: ",
+        'send_refill': "Lägg beställning",
+
+        'vip_text': "",
+        'VIPs': "VIP-kunder",
+        'add_vip': "Lägg till ny VIP",
+        'credit': 'Användarprofil',
+        'credit_text': '',
+        'credit_button': 'Lägg till kredit',
+        'user_id': "Användar-ID: ",
+        'user_name': "Användarens namn: ",
+        'current_credits': "Nuvarande kredit: ",
+        'creditsToAdd': 'Kredit att lägga till: ',
+
+        'yes': 'Ja',
+        'no': 'Nej',
+        'discount': 'RABATT (mellan 1% och 100%):',
+        'comment': 'Kommentar (0 to 30 tecken):',
+        'add': 'Lägg till',
+        'cancel': 'Avbryt',
+        'submit': 'Använd rabatt',
+        'reset': 'Återställ rabatt',
+        'add_order': 'Lägg till vara',
+        'subtract_order': 'Ta bort vara',
+        'confirm': 'Bekräfta',
+        'exit': 'X',
+
+
+        'remove_text_1': 'Är du säker på att du vill radera fäljande vara: ',
+        'remove_text_2': '(Detta val kan inte ångras)',
+
+        'add_item_text': 'Fyll i formuläret nedan för att lägga till en vara',
+
+        'security_text_1': 'Är du säker på att du vill kalla på väktare?',
+        'security_text_2': 'Väktare har kallats.',
+    },
 
 }
 

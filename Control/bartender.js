@@ -26,7 +26,7 @@ function createOrderElement(order){
     elem.classList.add('key', 'ord');
     elem.id = order["orderID"];
     elem.onclick = function() {showOrder(order["order_id"])};
-    elem.innerHTML = dict['ordID'] + order["order_id"] + dict['tableNr'] + order["tableNr"];
+    elem.innerHTML = dict[lang]['ordID'] + order["order_id"] + dict[lang]['tableNr'] + order["tableNr"];
     return elem
 }
 
@@ -81,7 +81,7 @@ function showOrder(order_id) {
             break;
         }
     } 
-    $('#payList').append("Total price: " + totalPrice);
+    $('#payList').append(dict[lang]['total_price'] + totalPrice);
 
     // Activate button which shows split bill
     $('#split_bill').show();
@@ -103,7 +103,7 @@ function showOrder(order_id) {
                     var n = j + 1;
                     // Activate pay function
                     elem.onclick = function () { pay_order(suborderPrice) };
-                    elem.innerHTML = "Customer: " + n + "  Price: " + suborderPrice + "\r";
+                    elem.innerHTML = dict[lang]['customer'] + n +  dict[lang]['price'] + suborderPrice + "\r";
                     $('#billList').append(elem);
                 }
                 break;
@@ -122,7 +122,7 @@ function showOrder(order_id) {
         elem1.classList.add('key');
         elem1.id = i;
         elem1.onclick = function () { pay_order(totalPrice) };
-        elem1.innerHTML = "Total price: " + totalPrice + "\r";
+        elem1.innerHTML = dict[lang]['total_price'] + totalPrice + "\r";
         $('#billList').append(elem1);
 
 
@@ -186,7 +186,7 @@ function updateOrder(order_id, suborder_index, productName, quantity){
 // Function which opens the pay dialogue
 function pay_order(n){
     toggleWindow("discount_popup");
-    $('#discount_form').html("Total price: "+ n.toFixed(1) + "\r");
+    $('#discount_form').html(dict[lang]['total_price']+ n.toFixed(1) + "\r");
 
     // Create button which applies the discount from input
     var btn = document.getElementById('submit');
@@ -195,14 +195,14 @@ function pay_order(n){
         k = document.getElementById("dis_num").value;
         var discount_n = 1-(k*0.01);                         
         var num = n*discount_n;
-        $('#discount_form').html("Total price: "+ num.toFixed(1) + "\r");
+        $('#discount_form').html(dict[lang]['total_price']+ num.toFixed(1) + "\r");
     });
 
     // Create button which resets the discount
     var bte = document.getElementById('reset');
     bte.addEventListener('click',function(){
         document.getElementById("dis_num").value='';
-        $('#discount_form').html("Total price: "+ n.toFixed(1) + "\r");
+        $('#discount_form').html(dict[lang]['total_price']+ n.toFixed(1) + "\r");
     })
 }
 
@@ -219,7 +219,7 @@ function createAvailableKey(ID){
     key.classList.add('key', 'refill');
     key.id = ID+"available";
     key.onclick = function() {toggleAvailable(ID)}; //Button toggles availability
-    key.innerHTML = dict['unavailable'];
+    key.innerHTML = dict[lang]['unavailable'];
     return key
 }
 
@@ -229,7 +229,7 @@ function createRemoveKey(ID){
     key.classList.add('key', 'refill');
     key.id = ID+"remove";
     key.onclick = function() {removeProduct(ID)}; //Button opens remove dialogue
-    key.innerHTML = dict['remove'];
+    key.innerHTML = dict[lang]['remove'];
     return key
 }
 
@@ -239,7 +239,7 @@ function createRefillKey(ID, price){
     key.classList.add('key', 'refill');
     key.id = ID+"refill";
     key.onclick = function() {add_refill(ID, price)}; //Button sends the ID of the corresponding item
-    key.innerHTML = dict['refill'];
+    key.innerHTML = dict[lang]['refill'];
     return key
 }
 
@@ -248,7 +248,7 @@ function createInventoryElement(product){
     elem = document.createElement("div");
     elem.classList.add('key', 'inv');
     elem.id = product[ "artikelid"];
-    elem.innerHTML = dict['productName'] + product["namn"] + dict['price'] + product["prisinklmoms"] + dict['stock'] + product["stock"];
+    elem.innerHTML = dict[lang]['productName'] + product["namn"] + dict[lang]['price'] + product["prisinklmoms"] + dict[lang]['stock'] + product["stock"];
     // Create buttons and append them to the row
     refillKey = createRefillKey(elem.id, product["prisinklmoms"]);
     availableKey = createAvailableKey(elem.id);
@@ -373,19 +373,19 @@ function updateRefillOrder(){
             });
 
             var button_add = document.createElement("button");
-            button_add.textContent = "Add " ;// create add button 
+            button_add.textContent = dict[lang]["Add"] ;// create add button 
             button_add.addEventListener("click", function () {
                 add_refill(currentKey);//add element to the order by clicking on add button
             });
 
             var button_remove = document.createElement("button");
-            button_remove.textContent = "Remove";// create remove button 
+            button_remove.textContent = dict[lang]["Remove"];// create remove button 
             button_remove.addEventListener("click", function () {
                 remove_refill(currentKey);//remove  element from the order by clicking on remove button
             });
             var p = document.createElement("p");
-            var text1 = product["namn"] + "<br>Price:" + refillOrder[currentKey][0]+ "<br>Quantity:" +refillOrder[currentKey][1]+'<br>';
-            p.innerHTML = "Total price:"
+            var text1 = product["namn"] + "<br>" + dict[lang]['Price'] + refillOrder[currentKey][0]+ "<br>" + dict[lang]['Quantity'] +refillOrder[currentKey][1]+'<br>';
+            p.innerHTML = dict[lang]['total_price']
             p.innerHTML = text1;
             p.appendChild(button_add);
             p.appendChild(button_remove);
@@ -428,14 +428,14 @@ function updateInventoryView(){
         if(inventoryList[i]['available'])
         {
             $('#' + productID ).css('opacity', 1);
-            $('#' + productID + "available").text(dict['unavailable']);
+            $('#' + productID + "available").text(dict[lang]['unavailable']);
         }
             
         
         else
         {
             $('#' + productID ).css('opacity', 0.5);
-            $('#' + productID + "available").text(dict['available']);
+            $('#' + productID + "available").text(dict[lang]['available']);
         }
     }
 
@@ -477,7 +477,7 @@ function removeProduct(ID){
     var item =  DB2.beverages.find(function(item) {
         return item["artikelid"] === ID;
     });
-    text = dict['remove_text_1'] + item['productName'] +"? <br>" + dict['remove_text_2'];
+    text = dict[lang]['remove_text_1'] + item['productName'] +"? <br>" + dict[lang]['remove_text_2'];
     $("#remove_item_text").html(text)
 }
 
@@ -551,7 +551,7 @@ function createUserElement(user){
     elem = document.createElement("div");
     elem.classList.add('key', 'cust');
     elem.id = user["user_id"];
-    elem.innerHTML = dict['user_id'] + user["user_id"] +", " + dict['user_name'] + user["first_name"] + " " + user["last_name"];
+    elem.innerHTML = dict[lang]['user_id'] + user["user_id"] +", " + dict[lang]['user_name'] + user["first_name"] + " " + user["last_name"];
     elem.onclick = function() {showUser(user["user_id"])};
     return elem;
 }
@@ -573,7 +573,7 @@ function updateVIPView(){
 function showUser(ID){
     user = getUser(ID)
     $('#credit_text').html("");
-    text = dict['user_id'] + user["user_id"] + "<br>" + dict['user_name'] + user["first_name"] + " " + user["last_name"] + "<br>" + dict['current_credits'] + getCredits(ID);
+    text = dict[lang]['user_id'] + user["user_id"] + "<br>" + dict[lang]['user_name'] + user["first_name"] + " " + user["last_name"] + "<br>" + dict[lang]['current_credits'] + getCredits(ID);
     $('#credit_text').html(text);
     $('#creditButton').show();
     $('#creditsToAdd').show();
@@ -598,14 +598,14 @@ function addCredits(){
 //Function to open security dialogue
 function openSecurity(){
     toggleWindow("security_popup");
-    $('#security_text').text(dict['security_text_1']);
+    $('#security_text').text(dict[lang]['security_text_1']);
     $('#security_yes').show();
     $('#security_no').show();
 
 }
 // Function to call security
 function callSecurity(){
-    $('#security_text').text(dict['security_text_2']);
+    $('#security_text').text(dict[lang]['security_text_2']);
     $('#security_yes').hide();
     $('#security_no').hide();
 }

@@ -17,7 +17,7 @@ let historyIndex = -1;
 var user_credits = 0;
 var user_id=0;
 let limit = "false";
-var lang='rus'
+var lang='swe'
 $(document).ready(function() {
     const data_drinks = getAllBeverages();
     const slicedArray = data_drinks.slice(0, 20);
@@ -156,47 +156,79 @@ $(document).ready(function() {
 
     // Translate and set text for various elements
     //Login screen
-    $("#login_header").text(dict['login']);
-    $('label[for="username"]').text(dict['username']);
-    $('label[for="password"]').text(dict['password']);
-    $("#login_button").text(dict['login']);
-    $("#logout").text(dict['login']);
+    $("#login_header").text(dict[lang]['login']);
+    $('label[for="username"]').text(dict[lang]['username']);
+    $('label[for="password"]').text(dict[lang]['password']);
+    $("#login_button").text(dict[lang]['login']);
+    $("#logout").text(dict[lang]['login']);
 
     // Bartender view
-    $("#ordButton").text(dict['ord']);
-    $("#invButton").text(dict['inv']);
-    $("#VIPButton").text(dict['vip']);
-    $("#security").text(dict['security']);
+    $("#ordButton").text(dict[lang]['ord']);
+    $("#invButton").text(dict[lang]['inv']);
+    $("#VIPButton").text(dict[lang]['vip']);
+    $("#security").text(dict[lang]['security']);
 
-    $("#ord_title").text(dict['ord']);
-    $("#ord_text").text(dict['ord_text']);
-    $("#pay_title").text(dict['pay']);
-    $("#pay_text").text(dict['pay_text']);
-    $("#split_bill").text(dict['split_bill']);
-    $("#group_bill").text(dict['group_bill']);
+    $("#order_type0").text(dict[lang]['ord_type0']);
+    $("#order_type1").text(dict[lang]['ord_type1']);
+    $("#order_type2").text(dict[lang]['ord_type2']);
+    $("#ord_title").text(dict[lang]['ord']);
+    $("#ord_text").text(dict[lang]['ord_text']);
+    $("#pay_title").text(dict[lang]['pay']);
+    $("#pay_text").text(dict[lang]['pay_text']);
+    $("#split_bill").text(dict[lang]['split_bill']);
+    $("#group_bill").text(dict[lang]['group_bill']);
     $('#split_bill').hide();
     $('#group_bill').hide();
 
-    $("#inv_title").text(dict['inv']);
-    $("#inv_text").text(dict['inv_text']);
-    $("#inv_low").text(dict['inv_low']);
-    $("#inv_norm").text(dict['inv_norm']);
-    $("#add_inv").text(dict['add_inv']);
-    $("#refill_title").text(dict['refill']);
-    $("#refill_text").text(dict['refill_text']);
-    $("#add_item_text").text(dict['add_item_text']);
-    $("#send_refill").text(dict['send_refill']);
+    $("#inv_title").text(dict[lang]['inv']);
+    $("#all").text(dict[lang]['all']);
+    $("#beers").text(dict[lang]['Beers']);
+    $("#wines").text(dict[lang]['Wines']);
+    $("#spirits").text(dict[lang]['Spirits']);
+    $("#specials").text(dict[lang]['Specials']);
+    $("#inv_text").text(dict[lang]['inv_text']);
+    $("#inv_low").text(dict[lang]['inv_low']);
+    $("#inv_norm").text(dict[lang]['inv_norm']);
+    $("#add_inv").text(dict[lang]['add_inv']);
+    $("#refill_title").text(dict[lang]['refill']);
+    $("#refill_text").text(dict[lang]['refill_text']);
+    $("#add_item_text").text(dict[lang]['add_item_text']);
+    $("#send_refill").text(dict[lang]['send_refill']);
     $('#send_refill').hide();
 
-    $("#VIP_title").text(dict['vip']);
-    $("#VIP_text").text(dict['vip_text']);
-    $("#add_VIP").text(dict['add_vip']);
-    $("#credit_title").text(dict['credit']);
-    $("#credit_text").text(dict['credit_text']);
-    $("#creditButton").text(dict['credit_button']);
+    $("#VIP_title").text(dict[lang]['vip']);
+    $("#VIPs").text(dict[lang]['VIPs']);
+    $("#VIP_text").text(dict[lang]['vip_text']);
+    $("#add_VIP").text(dict[lang]['add_vip']);
+    $("#credit_title").text(dict[lang]['credit']);
+    $("#credit_text").text(dict[lang]['credit_text']);
+    $("#creditButton").text(dict[lang]['credit_button']);creditsToAdd
+    $("#creditsToAdd").text(dict[lang]['creditsToAdd']);
     $('#creditButton').hide();
     $('#creditsToAdd').hide();
     $('label[for="creditsToAdd"]').hide();
+
+    $("#security_yes").text(dict[lang]['yes']);
+    $("#remove_yes").text(dict[lang]['yes']);
+    $("#security_no").text(dict[lang]['no']);
+    $("#remove_no").text(dict[lang]['no']);
+    $("#add_item").text(dict[lang]['add']);
+    $("#cancel").text(dict[lang]['cancel']);
+    $("#submit").text(dict[lang]['submit']);
+    $("#reset").text(dict[lang]['reset']);
+    $("#add_order").text(dict[lang]['add_order']);
+    $("#subtract_order").text(dict[lang]['subtract_order']);
+    $("#confirm_change").text(dict[lang]['confirm']);
+    $("#pay").text(dict[lang]['Pay_button']);
+    $("#exit_security").text(dict[lang]['exit']);
+    $("#exit_remove").text(dict[lang]['exit']);  
+    $("#exit_add").text(dict[lang]['exit']);  
+    $("#exit_dis").text(dict[lang]['exit']);
+    $("#exit_ord").text(dict[lang]['exit']);     
+
+    $('label[for="discount"]').text(dict[lang]['discount']);
+    $('label[for="comment"]').text(dict[lang]['comment']);
+
 
     $("#logout").text(dict['logout']);
 
