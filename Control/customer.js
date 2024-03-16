@@ -9,6 +9,7 @@ let OrderDict = {};// dictionary of all element in order of one person
 let all_orders =[];// array of all customer orders
 let current_customer=0;// save the index of current customer
 let total_price=0;
+let current_order_id = 10002;
 
 var customer_type="vip"
 let undo_redo = [];
@@ -313,9 +314,26 @@ function hidePaymentPopup() {
     $('#paymentPopup').fadeOut();
 }//hide popup window for payment
 
+// Function to push order to database
+function pushOrder(all_orders, current_order_id, total_price, paid)
+{
+    DB_orders.push({
+        "order_id": current_order_id,
+        "bartender_id": "B00000",
+        "customer_id": "C00001",
+        "amount": total_price,
+        'tableNr' : 7,
+        "timestamp": "2023-11-10 19:04:13",
+        "suborder": all_orders,
+        "paid": paid
+    });
+    current_order_id +=1;
+    updateOrderView();
+}
 
 // Functions to display payment confirmation message(bar payment)
 function messagePaymentBar() {
+    pushOrder(all_orders, current_order_id, total_price, false);
     $('#paymentMessage').text('You chose to pay at the bar.');
     $('#ClosePayment').hide();
     $('#NewOrder').show();
@@ -327,6 +345,7 @@ function messagePaymentBar() {
 function messagePaymentCredits() {
     if (user_credits >= total_price){
         user_credits -=total_price;
+        pushOrder(all_orders, current_order_id, total_price, true);
         $('#DisplayCredits').text("You have "+ user_credits +" credits");
         $('#paymentMessage').text('Your order was paid by credits.');
         $('#ClosePayment').hide();
@@ -335,6 +354,7 @@ function messagePaymentCredits() {
         $('#payAtBarButton').hide();
     }
     else {
+        pushOrder(all_orders, current_order_id, total_price, false);
         $('#paymentMessage').text('You do not have enough credits. Please pay at the bar.');
         $('#ClosePayment').show();
         $('#New order').show();

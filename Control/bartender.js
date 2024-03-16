@@ -60,10 +60,10 @@ function showOrder(order_id) {
     $('#billList').html("");
     var totalPrice = 0;
     // Find the right order
-    for (i = 0; i < DB_order_example.length; i++) {
-        if (DB_order_example[i].order_id == order_id && DB_order_example[i].paid === false) {
+    for (i = 0; i < DB_orders.length; i++) {
+        if (DB_orders[i].order_id == order_id && DB_orders[i].paid === false) {
             // Pick out the list of suborders
-            var suborder = DB_order_example[i]["suborder"];
+            var suborder = DB_orders[i]["suborder"];
             // For each suborder
             for (j in suborder) {
                 // Get the suborder and add the price to the total price
@@ -87,11 +87,11 @@ function showOrder(order_id) {
     $('#split_bill').show();
     $('#split_bill').click(function () {
         $('#billList').html("");
-        for (i = 0; i < DB_order_example.length; i++) {
+        for (i = 0; i < DB_orders.length; i++) {
             // Find the right order
-            if (DB_order_example[i].order_id == order_id && DB_order_example[i].paid === false) {
+            if (DB_orders[i].order_id == order_id && DB_orders[i].paid === false) {
                 // Fetch the list of suborders
-                let suborders = DB_order_example[i]["suborder"];
+                let suborders = DB_orders[i]["suborder"];
                 // Create a pay button for each suborder
                 for (j = 0; j < suborders.length; j++) {
                     // Create element
@@ -164,7 +164,7 @@ function change_order(order_id, suborder_index, productName, quantity) {
 //Function which updates order database with new quantity of product
 function updateOrder(order_id, suborder_index, productName, quantity){
     // Find the right order  
-    var order= DB_order_example.find(function(order) {
+    var order= DB_orders.find(function(order) {
         return order.order_id == order_id;
     });
     
