@@ -79,6 +79,27 @@ $(document).ready(function() {
         applyFilter(category, selectedValue);
     });
 
+    // Function for inventory tabs in bartender view
+    $(".inv_tab").click(function() {
+        const category = $(this).data("category");
+        const selectedValue = $("#filter_select").val();
+    
+        $(".inv_tab").removeClass("active");
+        $(this).addClass("active");
+    
+        applyInventoryFilter(category, selectedValue);
+    });
+
+    // Function for order tabs in bartender view
+    $(".ord_tab").click(function() {
+        const category = $(this).data("category");
+    
+        $(".ord_tab").removeClass("active");
+        $(this).addClass("active");
+    
+        applyOrderFilter(category);
+    });
+
     $("#filter_select").change(function() {
         const selectedValue = $(this).val();
         const activeTab = $(".menu_tab.active");

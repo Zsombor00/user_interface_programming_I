@@ -176,9 +176,9 @@
     <div class="menu order", id="orders">
         <div >
             <ul class="menu_tabs">
-                <a><li id="order_type0"></li></a>
-                <a><li id="order_type1"></li></a>
-                <a><li id="order_type2"></li></a>
+                <a><li id="order_type0" class="ord_tab active" data-category="false"></li></a>
+                <a><li id="order_type1" class="ord_tab" data-category="false"></li></a>
+                <a><li id="order_type2" class="ord_tab" data-category="true"></li></a>
             </ul>
         </div>
         <div class="menu_list">
@@ -206,11 +206,11 @@
     <div class="menu inventory", id="inventory">
         <div >
             <ul class="menu_tabs">
-                <a><li id="all"></li></a>
-                <a><li id="beers"></li></a>
-                <a><li id="wines"></li></a>
-                <a><li id="spirits"></li></a>
-                <a><li id="specials"></li></a>
+                <a><li id = "all" class="inv_tab active" data-category="all"></li></a>
+                <a><li id = "beers" class="inv_tab" data-category="beer"></li></a>
+                <a><li id = "wines" class="inv_tab" data-category="wine"></li></a>
+                <a><li id = "spirits" class="inv_tab" data-category="spirit"></li></a>
+                <a><li id = "specials" class="inv_tab" data-category="special"></li></a>
             </ul>
         </div>
         <div class="menu_list">
@@ -231,10 +231,10 @@
         </div>        
     </div>
     <!--- Right column handling refill of inventory -->
-    <div class="right inventory", id="inventoryRefill">
+    <div class="right inventory", id="inventoryRefill" ondrop="drop_to_refill(event)" ondragover="allowDrop(event)">
         <h2 id="refill_title"></h2>
         <p id="refill_text"></p>
-        <div id = "refillList", class="list" ondrop="drop_to_refill(event)" ondragover="allowDrop(event)">
+        <div id = "refillList", class="list">
 
         </div>
         <button id="send_refill" onclick="sendRefill()"></button>
@@ -307,7 +307,7 @@
     <div class="key inv" id="discount_form" >
 
     </div>
-    <button id="pay", onclick="exitWindow(this.id)"></button>
+    <button id="pay"></button>
 
 </div>
 </div>

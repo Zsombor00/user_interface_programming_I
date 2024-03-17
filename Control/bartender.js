@@ -23,10 +23,11 @@ function toggleView(buttonID) {
 // Function which creates a HTML element for an order
 function createOrderElement(order){
     elem = document.createElement("div");
-    elem.classList.add('key', 'ord');
+    elem.classList.add('key', 'ord', 'ord-item');
     elem.id = order["orderID"];
     elem.onclick = function() {showOrder(order["order_id"])};
     elem.innerHTML = dict[lang]['ordID'] + order["order_id"] + dict[lang]['tableNr'] + order["tableNr"];
+    elem.setAttribute('data-category', order["paid"].toString());
     return elem
 }
 
@@ -41,6 +42,15 @@ function updateOrderView(){
         $('#orderList').append(order);
 
     }
+    applyOrderFilter(current_order_filter)
+}
+
+// Functions which filter orders
+current_order_filter = "false";
+function applyOrderFilter(category) {
+    $(".ord-item").hide();
+    $(`.ord-item[data-category='${category}']`).show();
+    current_order_filter = category;
 }
 
 // Create a bill element with name and ammount of product in order
@@ -61,7 +71,7 @@ function showOrder(order_id) {
     var totalPrice = 0;
     // Find the right order
     for (i = 0; i < DB_orders.length; i++) {
-        if (DB_orders[i].order_id == order_id && DB_orders[i].paid === false) {
+        if (DB_orders[i].order_id == order_id) {
             // Pick out the list of suborders
             var suborder = DB_orders[i]["suborder"];
             // For each suborder
@@ -84,12 +94,13 @@ function showOrder(order_id) {
     $('#payList').append(dict[lang]['total_price'] + totalPrice);
 
     // Activate button which shows split bill
+    
     $('#split_bill').show();
     $('#split_bill').click(function () {
         $('#billList').html("");
         for (i = 0; i < DB_orders.length; i++) {
             // Find the right order
-            if (DB_orders[i].order_id == order_id && DB_orders[i].paid === false) {
+            if (DB_orders[i].order_id == order_id) {
                 // Fetch the list of suborders
                 let suborders = DB_orders[i]["suborder"];
                 // Create a pay button for each suborder
@@ -103,7 +114,7 @@ function showOrder(order_id) {
                     var n = j + 1;
                     // Activate pay function
                     elem.onclick = function () { pay_order(suborderPrice) };
-                    elem.innerHTML = dict[lang]['Customer'] + n +  dict[lang]['price'] + suborderPrice + "\r";
+                    elem.innerHTML = dict[lang]['customer'] + n +  dict[lang]['price'] + suborderPrice + "\r";
                     $('#billList').append(elem);
                 }
                 break;
@@ -204,6 +215,13 @@ function pay_order(n){
         document.getElementById("dis_num").value='';
         $('#discount_form').html(dict[lang]['total_price']+ n.toFixed(1) + "\r");
     })
+
+    // Create button which pays the order and
+    var bte = document.getElementById('reset');
+    bte.addEventListener('click',function(){
+        document.getElementById("dis_num").value='';
+        $('#discount_form').html(dict[lang]['total_price']+ n.toFixed(1) + "\r");
+    })
 }
 
 
@@ -246,21 +264,58 @@ function createRefillKey(ID, price){
 // Function which creates a HTML element for an inventory item
 function createInventoryElement(product){
     elem = document.createElement("div");
-    elem.classList.add('key', 'inv');
+    elem.classList.add('key', 'inv', 'inv-item');
     elem.id = product[ "artikelid"];
     elem.innerHTML = dict[lang]['productName'] + product["namn"] + dict[lang]['price'] + product["prisinklmoms"] + dict[lang]['stock'] + product["stock"];
     // Create buttons and append them to the row
     refillKey = createRefillKey(elem.id, product["prisinklmoms"]);
-    availableKey = createAvailableKey(elem.id);
     removeKey = createRemoveKey(elem.id);
-    
+    availableKey = createAvailableKey(elem.id);
+
     elem.appendChild(refillKey);
     elem.appendChild(removeKey);
     elem.appendChild(availableKey);
     // Make the item dragable
     elem.setAttribute('draggable', true);
     elem.setAttribute('ondragstart', `drag(event, '${product["artikelid"]}', '${product["prisinklmoms"]}')`);
+    // Create attributes for filtering
+    elem.setAttribute('data-category', product["category"].toLowerCase());
+    elem.setAttribute('data-alcohol', getAlcoholRange(product["alkoholhalt"]));
     return elem
+}
+
+// Functions to filter inventory
+// Get the selected gategory
+function getAlcoholRange(alcoholContent) {
+    const percentage = parseFloat(alcoholContent.replace("%", ""));
+    if (percentage < 5) {
+        return "< 5%";
+    } else if (percentage >= 5 && percentage < 10) {
+        return "5 - 10%";
+    } else if (percentage >= 10 && percentage < 20) {
+        return "10 - <20%";
+    } else if (percentage >= 20 && percentage < 30) {
+        return "20 - <30%";
+    } else if (percentage >= 30 && percentage <= 40) {
+        return "30% - 40%";
+    } else {
+        return "> 40%";
+    }
+}
+
+//Only show inventory items which belong to selected category
+function applyInventoryFilter(category, alcoholFilter = "all") {
+    $(".inv-item").hide();
+
+    if (category === "all" && alcoholFilter === "all") {
+        $(".inv-item").show();
+    } else if (category === "all") {
+        $(`.inv-item[data-alcohol='${alcoholFilter}']`).show();
+    } else if (alcoholFilter === "all") {
+        $(`.inv-item[data-category='${category}']`).show();
+    } else {
+        $(`.inv-item[data-category='${category}'][data-alcohol='${alcoholFilter}']`).show();
+    }
 }
 
 // Function for ordering refill of inventory in right column
@@ -429,13 +484,22 @@ function updateInventoryView(){
         {
             $('#' + productID ).css('opacity', 1);
             $('#' + productID + "available").text(dict[lang]['unavailable']);
-        }
-            
-        
+        } 
         else
         {
             $('#' + productID ).css('opacity', 0.5);
             $('#' + productID + "available").text(dict[lang]['available']);
+        }
+        // Toggle button visibility according to current login
+        if(current_view != "bartender")
+        {
+            $('#' + productID + "remove").hide();
+            $('#' + productID + "refill").hide();
+        }
+        else
+        {
+            $('#' + productID + "remove").show();
+            $('#' + productID + "refill").show();  
         }
     }
 

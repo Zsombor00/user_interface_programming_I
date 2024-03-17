@@ -295,12 +295,12 @@ const dict= {
         'alcohol20_30':'20% - Mindre än 30%',
         'alcohol30_40':'30% - Mindre än 40%',
         'alcohol40':'Mer än 40%',
-        'foodAll':'',
-        'foodSnacks':'',
-        'foodAppetizers':'',
-        'foodMain':'',
-        'foodVegetarian':'',
-        'foodDessert':'',
+        'foodAll':'Allt',
+        'foodSnacks':'Snacks',
+        'foodAppetizers':'Förrätt',
+        'foodMain':'Huvdrätt',
+        'foodVegetarian':'Vegetariskt',
+        'foodDessert':'Dessert',
         'Title_order':'Din beställning ',
         'Order_list':'Din beställning visas här',
         'Customers_limit':'Du har nått max antal kunder i en beställning.',
@@ -333,7 +333,7 @@ const dict= {
         'Captype':'Förslutning: ',
         'Country of Origin':'Ursprungsland: ',
         'Alcohol Strength':'Alkoholhalt: ',
-        'Description':'',
+        'Description':'Beskrivning: ',
 
         //To translate:
         // Log in screen

@@ -174,7 +174,7 @@ h1 {
 
 
 .right button {
-    width: 30%;
+    width: 140px;
     background-color: #162856;
     border: #162856;
     color: white;
@@ -304,13 +304,30 @@ div.credits {
     }
 
 
-/* BARTENDER STYLE CSS/*
+/* BARTENDER STYLE CSS*/
+.inv_tabs {
+    width: 100%;
+    height: 10%;
+    margin-bottom: 0%;
+}
 
-/* scrolling list*/
+.inv_tab.active {
+    background-color: #7887AB;
+}
 .list {
     max-height: 70%;
     overflow-y:scroll
 }
+
+.ord_tabs {
+    width: 100%;
+    height: 10%;
+    margin-bottom: 0%;
+}
+.ord_tab.active {
+    background-color: #7887AB;
+}
+
 
 /* pop-up windows*/
 .popup {
