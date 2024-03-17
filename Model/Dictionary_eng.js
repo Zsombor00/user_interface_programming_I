@@ -37,9 +37,12 @@ const dict= {
         'alcohol20_30':'20% - Less than 30%',
         'alcohol30_40':'30% - 40%',
         'alcohol40':'Greater than 40%',
-        'food_type0':'Type 1',
-        'food_type1':'Type 2',
-        'food_type2':'Type 3',
+        'foodAll':'All',
+        'foodSnacks':'Snacks',
+        'foodAppetizers':'Appetizers',
+        'foodMain':'Main Courses',
+        'foodVegetarian':'Vegetarian',
+        'foodDessert':'Desserts',
         'Title_order':'Your order ',
         'Order_list':'Your order here',
         'Customers_limit':'You have reached the limit of customers in one order.',
@@ -68,10 +71,11 @@ const dict= {
         'Add':'Add',
         'Remove':'Remove',
         'Category':'Category: ',
-        'Packaging':'Category: ',
+        'Packaging':'Packaging: ',
         'Captype':'Captype: ',
         'Country of Origin':'Country of Origin: ',
         'Alcohol Strength':'Alcohol Strength: ',
+        'Description':'Description: ',
 
         //To translate:
         // Log in screen
@@ -163,9 +167,12 @@ const dict= {
         'alcohol20_30':'20% - Меньше чем  30%',
         'alcohol30_40':'30% - 40%',
         'alcohol40':'Выше чем 40%',
-        'food_type0':'Тип 1',
-        'food_type1':'Тип 2',
-        'food_type2':'Тип 3',
+        'foodAll':'',
+        'foodSnacks':'',
+        'foodAppetizers':'',
+        'foodMain':'',
+        'foodVegetarian':'',
+        'foodDessert':'',
         'Title_order':'Ваш заказ ',
         'Order_list':'Ваш заказ здесь',
         'Customers_limit':'Вы достигли максимального количества клиентов в одном заказе.',
@@ -199,6 +206,7 @@ const dict= {
         'Captype':'Captype: ',
         'Country of Origin':'Страна производства: ',
         'Alcohol Strength':'Крепость: ',
+        'Description':'',
 
          //To translate:
         // Log in screen
@@ -287,9 +295,12 @@ const dict= {
         'alcohol20_30':'20% - Mindre än 30%',
         'alcohol30_40':'30% - Mindre än 40%',
         'alcohol40':'Mer än 40%',
-        'food_type0':'Typ 1',
-        'food_type1':'Typ 2',
-        'food_type2':'Typ 3',
+        'foodAll':'',
+        'foodSnacks':'',
+        'foodAppetizers':'',
+        'foodMain':'',
+        'foodVegetarian':'',
+        'foodDessert':'',
         'Title_order':'Din beställning ',
         'Order_list':'Din beställning visas här',
         'Customers_limit':'Du har nått max antal kunder i en beställning.',
@@ -322,6 +333,7 @@ const dict= {
         'Captype':'Förslutning: ',
         'Country of Origin':'Ursprungsland: ',
         'Alcohol Strength':'Alkoholhalt: ',
+        'Description':'',
 
         //To translate:
         // Log in screen
