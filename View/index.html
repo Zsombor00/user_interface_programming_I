@@ -32,6 +32,7 @@
 
     <!-- Favicon -->
     <link rel="shortcut icon" href="img/favicon-32x32.png">
+    <link rel="shortcut icon" href="img/intro-1590607552.jpg">
 
     <!-- CSS Icons -->
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
@@ -52,6 +53,9 @@
         <a href="#" id="undo" onclick="undo()"><i class="fa fa-arrow-left fa-2x"></i></a>
         <a href="#" id="redo" onclick="redo()"><i class="fa fa-arrow-right fa-2x"></i></a>
     </div>
+    <button  class="lang_button" onclick="change_language('eng')">English</button>
+    <button class="lang_button" onclick="change_language('swe')">Svensk</button>
+    <button  class="lang_button" onclick="change_language('rus')">Русский</button>
 
 </header>
 <body>
@@ -110,10 +114,13 @@
     <!--  Main menu with food -->
     <div class="menu" id="all_food_menu" style="display: None">
         <div >
-            <ul class="menu_tabs">
-                <a><li id="food_type0"></li></a>
-                <a><li id="food_type1"></li></a>
-                <a><li id="food_type2"></li></a>
+            <ul class="menu_tabs_food">
+                <a><li id="foodAll" class="menu_tab_food active" data-category="all"></li></a>
+                <a><li id="foodSnacks" class="menu_tab_food" data-category="snack"></li></a>
+                <a><li id="foodAppetizers" class="menu_tab_food" data-category="appetizer"></li></a>
+                <a><li id="foodMain" class="menu_tab_food" data-category="main"></li></a>
+                <a><li id="foodVegetarian" class="menu_tab_food" data-category="vegetarian"></li></a>
+                <a><li id="foodDessert" class="menu_tab_food" data-category="dessert"></li></a>
             </ul>
         </div>
         <div class="menu_list" id="all_food">

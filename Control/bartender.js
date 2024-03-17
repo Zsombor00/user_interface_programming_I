@@ -103,7 +103,7 @@ function showOrder(order_id) {
                     var n = j + 1;
                     // Activate pay function
                     elem.onclick = function () { pay_order(suborderPrice) };
-                    elem.innerHTML = dict[lang]['customer'] + n +  dict[lang]['price'] + suborderPrice + "\r";
+                    elem.innerHTML = dict[lang]['Customer'] + n +  dict[lang]['price'] + suborderPrice + "\r";
                     $('#billList').append(elem);
                 }
                 break;
