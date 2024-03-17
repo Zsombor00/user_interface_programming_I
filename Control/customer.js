@@ -24,6 +24,7 @@ function change_language(new_lang){
     lang=new_lang
     translation()
 }
+
 $(document).ready(function() {
     translation()
     const data_drinks = getAllBeverages();
@@ -35,9 +36,11 @@ $(document).ready(function() {
         const menuItem = $("<div class='menu-item'>");
         const accordionButton = $("<button class='accordion'>").html(`<strong>${item.namn}</strong> - SEK ${item.prisinklmoms}`);
         const addButton = $(`<button onclick="add_element('${item.namn}','${item.prisinklmoms}')" class='add-button'>${dict[lang]['Add']}</button>`);
-        
+        const downArrow = '<span class="arrow-spacing">&#9662;</span>';
+
         const buttonContainer = $("<div class='button-container'>");
         buttonContainer.append(accordionButton);
+        buttonContainer.append(downArrow);
         buttonContainer.append(addButton);
         const panel = $("<div class='panel'>").html(`
       <p>
@@ -49,11 +52,11 @@ $(document).ready(function() {
       </p>
     `);
 
-        buttonContainer.on("click", function() {
+        buttonContainer.on("click", function () {
             $(this).toggleClass("active");
             panel.slideToggle();
         });
- 
+
         menuItem.append(buttonContainer);
         menuItem.append(panel);
 
@@ -68,27 +71,35 @@ $(document).ready(function() {
 
     $(".menu_tab").click(function() {
         const category = $(this).data("category");
+        const selectedValue = $("#filter_select").val();
+
         $(".menu_tab").removeClass("active");
         $(this).addClass("active");
 
-        $(".menu-item").hide();
-        if (category === "all") {
-            $(".menu-item").show();
-        } else {
-            $(`.menu-item[data-category='${category}']`).show();
-        }
+        applyFilter(category, selectedValue);
     });
 
     $("#filter_select").change(function() {
         const selectedValue = $(this).val();
+        const activeTab = $(".menu_tab.active");
+        const category = activeTab.length ? activeTab.data("category") : "all";
+
+        applyFilter(category, selectedValue);
+    });
+
+    function applyFilter(category, alcoholFilter = "all") {
         $(".menu-item").hide();
 
-        if (selectedValue === "all") {
+        if (category === "all" && alcoholFilter === "all") {
             $(".menu-item").show();
+        } else if (category === "all") {
+            $(`.menu-item[data-alcohol='${alcoholFilter}']`).show();
+        } else if (alcoholFilter === "all") {
+            $(`.menu-item[data-category='${category}']`).show();
         } else {
-            $(`.menu-item[data-alcohol='${selectedValue}']`).show();
+            $(`.menu-item[data-category='${category}'][data-alcohol='${alcoholFilter}']`).show();
         }
-    });
+    }
 
     function getAlcoholRange(alcoholContent) {
         const percentage = parseFloat(alcoholContent.replace("%", ""));
@@ -111,15 +122,49 @@ $(document).ready(function() {
     const data_dishes = getAllDishes();
     const menuContainer = $("#menu_food");
     data_dishes.forEach(item => {
-        const menuItem = $("<div>");
+        const menuItem = $("<div class='menu-item'>");
+        const accordionButton = $("<button class='accordion'>").html(`<strong>${item.name}</strong> - SEK ${item.priceinclvat}`);
+        const addButton = $(`<button onclick="add_element('${item.name}','${item.priceinclvat}')" class='add-button'>Add</button>`);
+        const buttonContainer = $("<div class='button-container'>");
+        const downArrow = '<span class="arrow-spacing">&#9662;</span>';
+
+        buttonContainer.append(accordionButton);
+        buttonContainer.append(downArrow);
+        buttonContainer.append(addButton);
+        const panel = $("<div class='panel'>").html(`
+      <p>
+        <strong>${dict[lang]['Description']}</strong> ${item.description}<br>
+        <i>${item.ingredients}</i>
+      </p>
+    `);
+
+        buttonContainer.on("click", function() {
+            $(this).toggleClass("active");
+            panel.slideToggle();
+        });
+
+        menuItem.append(buttonContainer);
+        menuItem.append(panel);
+
+        menuItem.attr('data-category', item.category.toLowerCase());
         menuItem.attr('draggable', true);
         menuItem.attr('ondragstart', `drag(event, '${item.name}', '${item.priceinclvat}')`);
-        menuItem.html(`
-            <h2>${item.name}</h2>
-            <p>${item.priceinclvat}</p>
-            <button onclick="add_element('${item.name}','${item.priceinclvat}')">${dict[lang]['Add']}</button>
-        `);
+
         menuContainer.append(menuItem);
+    });
+
+    $(".menu_tab_food").click(function() {
+        const category = $(this).data("category");
+
+        $(".menu_tab_food").removeClass("active");
+        $(this).addClass("active");
+        $(".menu-item").hide();
+
+        if (category === "all") {
+            $(".menu-item").show();
+        } else {
+            $(`.menu-item[data-category='${category}']`).show();
+        }
     });
 
 });
@@ -140,9 +185,12 @@ function translation(){
     $("#alcohol20_30").text(dict[lang]['alcohol20_30']);
     $("#alcohol30_40").text(dict[lang]['alcohol30_40']);
     $("#alcohol40").text(dict[lang]['alcohol40']);
-    $("#food_type0").text(dict[lang]['food_type0']);
-    $("#food_type1").text(dict[lang]['food_type1']);
-    $("#food_type2").text(dict[lang]['food_type2']);
+    $("#foodAll").text(dict[lang]['foodAll']);
+    $("#foodSnacks").text(dict[lang]['foodSnacks']);
+    $("#foodAppetizers").text(dict[lang]['foodAppetizers']);
+    $("#foodMain").text(dict[lang]['foodMain']);
+    $("#foodVegetarian").text(dict[lang]['foodVegetarian']);
+    $("#foodDessert").text(dict[lang]['foodDessert']);
 
     $("#order_title").text(dict[lang]['Title_order']);
     $("#order").text(dict[lang]['Order_list']);
@@ -290,12 +338,24 @@ function redo() {
     }
 }
 
-
 function SwapDivsWithClick(div1, div2) {
     $('#' + div1).show();
     $('#' + div2).hide();
-} // swap food and drink pages by clicking on buttons food, drinks
 
+    // Show menu in "all" tab when switching divisions
+    if (div1 === "all_drink_menu" && div2 === "all_food_menu") {
+        $(".menu_tab.active").removeClass("active");
+        $("#filterAll").addClass("active");
+        $("#filter_select").val("all");
+        $(".menu-item").hide();
+        $(".menu-item").show();
+    } else if (div1 === "all_food_menu" && div2 === "all_drink_menu") {
+        $(".menu_tab_food.active").removeClass("active");
+        $("#foodAll").addClass("active");
+        $(".menu-item").hide();
+        $(".menu-item").show();
+    }
+} // swap food and drink pages by clicking on buttons food, drinks
 
 function add_element(name, price){
     if (decreaseStockAllMenu(name)){
