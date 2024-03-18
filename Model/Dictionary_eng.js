@@ -82,8 +82,12 @@ const dict= {
         'login': "Log In",
         'username': 'Username:',
         'password': 'Password:',
+        'username_placeholder': "Enter your username",
+        'password_placeholder': "Enter your password",
 
         // Bartender view
+        'all_food': "All food",
+        'all_drinks': "All drinks",
         'ord': "Orders",
         'inv': "Inventory",
         'vip': "VIP customers",
@@ -114,6 +118,7 @@ const dict= {
         'remove': 'Remove permanently',
         'refill_text': 'List of selected items to refill will be shown here',
         'add_inv' : 'Add new item',
+        'add_dish' : 'Add new dish',
         'productName': "Product name: ",
         'price': ", Product price: ",
         'stock': ", Stock: ",
@@ -208,13 +213,19 @@ const dict= {
         'Alcohol Strength':'Крепость: ',
         'Description':'',
 
-         //To translate:
+         
         // Log in screen
         'login': "Войти",
         'username': 'Имя пользователя:',
         'password': 'Пароль:',
         "Exit":"Закрыть",
+        //To translate:
+        'username_placeholder': "Enter your username",
+        'password_placeholder': "Enter your password",
+
         // Bartender view
+        'all_food': "All food",
+        'all_drinks': "All drinks",
         'ord': "Заказы",
         'inv': "Инвентарь",
         'vip': "VIP клиенты",
@@ -341,7 +352,12 @@ const dict= {
         'username': 'Användarnamn:',
         'password': 'Lösenord:',
         "Exit":"Avsluta",
+        'username_placeholder': "Skriv in ditt användarnamn",
+        'password_placeholder': "Skriv in ditt lösenord",
+
         // Bartender view
+        'all_food': "All mat",
+        'all_drinks': "Alla drinkar",
         'ord': "Beställningar",
         'inv': "Lager",
         'vip': "VIP-kunder",

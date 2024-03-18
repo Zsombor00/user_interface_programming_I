@@ -17,7 +17,8 @@
 var modelData = {};
 
 modelData['orders'] = [];
-modelData['productAttributes'] = ['productID', 'productName', 'price', 'stock']
+modelData['productAttributes'] = ["artikelid", "namn", "prisinklmoms", "category", "alkoholhalt",  "forpackning",  "forslutning",  "ursprunglandnamn", 'stock'];
+modelData['dishAttributes'] = ["nr","name","priceinclvat", "stock", "category", "description", "ingredients"];
 
 // Example of orders
 
