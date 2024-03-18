@@ -24,67 +24,20 @@ function change_language(new_lang){
     lang=new_lang
     translation()
     updateMenu()
-
 }
 
 
 $(document).ready(function() {
-    translation();
-    updateMenu();
-
-    $(".menu_tab").click(function() {
-        const category = $(this).data("category");
-        const selectedValue = $("#filter_select").val();
-
-        $(".menu_tab").removeClass("active");
-        $(this).addClass("active");
-
-        applyFilter(category, selectedValue);
-    });
-
-    // Function for inventory tabs in bartender view
-    $(".inv_tab").click(function() {
-        const category = $(this).data("category");
-        const selectedValue = $("#filter_select").val();
+    $('#login_view').hide();
+    $('#employee_view').hide();
+    $(".inventory").hide();
+    $(".VIP").hide();
+    $('#creditButton').hide();
+    $('#creditsToAdd').hide();
+    $('label[for="creditsToAdd"]').hide();
+    translation()
+    updateMenu()
     
-        $(".inv_tab").removeClass("active");
-        $(this).addClass("active");
-    
-        applyInventoryFilter(category, selectedValue);
-    });
-
-    // Function for order tabs in bartender view
-    $(".ord_tab").click(function() {
-        const category = $(this).data("category");
-    
-        $(".ord_tab").removeClass("active");
-        $(this).addClass("active");
-    
-        applyOrderFilter(category);
-    });
-
-    $("#filter_select").change(function() {
-        const selectedValue = $(this).val();
-        const activeTab = $(".menu_tab.active");
-        const category = activeTab.length ? activeTab.data("category") : "all";
-
-        applyFilter(category, selectedValue);
-    });
-
-    function applyFilter(category, alcoholFilter = "all") {
-        $(".menu-item").hide();
-
-        if (category === "all" && alcoholFilter === "all") {
-            $(".menu-item").show();
-        } else if (category === "all") {
-            $(`.menu-item[data-alcohol='${alcoholFilter}']`).show();
-        } else if (alcoholFilter === "all") {
-            $(`.menu-item[data-category='${category}']`).show();
-        } else {
-            $(`.menu-item[data-category='${category}'][data-alcohol='${alcoholFilter}']`).show();
-        }
-    }
-
 });
 
 function getAlcoholRange(alcoholContent) {
@@ -103,6 +56,21 @@ function getAlcoholRange(alcoholContent) {
         return "> 40%";
     }
 }
+
+function applyFilter(category, alcoholFilter = "all") {
+    $(".menu-item").hide();
+
+    if (category === "all" && alcoholFilter === "all") {
+        $(".menu-item").show();
+    } else if (category === "all") {
+        $(`.menu-item[data-alcohol='${alcoholFilter}']`).show();
+    } else if (alcoholFilter === "all") {
+        $(`.menu-item[data-category='${category}']`).show();
+    } else {
+        $(`.menu-item[data-category='${category}'][data-alcohol='${alcoholFilter}']`).show();
+    }
+}
+
 function updateMenu(){
     const data_drinks = getAllBeverages();
     //const slicedArray = data_drinks.slice(0, 20);
@@ -197,6 +165,51 @@ function updateMenu(){
             $(`.menu-item[data-category='${category}']`).show();
         }
     });
+    
+    $(".menu_tab").click(function() {
+        const category = $(this).data("category");
+        const selectedValue = $("#filter_select").val();
+
+        $(".menu_tab").removeClass("active");
+        $(this).addClass("active");
+
+        applyFilter(category, selectedValue);
+    });
+
+    // Function for inventory tabs in bartender view
+    $(".inv_tab").click(function() {
+        const category = $(this).data("category");
+        const selectedValue = $("#filter_select").val();
+    
+        $(".inv_tab").removeClass("active");
+        $(this).addClass("active");
+    
+        applyInventoryFilter(category, selectedValue);
+    });
+
+    // Function for order tabs in bartender view
+    $(".ord_tab").click(function() {
+        const category = $(this).data("category");
+    
+        $(".ord_tab").removeClass("active");
+        $(this).addClass("active");
+    
+        applyOrderFilter(category);
+    });
+
+    $("#filter_select").change(function() {
+        const selectedValue = $(this).val();
+        const activeTab = $(".menu_tab.active");
+        const category = activeTab.length ? activeTab.data("category") : "all";
+
+        applyFilter(category, selectedValue);
+    });
+        // Hide elements
+    display_view(current_view)
+    updateOrderView();
+    
+    updateInventoryView();
+    updateVIPView();
 }
 
 function translation(){
@@ -238,11 +251,6 @@ function translation(){
     $("#NewOrder").text(dict[lang]['New_order']);
     $("#ClosePayment").text(dict[lang]['Close_payment']);
 
-    // Hide elements
-    $('#login_view').hide();
-    $('#employee_view').hide();
-    $(".inventory").hide();
-    $(".VIP").hide();
 
     // Translate and set text for various elements
     //Login screen
@@ -301,11 +309,8 @@ function translation(){
     $("#add_VIP").text(dict[lang]['add_vip']);
     $("#credit_title").text(dict[lang]['credit']);
     $("#credit_text").text(dict[lang]['credit_text']);
-    $("#creditButton").text(dict[lang]['credit_button']);creditsToAdd
+    $("#creditButton").text(dict[lang]['credit_button']);
     $("#creditsToAdd").text(dict[lang]['creditsToAdd']);
-    $('#creditButton').hide();
-    $('#creditsToAdd').hide();
-    $('label[for="creditsToAdd"]').hide();
 
     $("#security_yes").text(dict[lang]['yes']);
     $("#remove_yes").text(dict[lang]['yes']);
@@ -332,11 +337,6 @@ function translation(){
     $("#logout").text(dict[lang]['login']);
 
     // Create and update various views
-    display_view(current_view)
-    updateOrderView();
-    
-    updateInventoryView();
-    updateVIPView();
 }
 
 function saveState() {
