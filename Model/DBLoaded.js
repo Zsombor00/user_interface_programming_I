@@ -23,8 +23,8 @@ var DB = {
         {
             "user_id": "28",
             "credentials": "3",
-            "password": "b612f428e4a53386fdb98f6c2164c16c",
-            "username": "sulstr",
+            "password": "f",
+            "username": "e",
             "first_name": "Sulayman",
             "last_name": "Street",
             "email": "sulayman.street@it.uu.se",

@@ -82,8 +82,12 @@ const dict= {
         'login': "Log In",
         'username': 'Username:',
         'password': 'Password:',
+        'username_placeholder': "Enter your username",
+        'password_placeholder': "Enter your password",
 
         // Bartender view
+        'all_food': "All food",
+        'all_drinks': "All drinks",
         'ord': "Orders",
         'inv': "Inventory",
         'vip': "VIP customers",
@@ -114,6 +118,7 @@ const dict= {
         'remove': 'Remove permanently',
         'refill_text': 'List of selected items to refill will be shown here',
         'add_inv' : 'Add new item',
+        'add_dish' : 'Add new dish',
         'productName': "Product name: ",
         'price': ", Product price: ",
         'stock': ", Stock: ",
@@ -206,15 +211,21 @@ const dict= {
         'Captype':'Captype: ',
         'Country of Origin':'Страна производства: ',
         'Alcohol Strength':'Крепость: ',
-        'Description':'',
+        'Description':'Описание: ',
 
-         //To translate:
+         
         // Log in screen
         'login': "Войти",
         'username': 'Имя пользователя:',
         'password': 'Пароль:',
         "Exit":"Закрыть",
+        //To translate:
+        'username_placeholder': "Введите имя пользователя",
+        'password_placeholder': "Введите пароль",
+
         // Bartender view
+        'all_food': "Вся еда",
+        'all_drinks': "Все напитки",
         'ord': "Заказы",
         'inv': "Инвентарь",
         'vip': "VIP клиенты",
@@ -243,6 +254,7 @@ const dict= {
         'remove': 'Удалить навсегда',
         'refill_text': 'Список выбранных пунктов для пополнения будет показан здесь',
         'add_inv' : 'Добавить новый элемент',
+        'add_dish' : 'Добавить новое блюдо',
         'productName': "Наименование товара: ",
         'stock': ", Запас: ",
         'send_refill': "Разместить заказ",
@@ -295,12 +307,12 @@ const dict= {
         'alcohol20_30':'20% - Mindre än 30%',
         'alcohol30_40':'30% - Mindre än 40%',
         'alcohol40':'Mer än 40%',
-        'foodAll':'',
-        'foodSnacks':'',
-        'foodAppetizers':'',
-        'foodMain':'',
-        'foodVegetarian':'',
-        'foodDessert':'',
+        'foodAll':'Allt',
+        'foodSnacks':'Snacks',
+        'foodAppetizers':'Förrätt',
+        'foodMain':'Huvdrätt',
+        'foodVegetarian':'Vegetariskt',
+        'foodDessert':'Dessert',
         'Title_order':'Din beställning ',
         'Order_list':'Din beställning visas här',
         'Customers_limit':'Du har nått max antal kunder i en beställning.',
@@ -333,7 +345,7 @@ const dict= {
         'Captype':'Förslutning: ',
         'Country of Origin':'Ursprungsland: ',
         'Alcohol Strength':'Alkoholhalt: ',
-        'Description':'',
+        'Description':'Beskrivning: ',
 
         //To translate:
         // Log in screen
@@ -341,7 +353,12 @@ const dict= {
         'username': 'Användarnamn:',
         'password': 'Lösenord:',
         "Exit":"Avsluta",
+        'username_placeholder': "Skriv in ditt användarnamn",
+        'password_placeholder': "Skriv in ditt lösenord",
+
         // Bartender view
+        'all_food': "All mat",
+        'all_drinks': "Alla drinkar",
         'ord': "Beställningar",
         'inv': "Lager",
         'vip': "VIP-kunder",
@@ -370,6 +387,7 @@ const dict= {
         'remove': 'Ta bort permanent',
         'refill_text': 'Valda varor att beställa in visas här:',
         'add_inv' : 'Lägg till ny vara',
+        'add_dish' : 'Lägg till ny rätt',
         'productName': "Varans namn: ",
         'price': ", Pris: ",
         'stock': ", Antal: ",

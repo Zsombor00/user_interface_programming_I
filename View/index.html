@@ -65,11 +65,11 @@
     <h2 id="login_header"></h2>
     <div class="input-group">
         <label for="username"></label>
-        <input type="text" id="username" placeholder="Enter your username">
+        <input type="text" id="username">
     </div>
     <div class="input-group">
         <label for="password"></label>
-        <input type="password" id="password" placeholder="Enter your password">
+        <input type="password" id="password">
     </div>
     <button id="login_button" class="btn" onclick="login()"></button>
 </div>
@@ -176,9 +176,9 @@
     <div class="menu order", id="orders">
         <div >
             <ul class="menu_tabs">
-                <a><li id="order_type0"></li></a>
-                <a><li id="order_type1"></li></a>
-                <a><li id="order_type2"></li></a>
+                <a><li id="order_type0" class="ord_tab active" data-category="false"></li></a>
+                <a><li id="order_type1" class="ord_tab" data-category="false"></li></a>
+                <a><li id="order_type2" class="ord_tab" data-category="true"></li></a>
             </ul>
         </div>
         <div class="menu_list">
@@ -205,18 +205,25 @@
     <!--- Main column showing list of inventory -->
     <div class="menu inventory", id="inventory">
         <div >
-            <ul class="menu_tabs">
-                <a><li id="all"></li></a>
-                <a><li id="beers"></li></a>
-                <a><li id="wines"></li></a>
-                <a><li id="spirits"></li></a>
-                <a><li id="specials"></li></a>
+            <ul class="inv_tabs">
+                <a><li id = "all_drinks_inv" class="inv_tab active" data-category="all_drinks"></li></a>
+                <a><li id = "beers" class="inv_tab" data-category="beer"></li></a>
+                <a><li id = "wines" class="inv_tab" data-category="wine"></li></a>
+                <a><li id = "spirits" class="inv_tab" data-category="spirit"></li></a>
+                <a><li id = "specials" class="inv_tab" data-category="special"></li></a>
+                <a><li id="all_food_inv" class="inv_tab clear" data-category="all_food"></li></a>
+                <a><li id="snacks" class="inv_tab" data-category="snack"></li></a>
+                <a><li id="appetizers" class="inv_tab" data-category="appetizer"></li></a>
+                <a><li id="main_course" class="inv_tab" data-category="main"></li></a>
+                <a><li id="vegetarian" class="inv_tab" data-category="vegetarian"></li></a>
+                <a><li id="dessert" class="inv_tab" data-category="dessert"></li></a>
             </ul>
         </div>
         <div class="menu_list">
             <h2 id="inv_title"></h2>
             <p id="inv_text"></p>
-            <button id="add_inv" onclick="toggleWindow('add_popup')"></button>  
+            <button id="add_inv" onclick="add_drink()"></button>
+            <button id="add_dish" onclick="add_dish()"></button>
             <div id = "inventoryList", class="list", ondrop="drop_to_inventory(event)" ondragover="allowDrop(event)">
                 <p id="inv_low"></p>
                 <div id = "lowStock">
@@ -231,10 +238,10 @@
         </div>        
     </div>
     <!--- Right column handling refill of inventory -->
-    <div class="right inventory", id="inventoryRefill">
+    <div class="right inventory", id="inventoryRefill" ondrop="drop_to_refill(event)" ondragover="allowDrop(event)">
         <h2 id="refill_title"></h2>
         <p id="refill_text"></p>
-        <div id = "refillList", class="list" ondrop="drop_to_refill(event)" ondragover="allowDrop(event)">
+        <div id = "refillList", class="list">
 
         </div>
         <button id="send_refill" onclick="sendRefill()"></button>
@@ -244,7 +251,7 @@
     <!--- Main column showing list of VIP users -->
     <div class="menu VIP", id="users">
         <ul class="menu_tabs">
-            <a><li id="VIPs"></li></a>
+            <a><li id="VIPs" class="vip_tab active"></li></a>
         </ul>
         <div class="menu_list">
             <h2 id="VIP_title"></h2>
@@ -284,13 +291,13 @@
     
 </div>
 <!--- Add item dialogue -->
-<div class="popup", id="add_popup">
+<div class="popup_item", id="add_popup">
     <div class="key exit", id="exit_add", onclick="exitWindow(this.id)"></div>
     <p id="add_item_text"></p>
     <div id="input_form">
 
     </div>
-    <div class="key", id="add_item", onclick="addItem()"></div>
+    <div class="key", id="add_item"></div>
     <div class="key", id="cancel", onclick="exitWindow(this.id)"></div>   
 </div>
 <!--- Discount -->
@@ -304,10 +311,10 @@
     <div class="key", id="submit", onclick=""></div>
     <div class="key", id="reset", onclick=""></div>
     <p id="put_discount"></p>
-    <div class="key inv" id="discount_form" >
+    <div class="key pay" id="discount_form" >
 
     </div>
-    <button id="pay", onclick="exitWindow(this.id)"></button>
+    <button id="pay"></button>
 
 </div>
 </div>
@@ -319,7 +326,7 @@
     <br>
     <div class="key", id="add_order", onclick=""></div>
     <div class="key", id="subtract_order", onclick=""></div>
-    <div class="key inv" id="order_form" >
+    <div class="key pay" id="order_form" >
 
     </div>
     <button id="confirm_change"></button>

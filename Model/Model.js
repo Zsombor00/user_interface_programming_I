@@ -17,11 +17,25 @@
 var modelData = {};
 
 modelData['orders'] = [];
-modelData['productAttributes'] = ['productID', 'productName', 'price', 'stock']
+modelData['productAttributes'] = ["artikelid", "namn", "prisinklmoms", "category", "alkoholhalt",  "forpackning",  "forslutning",  "ursprunglandnamn", 'stock'];
+modelData['dishAttributes'] = ["nr","name","priceinclvat", "stock", "category", "description", "ingredients"];
 
 // Example of orders
 
 var DB_orders = [
+    {
+        "order_id": 9999,
+        "bartender_id": "B00000",
+        "customer_id": "C00001",
+        "order":[],
+        "quantities":[],
+        "amount": 2153,
+        'tableNr' : 7,
+        "timestamp": "2023-11-10 19:04:13",
+        "suborder":[[{"Braastad XO":[442.00, 2], "Vanlig Vodka":[195.00, 1]}, 1079], [{"Dworek Vodka":[190.00, 1]}, 190], [{"Braastad XO":[442.00, 2]}, 884]],
+        "subpay":[1079,190,884],
+        "paid":true
+    },
     {
         "order_id": 10000,
         "bartender_id": "B00000",

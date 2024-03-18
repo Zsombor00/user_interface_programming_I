@@ -23,15 +23,94 @@ current_view="customer"
 function change_language(new_lang){
     lang=new_lang
     translation()
+    updateMenu()
+
 }
 
+
 $(document).ready(function() {
-    translation()
+    translation();
+    updateMenu();
+
+    $(".menu_tab").click(function() {
+        const category = $(this).data("category");
+        const selectedValue = $("#filter_select").val();
+
+        $(".menu_tab").removeClass("active");
+        $(this).addClass("active");
+
+        applyFilter(category, selectedValue);
+    });
+
+    // Function for inventory tabs in bartender view
+    $(".inv_tab").click(function() {
+        const category = $(this).data("category");
+        const selectedValue = $("#filter_select").val();
+    
+        $(".inv_tab").removeClass("active");
+        $(this).addClass("active");
+    
+        applyInventoryFilter(category, selectedValue);
+    });
+
+    // Function for order tabs in bartender view
+    $(".ord_tab").click(function() {
+        const category = $(this).data("category");
+    
+        $(".ord_tab").removeClass("active");
+        $(this).addClass("active");
+    
+        applyOrderFilter(category);
+    });
+
+    $("#filter_select").change(function() {
+        const selectedValue = $(this).val();
+        const activeTab = $(".menu_tab.active");
+        const category = activeTab.length ? activeTab.data("category") : "all";
+
+        applyFilter(category, selectedValue);
+    });
+
+    function applyFilter(category, alcoholFilter = "all") {
+        $(".menu-item").hide();
+
+        if (category === "all" && alcoholFilter === "all") {
+            $(".menu-item").show();
+        } else if (category === "all") {
+            $(`.menu-item[data-alcohol='${alcoholFilter}']`).show();
+        } else if (alcoholFilter === "all") {
+            $(`.menu-item[data-category='${category}']`).show();
+        } else {
+            $(`.menu-item[data-category='${category}'][data-alcohol='${alcoholFilter}']`).show();
+        }
+    }
+
+});
+
+function getAlcoholRange(alcoholContent) {
+    const percentage = parseFloat(alcoholContent.replace("%", ""));
+    if (percentage < 5) {
+        return "< 5%";
+    } else if (percentage >= 5 && percentage < 10) {
+        return "5 - 10%";
+    } else if (percentage >= 10 && percentage < 20) {
+        return "10 - <20%";
+    } else if (percentage >= 20 && percentage < 30) {
+        return "20 - <30%";
+    } else if (percentage >= 30 && percentage <= 40) {
+        return "30% - 40%";
+    } else {
+        return "> 40%";
+    }
+}
+function updateMenu(){
     const data_drinks = getAllBeverages();
-    const slicedArray = data_drinks.slice(0, 20);
+    //const slicedArray = data_drinks.slice(0, 20);
+    const slicedArray = data_drinks;
 
     // Handle menu drinks
     const menuBev = $("#menu_drinks");
+    menuBev.html("");
     slicedArray.forEach(item => {
         const menuItem = $("<div class='menu-item'>");
         const accordionButton = $("<button class='accordion'>").html(`<strong>${item.namn}</strong> - SEK ${item.prisinklmoms}`);
@@ -69,58 +148,10 @@ $(document).ready(function() {
         menuBev.append(menuItem);
     });
 
-    $(".menu_tab").click(function() {
-        const category = $(this).data("category");
-        const selectedValue = $("#filter_select").val();
-
-        $(".menu_tab").removeClass("active");
-        $(this).addClass("active");
-
-        applyFilter(category, selectedValue);
-    });
-
-    $("#filter_select").change(function() {
-        const selectedValue = $(this).val();
-        const activeTab = $(".menu_tab.active");
-        const category = activeTab.length ? activeTab.data("category") : "all";
-
-        applyFilter(category, selectedValue);
-    });
-
-    function applyFilter(category, alcoholFilter = "all") {
-        $(".menu-item").hide();
-
-        if (category === "all" && alcoholFilter === "all") {
-            $(".menu-item").show();
-        } else if (category === "all") {
-            $(`.menu-item[data-alcohol='${alcoholFilter}']`).show();
-        } else if (alcoholFilter === "all") {
-            $(`.menu-item[data-category='${category}']`).show();
-        } else {
-            $(`.menu-item[data-category='${category}'][data-alcohol='${alcoholFilter}']`).show();
-        }
-    }
-
-    function getAlcoholRange(alcoholContent) {
-        const percentage = parseFloat(alcoholContent.replace("%", ""));
-        if (percentage < 5) {
-            return "< 5%";
-        } else if (percentage >= 5 && percentage < 10) {
-            return "5 - 10%";
-        } else if (percentage >= 10 && percentage < 20) {
-            return "10 - <20%";
-        } else if (percentage >= 20 && percentage < 30) {
-            return "20 - <30%";
-        } else if (percentage >= 30 && percentage <= 40) {
-            return "30% - 40%";
-        } else {
-            return "> 40%";
-        }
-    }
-
     // Handle menu food
     const data_dishes = getAllDishes();
     const menuContainer = $("#menu_food");
+    menuContainer.html("");
     data_dishes.forEach(item => {
         const menuItem = $("<div class='menu-item'>");
         const accordionButton = $("<button class='accordion'>").html(`<strong>${item.name}</strong> - SEK ${item.priceinclvat}`);
@@ -166,8 +197,7 @@ $(document).ready(function() {
             $(`.menu-item[data-category='${category}']`).show();
         }
     });
-
-});
+}
 
 function translation(){
     $("#filterAll").text(dict[lang]['all']);
@@ -221,6 +251,8 @@ function translation(){
     $('label[for="password"]').text(dict[lang]['password']);
     $("#login_button").text(dict[lang]['login']);
     $("#logout").text(dict[lang]['login']);
+    $("#username").attr("placeholder", dict[lang]['username_placeholder']);
+    $("#password").attr("placeholder", dict[lang]['password_placeholder']);
 
     // Bartender view
     $("#ordButton").text(dict[lang]['ord']);
@@ -241,7 +273,7 @@ function translation(){
     $('#group_bill').hide();
 
     $("#inv_title").text(dict[lang]['inv']);
-    $("#all").text(dict[lang]['all']);
+    $("#all_drinks_inv").text(dict[lang]['all_drinks']);
     $("#beers").text(dict[lang]['Beers']);
     $("#wines").text(dict[lang]['Wines']);
     $("#spirits").text(dict[lang]['Spirits']);
@@ -250,11 +282,18 @@ function translation(){
     $("#inv_low").text(dict[lang]['inv_low']);
     $("#inv_norm").text(dict[lang]['inv_norm']);
     $("#add_inv").text(dict[lang]['add_inv']);
+    $("#add_dish").text(dict[lang]['add_dish']);
     $("#refill_title").text(dict[lang]['refill']);
     $("#refill_text").text(dict[lang]['refill_text']);
     $("#add_item_text").text(dict[lang]['add_item_text']);
     $("#send_refill").text(dict[lang]['send_refill']);
     $('#send_refill').hide();
+    $("#all_food_inv").text(dict[lang]['all_food']);
+    $("#snacks").text(dict[lang]['foodSnacks']);
+    $("#appetizers").text(dict[lang]['foodAppetizers']);
+    $("#main_course").text(dict[lang]['foodMain']);
+    $("#vegetarian").text(dict[lang]['foodVegetarian']);
+    $("#dessert").text(dict[lang]['foodDessert']);
 
     $("#VIP_title").text(dict[lang]['vip']);
     $("#VIPs").text(dict[lang]['VIPs']);
@@ -294,8 +333,8 @@ function translation(){
 
     // Create and update various views
     display_view(current_view)
-    createForm(modelData['productAttributes'], "input_form");
     updateOrderView();
+    
     updateInventoryView();
     updateVIPView();
 }

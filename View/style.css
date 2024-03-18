@@ -76,13 +76,13 @@ a:hover {
 body{
     background-image: url('img/intro-1590607552.jpg');
     background-size: cover;
-    max-width: 100%;
+    width: 100%;
     background-repeat: repeat-y;
     font-family: 'Oswald', sans-serif;
 }
 
 .menu {
-    width: 60%;
+    width: 63%;
     height: 100%;/*67px;*/
     float: left;
     overflow: hidden;
@@ -94,6 +94,12 @@ body{
 }
 
 .menu_tabs {
+    width: 100%;
+    height: 10%;
+    margin-bottom: 0%;
+}
+
+.inv_tabs {
     width: 100%;
     height: 10%;
     margin-bottom: 0%;
@@ -174,7 +180,7 @@ h1 {
 
 
 .right button {
-    width: 30%;
+    width: 140px;
     background-color: #162856;
     border: #162856;
     color: white;
@@ -262,6 +268,7 @@ h1 {
     text-align: center;
     padding: 15px;
     border: 3px solid #0000cc;
+    background-color: #7887AB;
     border-radius: 10px;
     color: #000000;
     position: absolute;
@@ -281,6 +288,7 @@ h1 {
     z-index: 9999;
     text-align: center;
     border: 3px solid #0000cc;
+    background-color: #7887AB;
     border-radius: 10px;
     color: #000000;
 }
@@ -304,13 +312,35 @@ div.credits {
     }
 
 
-/* BARTENDER STYLE CSS/*
+/* BARTENDER STYLE CSS*/
 
-/* scrolling list*/
+
+.inv_tab.active {
+    background-color: #7887AB;
+}
 .list {
     max-height: 70%;
     overflow-y:scroll
 }
+
+
+.ord_tab.active {
+    background-color: #7887AB;
+}
+
+.inv_tab.clear {
+    clear: 	none;
+}
+
+.refill.clear {
+    clear: 	none;
+}
+
+
+.vip_tab.active {
+    background-color: #7887AB;
+}
+
 
 /* pop-up windows*/
 .popup {
@@ -326,6 +356,23 @@ div.credits {
     left: 0;
     right: 0;
     margin: auto;
+    
+}
+
+.popup_item {
+    width: 300px;
+    height: 400px;
+    padding: 10px;
+    opacity: 0;
+    z-index: -1;
+    background-color: #3a48c4;
+    color: white;
+    position: absolute;
+    top: 20%;
+    left: 0;
+    right: 0;
+    margin: auto;
+    overflow-y:scroll
     
 }
 
@@ -404,6 +451,16 @@ Buttons
 }
 /* Inventory items */
 .inv {
+    display:block;
+    cursor: default;
+    padding: 10px;
+    width: 90%;
+    background-color: #eb736a;
+}
+
+/* Payment items */
+.pay {
+    display:block;
     cursor: default;
     padding: 10px;
     width: 90%;
@@ -412,23 +469,8 @@ Buttons
 /* Customer items */
 .cust {
     width: 90%;
-    background-color: #75eb6a;
+    background-color: #8fe688;
 }
-
-
-
-
-/* Responsive layout - when the screen is less than 550px high,*/
-@media screen and (max-height: 550px) {
-
-}
-
-/* Responsive layout - when the screen is less than 500px wide,*/
-@media screen and (max-width: 500px) {
-
-}
-
-
 
 .login-container {
     
@@ -535,4 +577,49 @@ a {
 
 a:hover {
     color: white;
+}
+
+/* Responsive layout - Small screen size*/
+@media screen and (max-width: 13in) {
+    body {
+        width: 8.7in;
+    }
+    .left {
+        height: 4.7in;
+        width: 13%
+    }
+    .menu {
+        height: 4.7in;
+        width: 60%
+    }
+    .right {
+        height: 4.7in;
+    }
+    .menu_list {
+        height: 4.1in;
+    }
+    .refill {
+        margin : 2px;     
+    }
+    .refill.clear {
+        clear: 	left;
+    }
+    .inv {
+        height : 50px;     
+    }
+    .popup_item {
+        top: 10%;      
+    }
+    .inv_tab{
+        font-size: 12px;
+    }
+    .inv_tab.clear {
+        clear: 	left;
+    }
+    .inv_tabs{
+        padding-left: 5px;
+        width: 100%
+    }
+
+    
 }

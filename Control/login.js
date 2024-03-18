@@ -11,12 +11,12 @@ function login() {
             current_view="VIP"
         }
         if(user.credentials == 1){
-            display_view("bartender")
             current_view="bartender"
+            display_view("bartender")
         }
         if(user.credentials == 3){
-            display_view("waiter")
             current_view="waiter"
+            display_view("waiter")
         }
         user_id=getUserID(username )
         login__status=true
@@ -26,11 +26,24 @@ function login() {
 }
 
 
+
 function display_view(type_view) {
     var employee = document.getElementById("employee_view");
     var customer = document.getElementById("vip_customer_view");
     var login=document.getElementById("login_view")
     if (type_view === "bartender") {
+        updateInventoryView();
+        employee.style.display = "block";
+        customer.style.display = "none";
+        login.style.display = "none";
+        // Change undo/redo between different views
+        $("#logout").text(dict[lang]['logout'])
+        $("#logout").attr("onclick", "display_view('customer')");
+        $("#undo").attr("onclick","undo_refill()");
+        $("#redo").attr("onclick","redo_refill()");
+    }
+    else if (type_view === "waiter") {
+        updateInventoryView();
         employee.style.display = "block";
         customer.style.display = "none";
         login.style.display = "none";

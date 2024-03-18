@@ -23,10 +23,11 @@ function toggleView(buttonID) {
 // Function which creates a HTML element for an order
 function createOrderElement(order){
     elem = document.createElement("div");
-    elem.classList.add('key', 'ord');
+    elem.classList.add('key', 'ord', 'ord-item');
     elem.id = order["orderID"];
     elem.onclick = function() {showOrder(order["order_id"])};
     elem.innerHTML = dict[lang]['ordID'] + order["order_id"] + dict[lang]['tableNr'] + order["tableNr"];
+    elem.setAttribute('data-category', order["paid"].toString());
     return elem
 }
 
@@ -41,6 +42,15 @@ function updateOrderView(){
         $('#orderList').append(order);
 
     }
+    applyOrderFilter(current_order_filter)
+}
+
+// Functions which filter orders
+current_order_filter = "false";
+function applyOrderFilter(category) {
+    $(".ord-item").hide();
+    $(`.ord-item[data-category='${category}']`).show();
+    current_order_filter = category;
 }
 
 // Create a bill element with name and ammount of product in order
@@ -55,13 +65,18 @@ function createBillElement(order_id, suborder_index, productName, quantity){
 }
 
 // Function for showing order in right column
+var show_order_id = 0;
 function showOrder(order_id) {
+    show_order_id = order_id;
     $('#payList').html("");
     $('#billList').html("");
+    $('#split_bill').hide();
+    $('#group_bill').hide();
     var totalPrice = 0;
+
     // Find the right order
     for (i = 0; i < DB_orders.length; i++) {
-        if (DB_orders[i].order_id == order_id && DB_orders[i].paid === false) {
+        if (DB_orders[i].order_id == order_id) {
             // Pick out the list of suborders
             var suborder = DB_orders[i]["suborder"];
             // For each suborder
@@ -78,18 +93,23 @@ function showOrder(order_id) {
                     $('#payList').append(product);  
                 })(k);
             }
+            //Only show pay options for unpaid orders
+            if(!DB_orders[i]["paid"])
+            {
+                $('#split_bill').show();
+                $('#group_bill').show();
+            }
             break;
         }
     } 
     $('#payList').append(dict[lang]['total_price'] + totalPrice);
 
     // Activate button which shows split bill
-    $('#split_bill').show();
     $('#split_bill').click(function () {
         $('#billList').html("");
         for (i = 0; i < DB_orders.length; i++) {
             // Find the right order
-            if (DB_orders[i].order_id == order_id && DB_orders[i].paid === false) {
+            if (DB_orders[i].order_id == order_id) {
                 // Fetch the list of suborders
                 let suborders = DB_orders[i]["suborder"];
                 // Create a pay button for each suborder
@@ -102,8 +122,8 @@ function showOrder(order_id) {
                     let suborderPrice = suborders[j][1];
                     var n = j + 1;
                     // Activate pay function
-                    elem.onclick = function () { pay_order(suborderPrice) };
-                    elem.innerHTML = dict[lang]['Customer'] + n +  dict[lang]['price'] + suborderPrice + "\r";
+                    elem.onclick = function () { pay_order(suborderPrice, order_id) };
+                    elem.innerHTML = dict[lang]['customer'] + n +  dict[lang]['price'] + suborderPrice + "\r";
                     $('#billList').append(elem);
                 }
                 break;
@@ -113,7 +133,6 @@ function showOrder(order_id) {
     });
 
     // Activate button which shows group bill
-    $('#group_bill').show();
     $('#group_bill').click(function () {
 
         $('#billList').html("");
@@ -121,7 +140,7 @@ function showOrder(order_id) {
         elem1 = document.createElement("div");
         elem1.classList.add('key');
         elem1.id = i;
-        elem1.onclick = function () { pay_order(totalPrice) };
+        elem1.onclick = function () { pay_order(totalPrice, order_id) };
         elem1.innerHTML = dict[lang]['total_price'] + totalPrice + "\r";
         $('#billList').append(elem1);
 
@@ -184,7 +203,7 @@ function updateOrder(order_id, suborder_index, productName, quantity){
 }
 
 // Function which opens the pay dialogue
-function pay_order(n){
+function pay_order(n, order_ID){
     toggleWindow("discount_popup");
     $('#discount_form').html(dict[lang]['total_price']+ n.toFixed(1) + "\r");
 
@@ -204,6 +223,25 @@ function pay_order(n){
         document.getElementById("dis_num").value='';
         $('#discount_form').html(dict[lang]['total_price']+ n.toFixed(1) + "\r");
     })
+
+    // Create button which pays the order and
+    var bte = document.getElementById('pay');
+    bte.addEventListener('click',function(){
+        finishPayment(order_ID);
+    })
+}
+
+function finishPayment(order_ID){
+    var order =  DB_orders.find(function(order) {
+        return order["order_id"] === order_ID;
+    });
+    order.paid = true;
+    updateOrderView();
+    $('#payList').html("");
+    $('#billList').html("");
+    $('#split_bill').hide();
+    $('#group_bill').hide();
+
 }
 
 
@@ -236,7 +274,7 @@ function createRemoveKey(ID){
 // Functions which creates a HTML button to refill item in inventory (only bartender)
 function createRefillKey(ID, price){
     key = document.createElement("div");
-    key.classList.add('key', 'refill');
+    key.classList.add('key', 'refill', 'clear');
     key.id = ID+"refill";
     key.onclick = function() {add_refill(ID, price)}; //Button sends the ID of the corresponding item
     key.innerHTML = dict[lang]['refill'];
@@ -246,21 +284,162 @@ function createRefillKey(ID, price){
 // Function which creates a HTML element for an inventory item
 function createInventoryElement(product){
     elem = document.createElement("div");
-    elem.classList.add('key', 'inv');
+    elem.classList.add('key', 'inv', 'inv-item');
     elem.id = product[ "artikelid"];
     elem.innerHTML = dict[lang]['productName'] + product["namn"] + dict[lang]['price'] + product["prisinklmoms"] + dict[lang]['stock'] + product["stock"];
     // Create buttons and append them to the row
-    refillKey = createRefillKey(elem.id, product["prisinklmoms"]);
-    availableKey = createAvailableKey(elem.id);
-    removeKey = createRemoveKey(elem.id);
     
-    elem.appendChild(refillKey);
+    removeKey = createRemoveKey(elem.id);
+    availableKey = createAvailableKey(elem.id);
+    refillKey = createRefillKey(elem.id, product["prisinklmoms"]);
+
+    
     elem.appendChild(removeKey);
     elem.appendChild(availableKey);
+    elem.appendChild(refillKey);
     // Make the item dragable
     elem.setAttribute('draggable', true);
     elem.setAttribute('ondragstart', `drag(event, '${product["artikelid"]}', '${product["prisinklmoms"]}')`);
+    // Create attributes for filtering
+    elem.setAttribute('data-category', product["category"].toLowerCase());
+    elem.setAttribute('data-type', "drink");
     return elem
+}
+
+//Function which creates element for a dish
+function createDishElement(product){
+    elem = document.createElement("div");
+    elem.classList.add('key', 'inv', 'inv-item');
+    elem.id = product[ "nr"];
+    elem.innerHTML = dict[lang]['productName'] + product["name"] + dict[lang]['price'] + product["priceinclvat"] + dict[lang]['stock'] + product["stock"];
+    // Create buttons and append them to the row
+    
+    removeKey = createRemoveKey(elem.id);
+    availableKey = createAvailableKey(elem.id);
+    refillKey = createRefillKey(elem.id, product["priceinclvat"]);
+
+    
+    
+    elem.appendChild(removeKey);
+    elem.appendChild(availableKey);
+    elem.appendChild(refillKey);
+    // Make the item dragable
+    elem.setAttribute('draggable', true);
+    elem.setAttribute('ondragstart', `drag(event, '${product["nr"]}', '${product["priceinclvat"]}')`);
+    // Create attributes for filtering
+    elem.setAttribute('data-category', product["category"].toLowerCase());
+    elem.setAttribute('data-type', "dish");
+    return elem
+}
+
+// Functions to filter inventory
+//Only show inventory items which belong to selected category
+current_inventory_filter = "all_drinks";
+function applyInventoryFilter(category) {
+    current_inventory_filter = category;
+    $(".inv-item").hide();
+
+    if (category === "all_drinks") {
+        $(`.inv-item[data-type='drink']`).show();
+    }
+    else if(category === "all_food"){
+        $(`.inv-item[data-type='dish']`).show();
+    }
+    else {
+        $(`.inv-item[data-category='${category}']`).show();
+    }
+}
+
+// Function which redraws the inventory view using the inventory model
+function updateInventoryView(){
+    var inventoryList = DB2.beverages;
+    var dishesList = DB3.dishes;
+    // Reset content of order view
+    $('#lowStock').html(""); 
+    $('#normalStock').html("");
+    // Draw an element for each item in the product list
+    for(i = 0; i < inventoryList.length; i++ ){ 
+        var product = createInventoryElement(inventoryList[i]);
+        // If it is low in stock, put it at the special container at top
+        if(inventoryList[i]["stock"] < 5)
+        {
+            $('#lowStock').append(product);
+        }
+        else{
+            $('#normalStock').append(product);
+        }  
+        // Toggle view  of element according to availability of product
+        let productID = inventoryList[i]["artikelid"];
+        if(inventoryList[i]['available'])
+        {
+            $('#' + productID ).css('opacity', 1);
+            $('#' + productID + "available").text(dict[lang]['unavailable']);
+        } 
+        else
+        {
+            $('#' + productID ).css('opacity', 0.5);
+            $('#' + productID + "available").text(dict[lang]['available']);
+        }
+        // Toggle button visibility according to current login
+        if(current_view != "bartender")
+        {
+            $('#' + productID + "remove").hide();
+            $('#' + productID + "refill").hide();
+        }
+        else
+        {
+            $('#' + productID + "remove").show();
+            $('#' + productID + "refill").show();  
+        }
+    }
+    // Create inventory element for dishes
+    for(i = 0; i < dishesList.length; i++ ){ 
+        var product = createDishElement(dishesList[i]);
+        // If it is low in stock, put it at the special container at top
+        if(dishesList[i]["stock"] < 5)
+        {
+            $('#lowStock').append(product);
+        }
+        else{
+            $('#normalStock').append(product);
+        }  
+        // Toggle view  of element according to availability of product
+        let productID = dishesList[i]["nr"];
+        if(inventoryList[i]['available'])
+        {
+            $('#' + productID ).css('opacity', 1);
+            $('#' + productID + "available").text(dict[lang]['unavailable']);
+        } 
+        else
+        {
+            $('#' + productID ).css('opacity', 0.5);
+            $('#' + productID + "available").text(dict[lang]['available']);
+        }
+        // Toggle button visibility according to current login
+        if(current_view != "bartender")
+        {
+            $('#' + productID + "remove").hide();
+            $('#' + productID + "refill").hide();
+        }
+        else
+        {
+            $('#' + productID + "remove").show();
+            $('#' + productID + "refill").show();  
+        }
+    }
+
+    // If the low stock section is empty, hide the division, else show it
+    if($('#lowStock').html() === "")
+    {
+        $("#inv_low").hide();
+        $("#inv_norm").hide();
+    }
+    else
+    {
+        $("#inv_low").show();
+        $("#inv_norm").show();
+    }
+    applyInventoryFilter(current_inventory_filter);
 }
 
 // Function for ordering refill of inventory in right column
@@ -348,10 +527,20 @@ function sendRefill(){
             var product =  DB2.beverages.find(function(product) {
                 return product["artikelid"] === currentKey;
             });
-
-            currentStock = parseInt(product["stock"]);
-            refillStock = parseInt(refillOrder[currentKey][1]);
-            product["stock"] = (currentStock + refillStock).toString();
+            if(product)
+            {
+                currentStock = parseInt(product["stock"]);
+                refillStock = parseInt(refillOrder[currentKey][1]);
+                product["stock"] = (currentStock + refillStock).toString();
+            }
+            else{
+                var product =  DB3.dishes.find(function(product) {
+                    return product["nr"] === currentKey;
+                });
+                currentStock = parseInt(product["stock"]);
+                refillStock = parseInt(refillOrder[currentKey][1]);
+                product["stock"] = (currentStock + refillStock).toString();
+            }   
         })(item);
     }
     refillOrder = {};
@@ -371,27 +560,56 @@ function updateRefillOrder(){
             var product =  DB2.beverages.find(function(product) {
                 return product["artikelid"] === currentKey;
             });
+            //If product is a drink
+            if(product){
+                var button_add = document.createElement("button");
+                button_add.textContent = dict[lang]["Add"] ;// create add button 
+                button_add.addEventListener("click", function () {
+                    add_refill(currentKey);//add element to the order by clicking on add button
+                });
 
-            var button_add = document.createElement("button");
-            button_add.textContent = dict[lang]["Add"] ;// create add button 
-            button_add.addEventListener("click", function () {
-                add_refill(currentKey);//add element to the order by clicking on add button
-            });
+                var button_remove = document.createElement("button");
+                button_remove.textContent = dict[lang]["Remove"];// create remove button 
+                button_remove.addEventListener("click", function () {
+                    remove_refill(currentKey);//remove  element from the order by clicking on remove button
+                });
+                var p = document.createElement("p");
+                var text1 = product["namn"] + "<br>" + dict[lang]['Price'] + refillOrder[currentKey][0]+ "<br>" + dict[lang]['Quantity'] +refillOrder[currentKey][1]+'<br>';
+                p.innerHTML = dict[lang]['total_price']
+                p.innerHTML = text1;
+                p.appendChild(button_add);
+                p.appendChild(button_remove);
+                p.setAttribute('draggable', true);
+                p.setAttribute('ondragstart', `drag(event, '${currentKey}', '${refillOrder[currentKey][0]}')`);
+                div.appendChild(p);
+            }
+            //If product is a dish
+            else{
+                var product =  DB3.dishes.find(function(product) {
+                    return product["nr"] === currentKey;
+                });
+                var button_add = document.createElement("button");
+                button_add.textContent = dict[lang]["Add"] ;// create add button 
+                button_add.addEventListener("click", function () {
+                    add_refill(currentKey);//add element to the order by clicking on add button
+                });
 
-            var button_remove = document.createElement("button");
-            button_remove.textContent = dict[lang]["Remove"];// create remove button 
-            button_remove.addEventListener("click", function () {
-                remove_refill(currentKey);//remove  element from the order by clicking on remove button
-            });
-            var p = document.createElement("p");
-            var text1 = product["namn"] + "<br>" + dict[lang]['Price'] + refillOrder[currentKey][0]+ "<br>" + dict[lang]['Quantity'] +refillOrder[currentKey][1]+'<br>';
-            p.innerHTML = dict[lang]['total_price']
-            p.innerHTML = text1;
-            p.appendChild(button_add);
-            p.appendChild(button_remove);
-            p.setAttribute('draggable', true);
-            p.setAttribute('ondragstart', `drag(event, '${currentKey}', '${refillOrder[currentKey][0]}')`);
-            div.appendChild(p);
+                var button_remove = document.createElement("button");
+                button_remove.textContent = dict[lang]["Remove"];// create remove button 
+                button_remove.addEventListener("click", function () {
+                    remove_refill(currentKey);//remove  element from the order by clicking on remove button
+                });
+                var p = document.createElement("p");
+                var text1 = product["name"] + "<br>" + dict[lang]['Price'] + refillOrder[currentKey][0]+ "<br>" + dict[lang]['Quantity'] +refillOrder[currentKey][1]+'<br>';
+                p.innerHTML = dict[lang]['total_price']
+                p.innerHTML = text1;
+                p.appendChild(button_add);
+                p.appendChild(button_remove);
+                p.setAttribute('draggable', true);
+                p.setAttribute('ondragstart', `drag(event, '${currentKey}', '${refillOrder[currentKey][0]}')`);
+                div.appendChild(p);
+            }
+            
         })(item);
     }
     // Toggle display of buttons/text accordingly if order is empty or not
@@ -403,52 +621,6 @@ function updateRefillOrder(){
     else{
         $("#refill_text").hide();
         $("#send_refill").show();
-    }
-}
-
-// Function which redraws the inventory view using the inventory model
-function updateInventoryView(){
-    var inventoryList = DB2.beverages;
-    // Reset content of order view
-    $('#lowStock').html(""); 
-    $('#normalStock').html("");
-    // Draw an element for each item in the product list
-    for(i = 0; i < inventoryList.length; i++ ){ 
-        var product = createInventoryElement(inventoryList[i]);
-        // If it is low in stock, put it at the special container at top
-        if(inventoryList[i]["stock"] < 5)
-        {
-            $('#lowStock').append(product);
-        }
-        else{
-            $('#normalStock').append(product);
-        }  
-        // Toggle view  of element according to availability of product
-        let productID = inventoryList[i]["artikelid"];
-        if(inventoryList[i]['available'])
-        {
-            $('#' + productID ).css('opacity', 1);
-            $('#' + productID + "available").text(dict[lang]['unavailable']);
-        }
-            
-        
-        else
-        {
-            $('#' + productID ).css('opacity', 0.5);
-            $('#' + productID + "available").text(dict[lang]['available']);
-        }
-    }
-
-    // If the low stock section is empty, hide the division, else show it
-    if($('#lowStock').html() === "")
-    {
-        $("#inv_low").hide();
-        $("#inv_norm").hide();
-    }
-    else
-    {
-        $("#inv_low").show();
-        $("#inv_norm").show();
     }
 }
 
@@ -515,9 +687,23 @@ function createTextInput(attribute, containerID){
 
 // Function to create a form of attributes
 function createForm(attributeList, containerID){
+    $("#" + containerID).html("");
     for(i=0; i<attributeList.length; i++){
         createTextInput(attributeList[i], containerID)
     }
+}
+
+//Functions which open dialogoues for adding drinks and dishes
+function add_drink(){
+    toggleWindow("add_popup");
+    createForm(modelData['productAttributes'], "input_form");
+    $("#add_item").attr("onclick", "addItem()");
+}
+
+function add_dish(){
+    toggleWindow("add_popup");
+    createForm(modelData['dishAttributes'], "input_form");
+    $("#add_item").attr("onclick", "addDish()");
 }
 
 // Function to add a new item to the database and then update the view
@@ -540,9 +726,36 @@ function addItem(){
     // TODO Check for unique product ID
 
     newProduct["available"] = true;
-    modelData['products'].push(newProduct);
+    DB2.beverages.push(newProduct);
 
     updateInventoryView(); // Change view from model
+    updateMenu();
+    toggleWindow("add_popup");
+}
+function addDish(){
+    // Change model
+    let newProduct = {};
+    for(i=0; i < modelData['dishAttributes'].length; i++){
+        // Fetch property from corresponding input field
+        let attribute = modelData['dishAttributes'][i];
+        let input = $('#' + attribute).val();
+        if(input != ""){
+            newProduct[attribute] = input; 
+        }
+        //If some field is empty, nothing happens
+        else
+        {
+            return
+        }
+    }
+    // TODO Check for unique product ID
+
+    newProduct["available"] = true;
+    DB3.dishes.push(newProduct);
+
+    updateInventoryView(); // Change view from model
+    updateMenu();
+    toggleWindow("add_popup");
 }
 
 // VIP-USER FUNCTIONS //
