@@ -460,3 +460,23 @@ This function controls the display of different views based on the `type_view` p
   - **VIP Customer**: Similar to the customer view with additional features for VIP customers.
   - **Logout**: Returns to the login screen.
 
+# Login credentials
+- **Bartender**:
+  - **Username**: molbab
+  - **Password**: 23408e7480c9946f0b892fd6eb9996fd
+
+- **VIP**:
+  - **Username**: saskru
+  - **Password**: 971299fa95fe467db26e8bf01864d48
+
+- **Waiter**:
+  - **Username**: kenolg
+  - **Password**: 4ec434994decffa3005b477cc7f992e6.
+
+# Time report
+   - **Chia Tzu Chang**: 2h + 8h + 6h + 8h + 5h + 3h = 32h total
+   - **Kwan Lam Wong**: 2h + 8.5h + 7h + 3h + 12h  = 32.5h total
+   - **Mariia Chuprina**: 2h + 10h + 11h + 7h + 4h + 10h = 44h total
+   - **Henrik Jonasson**: 2h + 7h + 16h + 5h + 3h + 12h = 45h total
+   - **Zsombor Kotán**: 2h + 7h + 8h + 9h + 9h + 7h = 42h total
+

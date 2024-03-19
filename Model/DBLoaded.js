@@ -332,7 +332,7 @@ var DB = {
         },
         {
             "user_id": "47",
-            "credentials": "3",
+            "credentials": "1",
             "password": "23408e7480c9946f0b892fd6eb9996fd",
             "username": "molbab",
             "first_name": "Molle",
